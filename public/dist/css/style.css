@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+.form1 {
+    height: 100vh;
+}
+
+.form1 {
+    padding-top: 5%;
+}
+
+.col-md-8 {
+    height: 100vh;
+}
+
+.col-md-8 {
+    background-image: url('/dist/images/hall.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.col-md-8 img{
+    margin-top: 20%;
+}
+
+.col-md-8 h1{
+    color: aliceblue;
+    font-weight: bold;
+    font-size: 70px;
+    font-weight: 900;
+    font-family: "Roboto Mono", monospace;
+    text-shadow: 1px 7px 9px rgba(0, 0, 0, 0.7);
+}
+
+label {
+    font-size: 20px;
+}
