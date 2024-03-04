@@ -22,7 +22,7 @@
                             <div class="text-center">
                                 <img src="{{ asset("dist/images/user1.png")}}" width="200" height="200" alt="">
                             </div>
-                            <form action="">
+                            <form action="" method="POST">
                                 <div>
                                     <label for="">Username</label>
                                     <input type="text" class="form-control">
