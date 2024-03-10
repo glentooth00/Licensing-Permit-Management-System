@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('site.index');
 });
 
+Route::get('/', function () {
+    return view('admin.dashboard');
+});
+
 
 
 
