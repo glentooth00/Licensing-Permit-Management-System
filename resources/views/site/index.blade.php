@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Licensing Permit </title>
     <link rel="stylesheet" href="{{ asset('dist/css/app.min.css')}}">
     <link rel="stylesheet" href="{{ asset('dist/css/style.css')}}">
 
@@ -37,7 +37,7 @@
                                 <div class="mt-5">
                                     <div class="d-grid gap-4">
                                         <button class="btn btn-primary" type="button">Login</button>
-                                        <button class="btn btn-success" type="button">Sign Up</button>
+                                        <a href="/registration" class="btn btn-success" type="button">Sign Up</a>
                                     </div>
                                 </div>
                             </form>

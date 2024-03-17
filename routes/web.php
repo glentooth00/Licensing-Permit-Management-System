@@ -18,9 +18,14 @@ Route::get('/', function () {
     return view('site.index');
 });
 
-Route::get('/', function () {
+Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 });
+
+Route::get('/registration', function () {
+    return view('site.registration');
+});
+
 
 
 
