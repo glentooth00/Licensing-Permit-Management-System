@@ -3,13 +3,13 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
-      <!-- Page-header end -->
+    <!-- Page-header end -->
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
                 <div class="page-body">
                     <div class="row">
-                         <div class="col-xl-3 col-md-6">
+                        <div class="col-xl-3 col-md-6">
                             <div class="card">
                                 <div class="card-block">
                                     <div class="row align-items-center">
@@ -57,7 +57,9 @@
                                                 <td>Male</td>
                                                 <td>09815123131</td>
                                                 <td class="text-right">
-                                                    <a class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More Details</a>
+                                                    <a
+                                                        class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More
+                                                        Details</a>
                                                 </td>
                                             </tr>
                                         </tbody>
