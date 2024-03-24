@@ -5,14 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <<<<<<< HEAD <title>Document</title>
-        <link rel="stylesheet" href="{{ asset('dist/css/app.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
-        =======
-        <title>Licensing Permit </title>
-        <link rel="stylesheet" href="{{ asset('dist/css/app.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
-        >>>>>>> user-registration
+
+    <title>Licensing Permit </title>
+    <link rel="stylesheet" href="{{ asset('dist/css/app.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
+
 
 </head>
 
