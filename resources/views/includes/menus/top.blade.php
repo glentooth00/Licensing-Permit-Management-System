@@ -26,7 +26,7 @@
                             <i class="ti-more"></i>
                         </a>
                     </div>
-
+{{-- 
                     <div class="navbar-container container-fluid">
                         <ul class="nav-right">
                             <li class="user-profile header-notification">
@@ -61,6 +61,6 @@
                                 </ul>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </nav>

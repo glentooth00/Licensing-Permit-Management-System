@@ -30,12 +30,43 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="waves-effect waves-dark">
+                                <a href="/admin/permit" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-list"></i><b>FC</b></span>
                                     <span class="pcoded-mtext">Newly Registered</span>
                                     <span class="pcoded-mcaret"></span>
                                 </a>
                             </li>
+                        </ul>
+                        <ul class="pcoded-item pcoded-left-item">
+                            <li>
+                                <a href="f#" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-settings"></i><b>FC</b></span>
+                                    <span class="pcoded-mtext">Settings</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/permit" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-user"></i><b>FC</b></span>
+                                    <span class="pcoded-mtext">Profile</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="auth-normal-sign-in.html" class="waves-effect waves-dark">
+                                          <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <x-dropdown-link :href="route('logout')"
+                                                onclick="event.preventDefault();
+                                                            this.closest('form').submit();">
+                                                    <span class="pcoded-micon"><i class="ti-layout-sidebar-left"></i><b></b></span>
+                                                    <span class="text-muted" style="margin-left: 20px;"> {{ __('Log Out') }}</span>
+                                                    <span class="pcoded-mcaret"></span>
+                                            </x-dropdown-link>
+                                        </form>
+                                    </span>
+                                </a>
+                            </li>   
                         </ul>
                     </div>
                 </nav>
