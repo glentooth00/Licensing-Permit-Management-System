@@ -41,27 +41,58 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>NAME</th>
-                                                <th>ADDRESS</th>
-                                                <th>AGE</th>
-                                                <th>GENDER</th>
-                                                <th>COTANCT No.</th>
-                                                <th class="text-right">ACTIONS</th>
+                                                <th style="width:5%;text-align:center;">STATUS</th>
+                                                <th style="width:10%;text-align:center;">NAME</th>
+                                                <th style="width:15%;text-align:center;">ADDRESS</th>
+                                                <th style="width:10%;text-align:center;">NAME OF BUSINESS</th>
+                                                <th>DATE BUSINESS STARTED</th>
+                                                <th style="width:5%;text-align:center;">COTANCT No.</th>
+                                                <th style="width:5%;text-align:center;">APPLIED ON</th>
+                                                <th class="text-center">ACTIONS</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Cardo, Dalisay</td>
-                                                <td>Balasan, Iloilo</td>
-                                                <td>30 year's old</td>
-                                                <td>Male</td>
-                                                <td>09815123131</td>
-                                                <td class="text-right">
-                                                    <a
-                                                        class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More
-                                                        Details</a>
-                                                </td>
-                                            </tr>
+
+                                            @foreach ($businessPermits as $businessPermit)
+                                                <tr>
+                                                    <td style="width:5%;">
+
+
+
+                                                        @php
+                                                            if ($businessPermit->status == 0) {
+                                                                echo '<span class="p-2 text-dark bg-warning">PENDING</span>';
+                                                            }
+                                                        @endphp
+                                                    </td>
+                                                    <td style="width:10%;text-align:center;">
+                                                        {{ $businessPermit->first_name }}
+                                                        {{ $businessPermit->middle_name }}
+                                                        {{ $businessPermit->last_name }}</td>
+                                                    <td style="width:15%;text-align:center;">
+                                                        {{ $businessPermit->owners_street }}
+                                                        {{ $businessPermit->owners_barangay }}
+                                                        {{ $businessPermit->owners_municipality }}
+                                                        {{ $businessPermit->owners_province }} </td>
+
+                                                    <td style="width:10%;text-align:center;">
+                                                        {{ $businessPermit->business_name }}</td>
+                                                    <td style="width:5%;text-align:center;">
+                                                        {{ $businessPermit->date_business_started }}</td>
+                                                    <td style="width:5%;text-align:center;">
+                                                        {{ $businessPermit->owners_Tel_No_Mobile }}</td>
+                                                    <td style="width:5%;text-align:center;">
+                                                        {{ $businessPermit->created_at }}</td>
+                                                    <!-- Add more table cells for other fields -->
+                                                    <td class="text-center">
+                                                        {{-- {{ route('business_permit_details', $businessPermit->id) }} --}}
+                                                        <a href=""
+                                                            class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More
+                                                            Details</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
