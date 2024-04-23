@@ -14,7 +14,7 @@
                                 <div class="card-block">
                                     <div class="row align-items-center">
                                         <div class="col-8">
-                                            <h4 class="text-c-purple">20</h4>
+                                            <h4 class="text-c-purple">{{ $approvedCount }}</h4>
                                             <h6 class="text-muted m-b-0">No. of Registered Member</h6>
                                         </div>
                                         <div class="col-4 text-right text-primary">
@@ -37,7 +37,7 @@
                                 <div class="card-block">
                                     <div class="row align-items-center">
                                         <div class="col-8">
-                                            <h4 class="text-danger">20</h4>
+                                            <h4 class="text-danger">{{ $pendingCount }}</h4>
                                             <h6 class="text-muted m-b-0">No. of Pending Member</h6>
                                         </div>
                                         <div class="col-4 text-right text-danger">
@@ -68,7 +68,7 @@
                                                 <th style="width:10%;text-align:center;">NAME</th>
                                                 <th style="width:15%;text-align:center;">ADDRESS</th>
                                                 <th style="width:10%;text-align:center;">NAME OF BUSINESS</th>
-                                                <th>DATE BUSINESS STARTED</th>
+
                                                 <th style="width:5%;text-align:center;">COTANCT No.</th>
                                                 <th style="width:5%;text-align:center;">APPLIED ON</th>
                                                 <th class="text-center">ACTIONS</th>
@@ -80,39 +80,63 @@
                                                 <tr>
                                                     <td style="width:5%;">
                                                         @php
-                                                            if ($businessPermit->status == 0) {
+                                                            if ($businessPermit->status == 'Pending') {
                                                                 echo '<span class="p-2 text-dark bg-warning">PENDING</span>';
+                                                            } else {
+                                                                echo '<span class="p-2 text-dark bg-success">Approved</span>';
                                                             }
                                                         @endphp
                                                     </td>
                                                     <td style="width:10%;text-align:center;">
                                                         {{ $businessPermit->first_name }}
                                                         {{ $businessPermit->middle_name }}
-                                                        {{ $businessPermit->last_name }}</td>
+                                                        {{ $businessPermit->last_name }}
+                                                    </td>
                                                     <td style="width:15%;text-align:center;">
                                                         {{ $businessPermit->owners_street }}
                                                         {{ $businessPermit->owners_barangay }}
                                                         {{ $businessPermit->owners_municipality }}
-                                                        {{ $businessPermit->owners_province }} </td>
-
+                                                        {{ $businessPermit->owners_province }}
+                                                    </td>
                                                     <td style="width:10%;text-align:center;">
-                                                        {{ $businessPermit->business_name }}</td>
+                                                        {{ $businessPermit->business_name }}
+                                                    </td>
+
                                                     <td style="width:5%;text-align:center;">
-                                                        {{ $businessPermit->date_business_started }}</td>
+                                                        {{ $businessPermit->owners_Tel_No_Mobile }}
+                                                    </td>
                                                     <td style="width:5%;text-align:center;">
-                                                        {{ $businessPermit->owners_Tel_No_Mobile }}</td>
-                                                    <td style="width:5%;text-align:center;">
-                                                        {{ $businessPermit->created_at }}</td>
+                                                        {{ $businessPermit->created_at }}
+                                                    </td>
                                                     <!-- Add more table cells for other fields -->
                                                     <td class="text-center">
-                                                        {{-- {{ route('business_permit_details', $businessPermit->id) }} --}}
-                                                        <a href=""
-                                                            class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More
-                                                            Details</a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                        <div class="button-container">
+                                                            {{-- Approve Button --}}
+                                                            <form
+                                                                action="{{ route('approve.permit', ['id' => $businessPermit->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit"
+                                                                    class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
+                                                            </form>
 
+                                                            {{-- More Details Button with ID --}}
+                                                            <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}"
+                                                                class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More
+                                                                Details</a>
+
+                                                            {{-- Generate Permit Button --}}
+                                                            {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
+                                                            <form action="" method="POST">
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="btn waves-effect waves-light btn-primary btn-outline-info btn-sm btn-round m-1">Generate
+                                                                    Permit</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -124,3 +148,12 @@
         </div>
     </div>
 @endsection
+<style>
+    .button-container {
+        display: flex;
+        /* Use flexbox to align buttons horizontally */
+        justify-content: center;
+        /* Space buttons evenly within the container */
+
+    }
+</style>

@@ -17,6 +17,7 @@
                                 <div class="card-block">
                                     <table class="table">
                                         <thead>
+
                                             <tr>
                                                 <th>NAME</th>
                                                 <th>ADDRESS</th>

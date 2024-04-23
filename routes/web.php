@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
+use App\Models\BusinessPermitApplication;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,20 +39,34 @@ Route::get('/registration-complete', [BusinessPermitApplicationController::class
 Route::get('/dashboard', [BusinessPermitApplicationController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route group for authenticated users
-Route::middleware('auth')->group(function () {
-    // Profile routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     // Profile routes
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/permit', function () {
         return view('admin.permit.index');
     });
+
+    // Route for showing permit details
+    Route::get('/permit/show/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
+
+    // Route for approving permit using BusinessPermitApplicationController
+    Route::put('/approve-permit/{id}', [BusinessPermitApplicationController::class, 'approvePermit'])->name('approve.permit');
+
+    Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+    Route::put('/business-registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
+
+
+
     // Additional admin routes can be added here
 });
+
+
 
 // Auth routes (login, register, etc.)
 require __DIR__.'/auth.php';
