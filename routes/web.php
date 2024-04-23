@@ -23,6 +23,10 @@ Route::get('/business-registration', function () {
     return view('site.registration');
 });
 
+Route::get('/admin-permit-show', function () {
+    return view('admin.permit.show');
+});
+
 // Handle registration form submission
 Route::post('/business-registration', [BusinessPermitApplicationController::class, 'store'])->name('business-registration.store');
 

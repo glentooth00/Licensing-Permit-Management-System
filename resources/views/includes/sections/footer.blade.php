@@ -20,7 +20,7 @@
 <script src="{{ asset('admin/js/vertical-layout.min.js ')}}"></script>
 <script src="{{ asset('admin/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 <!-- Custom js -->
-<script type="text/javascript" src="{{ asset('admin/js/script.js')}}"></script>
+{{-- <script type="text/javascript" src="{{ asset('admin/js/script.js')}}"></script> --}}
 
 </body>
 
