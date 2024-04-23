@@ -32,6 +32,29 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card">
+                                <div class="card-block">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h4 class="text-danger">20</h4>
+                                            <h6 class="text-muted m-b-0">No. of Pending Member</h6>
+                                        </div>
+                                        <div class="col-4 text-right text-danger">
+                                            <i class="fa fa-users f-28"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-danger">
+                                    <div class="row align-items-center">
+                                        <div class="col-9">
+                                            <p class="text-white m-b-0"></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-12 mt-5">
                             <div class="card">
                                 <div class="card-header">
@@ -56,9 +79,6 @@
                                             @foreach ($businessPermits as $businessPermit)
                                                 <tr>
                                                     <td style="width:5%;">
-
-
-
                                                         @php
                                                             if ($businessPermit->status == 0) {
                                                                 echo '<span class="p-2 text-dark bg-warning">PENDING</span>';

@@ -34,7 +34,7 @@
                                                 <td>Male</td>
                                                 <td>09815123131</td>
                                                 <td class="text-right">
-                                                    <a
+                                                    <a href="/admin-permit-show"
                                                         class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More
                                                         Details</a>
                                                 </td>
