@@ -31,11 +31,12 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/admin/permit" class="waves-effect waves-dark">
+                        <a href="{{ route('admin.permit') }}" class="waves-effect waves-dark">
                             <span class="pcoded-micon"><i class="ti-list"></i><b>FC</b></span>
                             <span class="pcoded-mtext">Newly Registered</span>
                             <span class="pcoded-mcaret"></span>
                         </a>
+
                     </li>
                 </ul>
                 <ul class="pcoded-item pcoded-left-item">

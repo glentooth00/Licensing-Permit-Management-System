@@ -47,25 +47,16 @@
                                         </li>
                                         <br>
                                         <b>Classification:</b>
-                                        <li><input type="checkbox" name="classification_cottage"
-                                                value=" Cottage (below 500,000)">
+                                        <li><input type="checkbox" name="classification_cottage" value="1">
                                             Cottage (below 500,000)</li>
-                                        <li><input type="checkbox" name="classification_cottage"
-                                                value="Small
-                                            (500,000 -> 5M)">
+                                        <li><input type="checkbox" name="classification_cottage" value="2">
                                             Small
                                             (500,000 -> 5M)</li>
-                                        <li><input type="checkbox" name="classification_cottage"
-                                                value="Medium
-                                            (5M
-                                            -> 20M)">
+                                        <li><input type="checkbox" name="classification_cottage" value="3">
                                             Medium
                                             (5M
                                             -> 20M)</li>
-                                        <li><input type="checkbox" name="classification_cottage"
-                                                value="Large
-                                            (20M
-                                            -> Up)">
+                                        <li><input type="checkbox" name="classification_cottage" value="4">
                                             Large
                                             (20M
                                             -> Up)</li>
@@ -76,41 +67,25 @@
                                         <b>Amendment:</b>
                                     </div>
                                     <ul>
-                                        <li><input type="checkbox" name="amendment"
-                                                value="From Single to
-                                            Partnership">
+                                        <li><input type="checkbox" name="amendment" value="1">
                                             From Single to
                                             Partnership</li>
-                                        <li><input type="checkbox" name="amendment"
-                                                value="From Single to
-                                            Corporation">
+                                        <li><input type="checkbox" name="amendment" value="2">
                                             From Single to
                                             Corporation</li>
-                                        <li><input type="checkbox" name="amendment"
-                                                value="From Partnership
-                                            to
-                                            Single">
+                                        <li><input type="checkbox" name="amendment" value="3">
                                             From Partnership
                                             to
                                             Single</li>
-                                        <li><input type="checkbox" name="amendment"
-                                                value="From Partnership
-                                            to
-                                            Corporation">
+                                        <li><input type="checkbox" name="amendment" value="4">
                                             From Partnership
                                             to
                                             Corporation</li>
-                                        <li><input type="checkbox" name="amendment"
-                                                value="From Corporaction
-                                            to
-                                            Single">
+                                        <li><input type="checkbox" name="amendment" value="5">
                                             From Corporaction
                                             to
                                             Single</li>
-                                        <li><input type="checkbox" name="amendment"
-                                                value="From Corporaction
-                                            to
-                                            Partnership">
+                                        <li><input type="checkbox" name="amendment" value="6">
                                             From Corporaction
                                             to
                                             Partnership</li>
