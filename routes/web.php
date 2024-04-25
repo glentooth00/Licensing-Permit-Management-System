@@ -64,7 +64,10 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/approve-permit/{id}', [BusinessPermitApplicationController::class, 'approvePermit'])->name('approve.permit');
 
     Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+
     Route::put('/business-registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
+
+
 
     Route::get('/admin/permit', [BusinessPermitApplicationController::class, 'showApproved'])->name('admin.permit');
 
