@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\BusinessPermitApplication;
 use Illuminate\Http\Request;
+use Endroid\QrCode\QrCode;
+
+use Endroid\QrCode\Response\QrCodeResponse;
+
 
 class BusinessPermitApplicationController extends Controller
 {
@@ -12,7 +16,7 @@ class BusinessPermitApplicationController extends Controller
      */
     public function index()
     {
-        $businessPermits = BusinessPermitApplication::all();
+        $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
 
          // Count pending applications
          $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
@@ -181,6 +185,31 @@ class BusinessPermitApplicationController extends Controller
         return redirect()->back()->with('success', 'Permit approved successfully.');
     }
 
+    public function showApproved(){
+        $approved_permits = BusinessPermitApplication::where('status', 'Approved')->get();
+    
+        return view('admin.permit.index', [
+            'approved_permits' => $approved_permits,
+        ]);
+    }
+
+    public function generatePermit(Request $request)
+    {
+        $userId = $request->input('user_id');
+        // Fetch user data based on $userId, e.g., $user = User::find($userId);
+    
+        // Generate QR code based on user data
+        $qrCode = new QrCode('Your QR Code Data'); // Replace 'Your QR Code Data' with the actual data you want to encode
+        $qrCode->setSize(200); // Set QR code size
+    
+        // Generate base64-encoded QR code image
+        $base64QRCode = base64_encode($qrCode->writeString());
+    
+        // Return the base64-encoded QR code image as a response
+        return response()->json(['qr_code' => $base64QRCode]);
+    }
+    
+    
     
     
 }

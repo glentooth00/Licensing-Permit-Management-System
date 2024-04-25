@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
 use App\Models\BusinessPermitApplication;
 use Illuminate\Support\Facades\Route;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Route::get('qrcode', function () {
+//     return QrCode::size(300)->generate('A basic example of Qr code');
+// });
 
 Route::get('/', function () {
     return view('auth.login');
@@ -60,6 +65,21 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
     Route::put('/business-registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
+
+    Route::get('/admin/permit', [BusinessPermitApplicationController::class, 'showApproved'])->name('admin.permit');
+
+    Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
+        $permitId = $request->query('user_id');
+        $permit = BusinessPermitApplication::findOrFail($permitId);
+    
+        $qrCode = QrCode::size(300)->generate("Permit ID: $permitId");
+    
+        return view('admin.permit.permit')->with([
+            'qrCode' => $qrCode,
+            'permit' => $permit,
+        ]);
+    })->name('generate.qrcode');
+    
 
 
 

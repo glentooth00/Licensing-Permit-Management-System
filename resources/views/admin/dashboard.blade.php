@@ -58,7 +58,7 @@
                         <div class="col-sm-12 mt-5">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>New Registered Members</h5>
+                                    <h5>Business Permit Applications</h5>
                                 </div>
                                 <div class="card-block">
                                     <table class="table">
@@ -66,7 +66,7 @@
                                             <tr>
                                                 <th style="width:5%;text-align:center;">STATUS</th>
                                                 <th style="width:10%;text-align:center;">NAME</th>
-                                                <th style="width:15%;text-align:center;">ADDRESS</th>
+
                                                 <th style="width:10%;text-align:center;">NAME OF BUSINESS</th>
 
                                                 <th style="width:5%;text-align:center;">COTANCT No.</th>
@@ -92,12 +92,6 @@
                                                         {{ $businessPermit->middle_name }}
                                                         {{ $businessPermit->last_name }}
                                                     </td>
-                                                    <td style="width:15%;text-align:center;">
-                                                        {{ $businessPermit->owners_street }}
-                                                        {{ $businessPermit->owners_barangay }}
-                                                        {{ $businessPermit->owners_municipality }}
-                                                        {{ $businessPermit->owners_province }}
-                                                    </td>
                                                     <td style="width:10%;text-align:center;">
                                                         {{ $businessPermit->business_name }}
                                                     </td>
@@ -105,21 +99,27 @@
                                                     <td style="width:5%;text-align:center;">
                                                         {{ $businessPermit->owners_Tel_No_Mobile }}
                                                     </td>
-                                                    <td style="width:5%;text-align:center;">
+                                                    <td style="width:10%;text-align:center;">
                                                         {{ $businessPermit->created_at }}
                                                     </td>
                                                     <!-- Add more table cells for other fields -->
-                                                    <td class="text-center">
+                                                    <td class="text-center" style="width: 20%;">
+
+
                                                         <div class="button-container">
                                                             {{-- Approve Button --}}
-                                                            <form
-                                                                action="{{ route('approve.permit', ['id' => $businessPermit->id]) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button type="submit"
-                                                                    class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
-                                                            </form>
+                                                            @if ($businessPermit->status == 'Approved')
+                                                            @else
+                                                                <form
+                                                                    action="{{ route('approve.permit', ['id' => $businessPermit->id]) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button type="submit"
+                                                                        class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
+                                                                </form>
+                                                            @endif
+
 
                                                             {{-- More Details Button with ID --}}
                                                             <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}"
@@ -136,6 +136,7 @@
                                                             </form>
                                                         </div>
                                                     </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
