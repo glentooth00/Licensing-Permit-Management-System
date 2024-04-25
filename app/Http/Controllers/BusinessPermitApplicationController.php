@@ -114,18 +114,19 @@ class BusinessPermitApplicationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $businessPermit)
-    {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
+
+     public function update(Request $request, $businessPermit)
+     {
+         // Validate the incoming request data
+         $validatedData = $request->validate([
             'business_application' => 'nullable|string|max:255',
-            'classification_cottage' => 'nullable|string|max:255',
-            'amendment' => 'nullable|string|max:255',
+            'classification_cottage' => 'nullable|string|max:255', // Ensure it's a string
+            'amendment' => 'nullable|string|max:255', // Ensure it's a string
             'date_of_application' => 'nullable|date',
             'DTI_SEC_CDA_registration_No' => 'nullable|string|max:255',
             'date_business_started' => 'nullable|date',
             'DTI_SEC_CDA_date_of_Registration' => 'nullable|date',
-            'type_of_org' => 'nullable|string|max:255',
+            'type_of_org' => 'nullable|string|max:255', // Ensure it's a string
             'ctc_no' => 'nullable|string|max:255',
             'TIN' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
@@ -145,19 +146,23 @@ class BusinessPermitApplicationController extends Controller
             'owners_province' => 'nullable|string|max:255',
             'business_Tel_No_Mobile' => 'nullable|string|max:255',
             'owners_Tel_No_Mobile' => 'nullable|string|max:255',
-            'mode_of_payment' => 'nullable|string|max:255',
-            'transfer' => 'nullable|string|max:255',
+            'mode_of_payment' => 'nullable|string|max:255', // Ensure it's a string
+            'transfer' => 'nullable|string|max:255', // Ensure it's a string
         ]);
-
-        // Find the BusinessPermitApplication instance by ID
-        $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
-
-        // Update the BusinessPermitApplication instance with the validated data
-        $businessPermit->update($validatedData);
-
-        // Optionally, you can redirect back with a success message
-        return redirect()->back()->with('success', 'Business permit updated successfully');
-    }
+        
+         $validatedData['status'] = 'Pending';
+     
+         // Find the BusinessPermitApplication instance by ID
+         $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
+     
+         // Update the BusinessPermitApplication instance with the validated data
+         $businessPermit->update($validatedData);
+     
+         // Optionally, you can redirect back with a success message
+         return redirect()->back()->with('success', 'Business permit updated successfully');
+     }
+     
+   
 
     /**
      * Remove the specified resource from storage.
@@ -186,7 +191,11 @@ class BusinessPermitApplicationController extends Controller
     }
 
     public function showApproved(){
-        $approved_permits = BusinessPermitApplication::where('status', 'Approved')->get();
+
+       $approved_permits = BusinessPermitApplication::where('status', 'Approved')
+    ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
+    ->get();
+
     
         return view('admin.permit.index', [
             'approved_permits' => $approved_permits,

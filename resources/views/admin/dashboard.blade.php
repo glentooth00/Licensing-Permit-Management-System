@@ -128,12 +128,17 @@
 
                                                             {{-- Generate Permit Button --}}
                                                             {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
-                                                            <form action="" method="POST">
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="btn waves-effect waves-light btn-primary btn-outline-info btn-sm btn-round m-1">Generate
-                                                                    Permit</button>
-                                                            </form>
+
+                                                            @if ($businessPermit->status == 'Pending')
+                                                            @else
+                                                                <form action="" method="POST">
+                                                                    @csrf
+                                                                    <button type="submit"
+                                                                        class="btn waves-effect waves-light btn-primary btn-outline-info btn-sm btn-round m-1">Generate
+                                                                        Permit</button>
+                                                                </form>
+                                                            @endif
+
                                                         </div>
                                                     </td>
                                                 </tr>

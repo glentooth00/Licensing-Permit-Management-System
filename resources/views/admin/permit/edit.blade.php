@@ -18,11 +18,22 @@
                                 <div class="card-body">
                                     <section class="">
                                         <div class="container">
+
                                             <a href="/dashboard" class="btn btn-danger btn-sm" style="width: 10%;">CANCEL
                                             </a>
-                                            <a href="/dashboard" class="btn btn-primary btn-sm" style="width: 10%;"> EDIT
-                                            </a>
+
                                             <div class="card mt-4 p-4">
+
+                                                @if ($errors->any())
+                                                    <div class="alert alert-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <li>{{ $error }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+
                                                 <div class="card-body">
                                                     <div class="text-center">
                                                         <h6>Annex 1 (Page 1 of 2): APPLICATION FORM FOR BUSINESS PERMIT</h6>
@@ -50,9 +61,12 @@
                                                         action="{{ route('business-registration.update', ['businessPermit' => $businessPermit->id]) }}"
                                                         method="POST">
                                                         @csrf
+                                                        @method('PUT')
                                                         <div class="mt-3">
                                                             <div class="row">
                                                                 <div class="col-lg-4">
+                                                                    <input type="text" name="status"
+                                                                        value="{{ $businessPermit->status }}">
                                                                     <ul>
                                                                         <li>
                                                                             <input type="checkbox"
@@ -75,23 +89,19 @@
                                                                         <br>
                                                                         <b>Classification:</b>
                                                                         <li><input type="checkbox"
-                                                                                name="classification_cottage[]"
-                                                                                value="1"
+                                                                                name="classification_cottage" value="1"
                                                                                 @if (in_array('1', explode(',', $businessPermit->classification_cottage))) checked @endif>
                                                                             Cottage (below 500,000)</li>
                                                                         <li><input type="checkbox"
-                                                                                name="classification_cottage[]"
-                                                                                value="2"
+                                                                                name="classification_cottage" value="2"
                                                                                 @if (in_array('2', explode(',', $businessPermit->classification_cottage))) checked @endif>
                                                                             Small (500,000 -> 5M)</li>
                                                                         <li><input type="checkbox"
-                                                                                name="classification_cottage[]"
-                                                                                value="3"
+                                                                                name="classification_cottage" value="3"
                                                                                 @if (in_array('3', explode(',', $businessPermit->classification_cottage))) checked @endif>
                                                                             Medium (5M -> 20M)</li>
                                                                         <li><input type="checkbox"
-                                                                                name="classification_cottage[]"
-                                                                                value="4"
+                                                                                name="classification_cottage" value="4"
                                                                                 @if (in_array('4', explode(',', $businessPermit->classification_cottage))) checked @endif>
                                                                             Large (20M -> Up)</li>
 
@@ -102,32 +112,32 @@
                                                                         <b>Amendment:</b>
                                                                     </div>
                                                                     <ul>
-                                                                        <li><input type="checkbox" name="amendment[]"
+                                                                        <li><input type="checkbox" name="amendment"
                                                                                 value="1"
                                                                                 @if (in_array('1', explode(',', $businessPermit->amendment))) checked @endif>
                                                                             From Single to
                                                                             Partnership</li>
-                                                                        <li><input type="checkbox" name="amendment[]"
+                                                                        <li><input type="checkbox" name="amendment"
                                                                                 value="2"
                                                                                 @if (in_array('2', explode(',', $businessPermit->amendment))) checked @endif>
                                                                             From Single to
                                                                             Corporation</li>
-                                                                        <li><input type="checkbox" name="amendment[]"
+                                                                        <li><input type="checkbox" name="amendment"
                                                                                 value="3"
                                                                                 @if (in_array('3', explode(',', $businessPermit->amendment))) checked @endif>
                                                                             From Partnership to
                                                                             Single</li>
-                                                                        <li><input type="checkbox" name="amendment[]"
+                                                                        <li><input type="checkbox" name="amendment"
                                                                                 value="4"
                                                                                 @if (in_array('4', explode(',', $businessPermit->amendment))) checked @endif>
                                                                             From Partnership to
                                                                             Corporation</li>
-                                                                        <li><input type="checkbox" name="amendment[]"
+                                                                        <li><input type="checkbox" name="amendment"
                                                                                 value="5"
                                                                                 @if (in_array('5', explode(',', $businessPermit->amendment))) checked @endif>
                                                                             From Corporation to
                                                                             Single</li>
-                                                                        <li><input type="checkbox" name="amendment[]"
+                                                                        <li><input type="checkbox" name="amendment"
                                                                                 value="6"
                                                                                 @if (in_array('6', explode(',', $businessPermit->amendment))) checked @endif>
                                                                             From Corporation to
@@ -140,26 +150,26 @@
                                                                         <b>Mode of Payment:</b>
                                                                     </div>
                                                                     <ul>
-                                                                        <li><input type="checkbox" name="mode_of_payment[]"
+                                                                        <li><input type="checkbox" name="mode_of_payment"
                                                                                 value="Annually"
                                                                                 @if (in_array('Annually', explode(',', $businessPermit->mode_of_payment))) checked @endif>
                                                                             Annually</li>
-                                                                        <li><input type="checkbox" name="mode_of_payment[]"
+                                                                        <li><input type="checkbox" name="mode_of_payment"
                                                                                 value="Bi-Annually"
                                                                                 @if (in_array('Bi-Annually', explode(',', $businessPermit->mode_of_payment))) checked @endif>
                                                                             Bi-Annually</li>
-                                                                        <li><input type="checkbox" name="mode_of_payment[]"
+                                                                        <li><input type="checkbox" name="mode_of_payment"
                                                                                 value="Quarterly"
                                                                                 @if (in_array('Quarterly', explode(',', $businessPermit->mode_of_payment))) checked @endif>
                                                                             Quarterly</li>
 
                                                                         <br>
                                                                         <b>Transfer:</b>
-                                                                        <li><input type="checkbox" name="transfer[]"
+                                                                        <li><input type="checkbox" name="transfer"
                                                                                 value="Ownership"
                                                                                 @if (in_array('Ownership', explode(',', $businessPermit->transfer))) checked @endif>
                                                                             Ownership</li>
-                                                                        <li><input type="checkbox" name="transfer[]"
+                                                                        <li><input type="checkbox" name="transfe"
                                                                                 value="Location"
                                                                                 @if (in_array('Location', explode(',', $businessPermit->transfer))) checked @endif>
                                                                             Location</li>
@@ -176,7 +186,7 @@
                                                                         </td>
                                                                         <td> DTI/SEC/CDA Registration No.: <input
                                                                                 value="{{ $businessPermit->DTI_SEC_CDA_registration_No }}"
-                                                                                name="DTI_SEC_CDA_registration_no"
+                                                                                name="DTI_SEC_CDA_registration No"
                                                                                 type="text"></td>
                                                                     </tr>
                                                                     <tr>
@@ -186,7 +196,7 @@
                                                                         </td>
                                                                         <td> DTI/SEC/CDA Date of Registration: <input
                                                                                 value="{{ $businessPermit->DTI_SEC_CDA_date_of_Registration }}"
-                                                                                name="DTI_SEC_CDA_date_of_registration"
+                                                                                name="DTI_SEC_CDA_date_of_Registration"
                                                                                 type="date">
                                                                         </td>
                                                                     </tr>
@@ -194,23 +204,23 @@
                                                                     <tr>
                                                                         <td class="p-2">
                                                                             Type of Org:
-                                                                            <span><input name="type_of_org[]"
-                                                                                    type="checkbox" value="Single"
+                                                                            <span><input name="type_of_org" type="checkbox"
+                                                                                    value="Single"
                                                                                     @if ($businessPermit->type_of_org == 'Single') checked @endif>
                                                                                 Single</span>,
-                                                                            <span><input name="type_of_org[]"
+                                                                            <span><input name="type_of_org"
                                                                                     type="checkbox" value="Partnership"
                                                                                     @if ($businessPermit->type_of_org == 'Partnership') checked @endif>
                                                                                 Partnership</span>,
-                                                                            <span><input name="type_of_org[]"
+                                                                            <span><input name="type_of_org"
                                                                                     type="checkbox" value="Corp."
                                                                                     @if ($businessPermit->type_of_org == 'Corp.') checked @endif>
                                                                                 Corp.</span>,
-                                                                            <span><input name="type_of_org[]"
+                                                                            <span><input name="type_of_org"
                                                                                     type="checkbox" value="Inc."
                                                                                     @if ($businessPermit->type_of_org == 'Inc.') checked @endif>
                                                                                 Inc.</span>,
-                                                                            <span><input name="type_of_org[]"
+                                                                            <span><input name="type_of_org"
                                                                                     type="checkbox" value="Coop"
                                                                                     @if ($businessPermit->type_of_org == 'Coop') checked @endif>
                                                                                 Coop</span>
@@ -368,7 +378,8 @@
 
                                                                             </tbody>
                                                                         </table>
-                                                                        <button type="submit">Update</button>
+                                                                        <button class="btn btn-success"
+                                                                            type="submit">Update</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
