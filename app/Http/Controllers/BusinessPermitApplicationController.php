@@ -202,21 +202,51 @@ class BusinessPermitApplicationController extends Controller
         ]);
     }
 
+    // public function generatePermit(Request $request)
+    // {
+    //     $userId = $request->input('user_id');
+    //     // Fetch user data based on $userId, e.g., $user = User::find($userId);
+    
+    //     // Generate QR code based on user data
+    //     $qrCode = new QrCode('Your QR Code Data'); // Replace 'Your QR Code Data' with the actual data you want to encode
+    //     $qrCode->setSize(200); // Set QR code size
+    
+    //     // Generate base64-encoded QR code image
+    //     $base64QRCode = base64_encode($qrCode->writeString());
+    
+    //     // Return the base64-encoded QR code image as a response
+    //     return response()->json(['qr_code' => $base64QRCode]);
+    // }
+    
     public function generatePermit(Request $request)
     {
         $userId = $request->input('user_id');
-        // Fetch user data based on $userId, e.g., $user = User::find($userId);
+        $status = $request->input('status');
     
-        // Generate QR code based on user data
-        $qrCode = new QrCode('Your QR Code Data'); // Replace 'Your QR Code Data' with the actual data you want to encode
+        // Fetch user data based on $userId
+        $permit = BusinessPermitApplication::findOrFail($userId);
+    
+        // Construct the QR code data string with the necessary information
+        $qrCodeData = "Permit ID: {$permit->id}\n";
+        $qrCodeData .= "Status: {$status}\n";
+        $qrCodeData .= "Business Name: {$permit->business_name}\n";
+        $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
+        // Add more details as needed
+    
+        // Generate QR code based on the constructed data
+        $qrCode = new QrCode($qrCodeData);
         $qrCode->setSize(200); // Set QR code size
     
         // Generate base64-encoded QR code image
         $base64QRCode = base64_encode($qrCode->writeString());
     
-        // Return the base64-encoded QR code image as a response
-        return response()->json(['qr_code' => $base64QRCode]);
+        // Return the base64-encoded QR code image along with the status as a response
+        return response()->json(['qr_code' => $base64QRCode, 'status' => $status]);
     }
+    
+    
+    
+    
     
     
     
