@@ -71,15 +71,16 @@
                             <x-primary-button class="form-control btn btn-primary btn-lg">
                                 {{ __('Log in') }}
                             </x-primary-button>
-                    </form>
-                    <p class="text-center my-4 text-muted">-------- PERMIT REGISTRATRION ---------</p>
-                    <div>
-                        <a href="/business-registration" class="form-control btn btn-success btn-lg">Apply for Business Permit</a>
+                        </form>
+                        <p class="text-center my-4 text-muted">-------- PERMIT REGISTRATRION ---------</p>
+                        <div>
+                            <a href="/business-registration" class="form-control btn btn-success btn-lg">Apply for
+                                Business Permit</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <script src="{{ asset('dist/js/app.min.js') }}"></script>
