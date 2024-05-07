@@ -19,69 +19,67 @@
                                         <thead>
                                             <tr>
                                             <tr>
-                                                <th style="width:5%;text-align:center;">STATUS</th>
-                                                <th style="width:10%;text-align:center;">NAME</th>
-
-                                                <th style="width:10%;text-align:center;">NAME OF BUSINESS</th>
-
-                                                <th style="width:5%;text-align:center;">COTANCT No.</th>
-                                                <th style="width:5%;text-align:center;">APPLIED ON</th>
-                                                <th class="text-center">ACTIONS</th>
+                                                <th>NAME</th>
+                                                <th>NAME OF BUSINESS</th>
+                                                <th>COTANCT No.</th>
+                                                <th>APPLIED ON</th>
+                                                <th>STATUS</th>
+                                                <th></th>
                                             </tr>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($approved_permits as $approved_permit)
                                                 <tr>
-                                                    <td style="width:5%;">
-                                                        @php
-                                                            if ($approved_permit->status == 'Pending') {
-                                                                echo '<span class="p-2 text-dark bg-warning">PENDING</span>';
-                                                            } else {
-                                                                echo '<span class="p-2 text-dark bg-success">Approved</span>';
-                                                            }
-                                                        @endphp
-                                                    </td>
-                                                    <td style="width:10%;text-align:center;">
+                                                    <td>
                                                         {{ $approved_permit->first_name }}
                                                         {{ $approved_permit->middle_name }}
                                                         {{ $approved_permit->last_name }}
                                                     </td>
-                                                    <td style="width:10%;text-align:center;">
+                                                    <td>
                                                         {{ $approved_permit->business_name }}
                                                     </td>
 
-                                                    <td style="width:5%;text-align:center;">
+                                                    <td>
                                                         {{ $approved_permit->owners_Tel_No_Mobile }}
                                                     </td>
-                                                    <td style="width:10%;text-align:center;">
+                                                    <td>
                                                         {{ $approved_permit->created_at }}
                                                     </td>
+                                                    <td>
+                                                        @php
+                                                            if ($approved_permit->status == 'Pending') {
+                                                                echo '<span class="p-2 text-danger">Pending</span>';
+                                                            } else {
+                                                                echo '<span class="p-2 text-success">Approved</span>';
+                                                            }
+                                                        @endphp
+                                                    </td>
                                                     <!-- Add more table cells for other fields -->
-                                                    <td class="text-center" style="width: 10%;">
-
-
-                                                        <div class="button-container">
-                                                            {{-- Approve Button --}}
+                                                    <td>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
                                                             @if ($approved_permit->status == 'Approved')
-                                                            @else
-                                                                <form
-                                                                    action="{{ route('approve.permit', ['id' => $approved_permit->id]) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('PUT')
-                                                                    <button type="submit"
-                                                                        class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
-                                                                </form>
-                                                            @endif
-
-
+                                                                @else
+                                                                    <form
+                                                                        action="{{ route('approve.permit', ['id' => $approved_permit->id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <button type="submit"
+                                                                            class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
+                                                                    </form>
+                                                            @endif</div>
+                                                            <div class="col-md-3">
+                                                                  {{-- Approve Button --}}
                                                             {{-- More Details Button with ID --}}
-                                                            <a href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
-                                                                class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More
+                                                            <a type="button" href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
+                                                                class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round m-1">More
                                                                 Details</a>
-
-                                                            {{-- Generate Permit Button --}}
+                                                            </div>
+                                                          
+                                                            <div class="col-md-3">
+                                                                  {{-- Generate Permit Button --}}
                                                             {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
                                                             <form action="{{ route('generate.qrcode') }}" method="GET">
                                                                 @csrf
@@ -93,8 +91,7 @@
                                                                     class="btn waves-effect waves-light btn-primary btn-outline-info btn-sm btn-round m-1">Generate
                                                                     Permit</button>
                                                             </form>
-
-
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
