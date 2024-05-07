@@ -87,6 +87,8 @@
                                                                 @csrf
                                                                 <input type="hidden" name="user_id"
                                                                     value="{{ $approved_permit->id }}">
+                                                                <input type="hidden" name="status"
+                                                                    value="{{ $approved_permit->status }}">
                                                                 <button type="submit"
                                                                     class="btn waves-effect waves-light btn-primary btn-outline-info btn-sm btn-round m-1">Generate
                                                                     Permit</button>

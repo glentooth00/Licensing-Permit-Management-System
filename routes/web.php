@@ -73,15 +73,35 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
         $permitId = $request->query('user_id');
+        $status = $request->query('status');
         $permit = BusinessPermitApplication::findOrFail($permitId);
     
-        $qrCode = QrCode::size(300)->generate("Permit ID: $permitId");
+        $qrCodeData = "Permit ID: $permitId\n";
+        $qrCodeData .= "Status: $status\n";
+        $qrCodeData .= "Business Name: {$permit->business_name}\n";
+        $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
+        // Add more details as needed
+    
+        $qrCode = QrCode::size(300)->generate($qrCodeData);
     
         return view('admin.permit.permit')->with([
             'qrCode' => $qrCode,
             'permit' => $permit,
         ]);
     })->name('generate.qrcode');
+    
+
+    // Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
+    //     $permitId = $request->query('user_id');
+    //     $permit = BusinessPermitApplication::findOrFail($permitId);
+    
+    //     $qrCode = QrCode::size(300)->generate("Permit ID: $permitId");
+    
+    //     return view('admin.permit.permit')->with([
+    //         'qrCode' => $qrCode,
+    //         'permit' => $permit,
+    //     ]);
+    // })->name('generate.qrcode');
     
 
 

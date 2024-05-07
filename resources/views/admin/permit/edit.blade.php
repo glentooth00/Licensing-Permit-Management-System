@@ -66,7 +66,7 @@
                                                             <div class="row">
                                                                 <div class="col-lg-4">
                                                                     <input type="text" name="status"
-                                                                        value="{{ $businessPermit->status }}">
+                                                                        value="{{ $businessPermit->status }}" hidden>
                                                                     <ul>
                                                                         <li>
                                                                             <input type="checkbox"
