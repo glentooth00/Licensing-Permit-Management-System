@@ -71,7 +71,7 @@
                                                 <th>COTANCT No.</th>
                                                 <th>APPLIED ON</th>
                                                 <th>STATUS</th>
-                                                <th class="text-center">ACTIONS</th>
+                                                <th>ACTIONS</th>
                                             </tr>
                                         </thead>
                                         <tbody>
