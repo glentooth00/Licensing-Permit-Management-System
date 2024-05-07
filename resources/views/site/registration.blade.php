@@ -112,20 +112,20 @@
                                 <table class="table table-bordered table-sm">
                                     <tr>
                                         <td class="p-2"> Date of Application: <input name="date_of_application"
-                                                type="date"></td>
+                                                type="date" style="width: 70%;"></td>
                                         <td> DTI/SEC/CDA Registration No.: <input name="DTI_SEC_CDA_registration No"
-                                                type="text"></td>
+                                                type="text" style="width: 60%;"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-2">Date Business Started: <input name="date_business_started"
                                                 type="date"></td>
                                         <td> DTI/SEC/CDA Date of Registration: <input
-                                                name="DTI_SEC_CDA_date_of_Registration" type="date"></td>
+                                                name="DTI_SEC_CDA_date_of_Registration" type="date"  style="width: 55%;"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-2">
                                             Tye of Org:
-                                            <span><input name="type_of_org" type="checkbox" value="Single">
+                                            <span><input name="type_of_org" type="checkbox" value="Single" >
                                                 Single</span> ,
                                             <span><input name="type_of_org" type="checkbox" value="Partnership">
                                                 Partnership</span>,
@@ -137,8 +137,7 @@
                                                 Coop</span>
                                         </td>
                                         <td>
-                                            <span>CTC No.: <input name="ctc_no" type="text"> TIN: <input
-                                                    name="TIN" type="text"></span>
+                                            <span>CTC No.: <input name="ctc_no" type="text" style="width: 40%;"> TIN: <input name="TIN" type="text"  style="width: 40%;"></span>
                                         </td>
                                     </tr>
                                 </table>
@@ -148,10 +147,10 @@
                                     </div>
                                     <table class="table table-bordered table-sm">
                                         <tr>
-                                            <td class="p-2">Last Name: <input name="last_name" type="text"
+                                            <td class="p-2">Last Name: <input name="last_name" type="text"  style="width: 70%;"
                                                     required></td>
-                                            <td>First Name: <input name="first_name" type="text" required></td>
-                                            <td>Middle Name: <input name="middle_name" type="text" required></td>
+                                            <td>First Name: <input name="first_name" type="text" style="width: 70%;" required></td>
+                                            <td>Middle Name: <input name="middle_name" type="text" style="width: 70%;" required></td>
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="p-2">
@@ -181,48 +180,48 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="p-2">Building Name: <input
-                                                            name="business_building_name" type="text" required>
+                                                            name="business_building_name" type="text" required  style="width: 75%;">
                                                     </td>
                                                     <td class="p-2">Building Name: <input
-                                                            name="owners_building_name" type="text" required>
+                                                            name="owners_building_name" type="text" required  style="width: 75%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">Street: <input name="business_street"
-                                                            type="text" required>
+                                                            type="text" required  style="width: 90%;">
                                                     </td>
                                                     <td class="p-2">Street: <input name="owners_street"
-                                                            type="text" required>
+                                                            type="text" required  style="width: 90%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Barangay: </b><input
-                                                            name="business_barangay" type="text" required></td>
+                                                            name="business_barangay" type="text" required  style="width: 85%;"></td>
                                                     <td class="p-2"><b>Barangay: </b><input name="owners_barangay"
-                                                            type="text" required></td>
+                                                            type="text" required  style="width: 85%;"></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">City/Municipality: <input
-                                                            name="business_city_municipality" type="text" required>
+                                                            name="business_city_municipality" type="text" required  style="width: 75%;">
                                                     </td>
                                                     <td class="p-2">City/Municipality: <input
-                                                            name="owners_city_municipality" type="text" required>
+                                                            name="owners_city_municipality" type="text" required  style="width: 75%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">Province: <input name="business_province"
-                                                            type="text" required>
+                                                            type="text" required  style="width: 85%;">
                                                     </td>
                                                     <td class="p-2">Province: <input name="owners_province"
-                                                            type="text" required>
+                                                            type="text" required  style="width: 85%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Tel. No./Mobile: </b><input
-                                                            name="business_Tel_No_Mobile" type="text" required>
+                                                            name="business_Tel_No_Mobile" type="text" required  style="width: 75%;">
                                                     </td>
                                                     <td class="p-2"><b>Tel. No./Mobile: </b><input
-                                                            name="owners_Tel_No_Mobile" type="text" required>
+                                                            name="owners_Tel_No_Mobile" type="text" required  style="width: 75%;">
                                                     </td>
                                                 </tr>
                                             </tbody>

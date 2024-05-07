@@ -64,49 +64,47 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th style="width:5%;text-align:center;">STATUS</th>
-                                                <th style="width:10%;text-align:center;">NAME</th>
-
-                                                <th style="width:10%;text-align:center;">NAME OF BUSINESS</th>
-
-                                                <th style="width:5%;text-align:center;">COTANCT No.</th>
-                                                <th style="width:5%;text-align:center;">APPLIED ON</th>
-                                                <th class="text-center">ACTIONS</th>
+                                                <th>NAME</th>
+                                                
+                                                <th>NAME OF BUSINESS</th>
+                                                
+                                                <th>COTANCT No.</th>
+                                                <th>APPLIED ON</th>
+                                                <th>STATUS</th>
+                                                <th>ACTIONS</th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                             @foreach ($businessPermits as $businessPermit)
                                                 <tr>
-                                                    <td style="width:5%;">
-                                                        @php
-                                                            if ($businessPermit->status == 'Pending') {
-                                                                echo '<span class="p-2 text-dark bg-warning">PENDING</span>';
-                                                            } else {
-                                                                echo '<span class="p-2 text-dark bg-success">Approved</span>';
-                                                            }
-                                                        @endphp
-                                                    </td>
-                                                    <td style="width:10%;text-align:center;">
+                                                    <td>
                                                         {{ $businessPermit->first_name }}
                                                         {{ $businessPermit->middle_name }}
                                                         {{ $businessPermit->last_name }}
                                                     </td>
-                                                    <td style="width:10%;text-align:center;">
+                                                    <td>
                                                         {{ $businessPermit->business_name }}
                                                     </td>
 
-                                                    <td style="width:5%;text-align:center;">
+                                                    <td>
                                                         {{ $businessPermit->owners_Tel_No_Mobile }}
                                                     </td>
-                                                    <td style="width:10%;text-align:center;">
+                                                    <td>
                                                         {{ $businessPermit->created_at }}
                                                     </td>
+                                                     <td>
+                                                        @php
+                                                            if ($businessPermit->status == 'Pending') {
+                                                                echo '<span class="p-2 text-danger">Pending</span>';
+                                                            } else {
+                                                                echo '<span class="p-2 text-success">Approved</span>';
+                                                            }
+                                                        @endphp
+                                                    </td>
                                                     <!-- Add more table cells for other fields -->
-                                                    <td class="text-center" style="width: 20%;">
-
-
-                                                        <div class="button-container">
+                                                    <td>
+                                                        <div class="btn-group">
                                                             {{-- Approve Button --}}
                                                             @if ($businessPermit->status == 'Approved')
                                                             @else
@@ -115,17 +113,11 @@
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('PUT')
-                                                                    <button type="submit"
-                                                                        class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
+                                                                    <button type="submit" class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
+                                                                    {{-- Show more details --}}
+                                                                    <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}" class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round m-1">View More!</a>
                                                                 </form>
                                                             @endif
-
-
-                                                            {{-- More Details Button with ID --}}
-                                                            <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}"
-                                                                class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round">More
-                                                                Details</a>
-
                                                             {{-- Generate Permit Button --}}
                                                             {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
 
