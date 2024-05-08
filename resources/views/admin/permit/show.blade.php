@@ -1,4 +1,4 @@
-@extends('includes.layouts.app')
+@extends('includes.layouts.app2')
 
 @section('page-title', 'Dashboard')
 
@@ -12,16 +12,20 @@
                         <div class=""></div>
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header text-center">
+                                {{-- <div class="card-header text-center">
                                     <h4>More Details</h4>
-                                </div>
+                                </div> --}}
                                 <div class="card-body">
                                     <section class="">
                                         <div class="container">
-                                            <a href="/dashboard" class="btn btn-secondary btn-sm" style="width: 10%;">BACK
-                                            </a>
-                                            <a href="{{ route('permit.edit', ['businessPermit' => $businessPermit->id]) }}"
+
+
+                                            {{-- <a href="{{ route('permit.edit', ['businessPermit' => $businessPermit->id]) }}"
+                                                class="btn btn-primary btn-sm" style="width: 10%;">EDIT</a> --}}
+                                            <a href="#" onclick="openEditModal({{ $businessPermit->id }})"
                                                 class="btn btn-primary btn-sm" style="width: 10%;">EDIT</a>
+
+
 
                                             </a>
                                             <div class="card mt-4 p-4">

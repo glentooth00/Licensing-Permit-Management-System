@@ -1,4 +1,4 @@
-@extends('includes.layouts.app')
+@extends('includes.layouts.app2')
 
 @section('page-title', 'Dashboard')
 
@@ -12,15 +12,15 @@
                         <div class=""></div>
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header text-center">
+                                {{-- <div class="card-header text-center">
                                     <h4>More Details</h4>
-                                </div>
+                                </div> --}}
                                 <div class="card-body">
                                     <section class="">
                                         <div class="container">
 
-                                            <a href="/dashboard" class="btn btn-danger btn-sm" style="width: 10%;">CANCEL
-                                            </a>
+                                            {{-- <a href="/dashboard" class="btn btn-danger btn-sm" style="width: 10%;">CANCEL
+                                            </a> --}}
 
                                             <div class="card mt-4 p-4">
 
@@ -84,8 +84,6 @@
                                                                             {{-- {{ $businessPermit->business_application }} --}}
                                                                             <!-- Debugging output -->
                                                                         </li>
-
-
                                                                         <br>
                                                                         <b>Classification:</b>
                                                                         <li><input type="checkbox"
@@ -104,7 +102,6 @@
                                                                                 name="classification_cottage" value="4"
                                                                                 @if (in_array('4', explode(',', $businessPermit->classification_cottage))) checked @endif>
                                                                             Large (20M -> Up)</li>
-
                                                                     </ul>
                                                                 </div>
                                                                 <div class="col-lg-4">
@@ -208,8 +205,8 @@
                                                                                     value="Single"
                                                                                     @if ($businessPermit->type_of_org == 'Single') checked @endif>
                                                                                 Single</span>,
-                                                                            <span><input name="type_of_org"
-                                                                                    type="checkbox" value="Partnership"
+                                                                            <span><input name="type_of_org" type="checkbox"
+                                                                                    value="Partnership"
                                                                                     @if ($businessPermit->type_of_org == 'Partnership') checked @endif>
                                                                                 Partnership</span>,
                                                                             <span><input name="type_of_org"

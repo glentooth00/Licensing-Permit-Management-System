@@ -85,27 +85,49 @@ class BusinessPermitApplicationController extends Controller
         $product = BusinessPermitApplication::create($validatedData);
 
         // Optionally, you can return a response or redirect to another page
-        return redirect()->route('registration_complete')->with('success', 'Registration complete!');
+        // return redirect()->route('registration_complete')->with('success', 'Registration complete!');
+        session()->flash('registration_success', true);
+
+    // Redirect back to the login page
+    return redirect()->route('login');
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-        $businessPermit = BusinessPermitApplication::findOrFail($id);
-        return view('admin.permit.show', compact('businessPermit'));
-    }
+    // public function show($id)
+    // {
+    //     $businessPermit = BusinessPermitApplication::findOrFail($id);
+    //     return view('admin.permit.show', compact('businessPermit'));
+    // }
+public function show($id)
+{
+    $businessPermit = BusinessPermitApplication::findOrFail($id);
+
+    // Assuming you have a view named 'permit.show' to display user details
+    return view('admin.permit.show', compact('businessPermit'));
+}
+
     
 
     /**
      * Show the form for editing the specified resource.
      */
+    // public function edit($businessPermit)
+    // {
+    //     $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
+    //     return view('admin.permit.edit', compact('businessPermit'));
+    // }
     public function edit($businessPermit)
     {
+        // Fetch the data needed for editing
         $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
+    
+        // Render the edit view and pass data to it
         return view('admin.permit.edit', compact('businessPermit'));
     }
+    
     
     
     

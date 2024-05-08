@@ -51,7 +51,7 @@
                                                             if ($approved_permit->status == 'Pending') {
                                                                 echo '<span class="p-2 text-danger">Pending</span>';
                                                             } else {
-                                                                echo '<span class="p-2 text-success">Approved</span>';
+                                                                echo '<span class=" p-2 label label-success">Approved</span>';
                                                             }
                                                         @endphp
                                                     </td>
@@ -59,7 +59,7 @@
                                                     <td>
                                                         <div class="row">
                                                             <div class="col-md-3">
-                                                            @if ($approved_permit->status == 'Approved')
+                                                                @if ($approved_permit->status == 'Approved')
                                                                 @else
                                                                     <form
                                                                         action="{{ route('approve.permit', ['id' => $approved_permit->id]) }}"
@@ -69,28 +69,31 @@
                                                                         <button type="submit"
                                                                             class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
                                                                     </form>
-                                                            @endif</div>
-                                                            <div class="col-md-3">
-                                                                  {{-- Approve Button --}}
-                                                            {{-- More Details Button with ID --}}
-                                                            <a type="button" href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
-                                                                class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round m-1">More
-                                                                Details</a>
+                                                                @endif
                                                             </div>
-                                                          
                                                             <div class="col-md-3">
-                                                                  {{-- Generate Permit Button --}}
-                                                            {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
-                                                            <form action="{{ route('generate.qrcode') }}" method="GET">
-                                                                @csrf
-                                                                <input type="hidden" name="user_id"
-                                                                    value="{{ $approved_permit->id }}">
-                                                                <input type="hidden" name="status"
-                                                                    value="{{ $approved_permit->status }}">
-                                                                <button type="submit"
-                                                                    class="btn waves-effect waves-light btn-primary btn-outline-info btn-sm btn-round m-1">Generate
-                                                                    Permit</button>
-                                                            </form>
+                                                                {{-- Approve Button --}}
+                                                                {{-- More Details Button with ID --}}
+                                                                <a type="button"
+                                                                    href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
+                                                                    class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round m-1">More
+                                                                    Details</a>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                {{-- Generate Permit Button --}}
+                                                                {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
+                                                                <form action="{{ route('generate.qrcode') }}"
+                                                                    method="GET">
+                                                                    @csrf
+                                                                    <input type="hidden" name="user_id"
+                                                                        value="{{ $approved_permit->id }}">
+                                                                    <input type="hidden" name="status"
+                                                                        value="{{ $approved_permit->status }}">
+                                                                    <button type="submit"
+                                                                        class="btn waves-effect waves-light btn-primary btn-outline-info btn-sm btn-round m-1">Generate
+                                                                        Permit</button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </td>

@@ -65,10 +65,10 @@
                                         <thead>
                                             <tr>
                                                 <th>NAME</th>
-                                                
+
                                                 <th>NAME OF BUSINESS</th>
-                                                
-                                                <th>COTANCT No.</th>
+
+                                                <th>CONTACT No.</th>
                                                 <th>APPLIED ON</th>
                                                 <th>STATUS</th>
                                                 <th>ACTIONS</th>
@@ -93,12 +93,12 @@
                                                     <td>
                                                         {{ $businessPermit->created_at }}
                                                     </td>
-                                                     <td>
+                                                    <td>
                                                         @php
                                                             if ($businessPermit->status == 'Pending') {
-                                                                echo '<span class="p-2 text-danger">Pending</span>';
+                                                                echo '<span  class="p-2 label label-danger">Pending</span>';
                                                             } else {
-                                                                echo '<span class="p-2 text-success">Approved</span>';
+                                                                echo '<span  class="label label-success">Approved</span>';
                                                             }
                                                         @endphp
                                                     </td>
@@ -113,9 +113,18 @@
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('PUT')
-                                                                    <button type="submit" class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
+                                                                    <button type="submit"
+                                                                        class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
                                                                     {{-- Show more details --}}
-                                                                    <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}" class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round m-1">View More!</a>
+                                                                    {{-- <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}"
+                                                                        class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round m-1">View
+                                                                        More!</a> --}}
+
+                                                                    <a href="#"
+                                                                        data-user-id="{{ $businessPermit->id }}"
+                                                                        class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round m-1 viewMoreBtn">View
+                                                                        More!</a>
+
                                                                 </form>
                                                             @endif
                                                             {{-- Generate Permit Button --}}
@@ -145,6 +154,52 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewMoreModal">
+        <div class="modal-dialog col-md-8">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Application Details</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body" id="viewMoreModalBody">
+                    <!-- Content loaded via AJAX will appear here -->
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal for Editing -->
+    <div class="modal fade" id="editModal">
+        <div class="modal-dialog modal-lg col-md-8">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Application</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- This div will be populated with the content of edit.blade.php -->
+                    <div id="editModalContent"></div>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 <style>
     .button-container {
@@ -155,3 +210,47 @@
 
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".viewMoreBtn").click(function(e) {
+            e.preventDefault();
+            console.log("Button clicked"); // Debug statement
+            var userId = $(this).data('user-id');
+            console.log("User ID:", userId); // Debug statement
+            var url = "{{ route('permit.show', ['id' => ':id']) }}";
+            url = url.replace(':id', userId);
+            console.log("Request URL:", url); // Debug statement
+            $.ajax({
+                url: url,
+                method: "GET",
+                success: function(response) {
+                    console.log("AJAX Success"); // Debug statement
+                    $("#viewMoreModalBody").html(response);
+                    $("#viewMoreModal").modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+
+    function openEditModal(userId) {
+        $('#editModal').modal('show'); // Open the modal
+
+        // AJAX request to fetch the HTML content of the edit view
+        $.ajax({
+            url: "{{ route('permit.edit', ['businessPermit' => ':id']) }}".replace(':id', userId),
+            method: "GET",
+            success: function(response) {
+                // Inject the HTML content into the modal body
+                $('#editModal .modal-body').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+</script>
