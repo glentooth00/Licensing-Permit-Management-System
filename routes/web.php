@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
+use App\Http\Controllers\UserController;
 use App\Models\BusinessPermitApplication;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -22,7 +23,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 // });
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('login');
 });
 
 Route::get('/business-registration', function () {
@@ -32,6 +33,9 @@ Route::get('/business-registration', function () {
 Route::get('/admin-permit-show', function () {
     return view('admin.permit.show');
 });
+
+Route::post('/custom-login', [UserController::class, 'authenticate'])->name('custom.login');
+
 
 // Handle registration form submission
 Route::post('/business-registration', [BusinessPermitApplicationController::class, 'store'])->name('business-registration.store');
@@ -50,6 +54,7 @@ Route::get('/dashboard', [BusinessPermitApplicationController::class, 'index'])-
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
+// Route::post('/', [UserController::class, 'authenticate'])->name('login');
 
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
@@ -63,9 +68,13 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Route for approving permit using BusinessPermitApplicationController
     Route::put('/approve-permit/{id}', [BusinessPermitApplicationController::class, 'approvePermit'])->name('approve.permit');
 
-    Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+    // Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+    Route::get('/admin/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+
 
     Route::put('/business-registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
+    // Route::put('/business-registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
+
 
 
 
@@ -90,23 +99,6 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('generate.qrcode');
     
-
-    // Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
-    //     $permitId = $request->query('user_id');
-    //     $permit = BusinessPermitApplication::findOrFail($permitId);
-    
-    //     $qrCode = QrCode::size(300)->generate("Permit ID: $permitId");
-    
-    //     return view('admin.permit.permit')->with([
-    //         'qrCode' => $qrCode,
-    //         'permit' => $permit,
-    //     ]);
-    // })->name('generate.qrcode');
-    
-
-
-
-    // Additional admin routes can be added here
 });
 
 
