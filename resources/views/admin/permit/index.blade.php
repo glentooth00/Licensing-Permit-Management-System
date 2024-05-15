@@ -26,11 +26,21 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>New Registered Members</h5>
+                                <form action="" method="GET">
+                                    <div class="input-group mb-3 col-md-3">
+                                        <input type="text" name="search" class="form-control" placeholder="Search..."
+                                            value="{{ $search }}">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-outline-secondary">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                             <div class="card-block">
+
+
                                 <table class="table">
                                     <thead>
-                                        <tr>
                                         <tr>
                                             <th>NAME</th>
                                             <th>NAME OF BUSINESS</th>
@@ -38,7 +48,6 @@
                                             <th>APPLIED ON</th>
                                             <th>STATUS</th>
                                             <th></th>
-                                        </tr>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -111,8 +120,14 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-
                                     </tbody>
+                                </table>
+
+                                <div class="d-flex justify-content-center">
+                                    <nav aria-label="Page navigation">
+                                        {{ $approved_permits->appends(['search' => $search])->links('pagination::bootstrap-4') }}
+                                    </nav>
+                                </div>
                                 </table>
                             </div>
                         </div>

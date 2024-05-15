@@ -247,17 +247,37 @@ public function show($id)
 
     
 
-    public function showApproved(){
+    // public function showApproved(){
 
-       $approved_permits = BusinessPermitApplication::where('status', 'Approved')
-    ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
-    ->get();
+    //    $approved_permits = BusinessPermitApplication::where('status', 'Approved')
+    // ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
+    // ->get();
 
+    
+    //     return view('admin.permit.index', [
+    //         'approved_permits' => $approved_permits,
+    //     ]);
+    // }
+
+    public function showApproved(Request $request){
+        $search = $request->input('search');
+    
+        $approved_permits = BusinessPermitApplication::where('status', 'Approved')
+            ->when($search, function($query) use ($search) {
+                $query->where('first_name', 'like', '%' . $search . '%')
+                      ->orWhere('last_name', 'like', '%' . $search . '%')
+                      ->orWhere('business_name', 'like', '%' . $search . '%');
+            })
+            ->orderByDesc('created_at')
+            ->paginate(10);
     
         return view('admin.permit.index', [
             'approved_permits' => $approved_permits,
+            'search' => $search,
         ]);
     }
+    
+    
 
     // public function generatePermit(Request $request)
     // {

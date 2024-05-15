@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
 use App\Http\Controllers\UserController;
 use App\Models\BusinessPermitApplication;
