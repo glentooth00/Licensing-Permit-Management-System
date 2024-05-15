@@ -1,23 +1,27 @@
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="float-right d-none d-sm-inline">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
-</div>
-<!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
+                <script type="text/javascript" src="{{ asset('admin/js/jquery/jquery.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('admin/js/jquery-ui/jquery-ui.min.js ') }}"></script>
+                <script type="text/javascript" src="{{ asset('admin/js/popper.js/popper.min.j') }}s"></script>
+                <script type="text/javascript" src="{{ asset('admin/js/bootstrap/js/bootstrap.min.js ') }}"></script>
+                <!-- waves js -->
+                <script src="{{ asset('admin/pages/waves/js/waves.min.js') }}"></script>
+                <!-- jquery slimscroll js -->
+                {{-- <script type="text/javascript" src="{{ asset('admin/js/jquery-slimscroll/jquery.slimscroll.js') }} "></script> --}}
+                <!-- modernizr js -->
+                <script type="text/javascript" src="{{ asset('admin/js/SmoothScroll.js') }}"></script>
+                <script src="{{ asset('admin/js/jquery.mCustomScrollbar.concat.min.js') }} "></script>
+                <script src="{{ asset('admin/js/pcoded.min.js') }}"></script>
+                <script src="{{ asset('admin/js/vertical-layout.min.js ') }}"></script>
+                <script src="{{ asset('admin/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+                <!-- Custom js -->
+                <script type="text/javascript" src="{{ asset('admin/js/script.js')}}"></script>
 
-<!-- jQuery -->
-<script src="/dist/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/dist/plugins/bootstrap/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/dist/js/adminlte.min.js"></script>
-</body>
-</html>
+                </body>
+
+                </html>
