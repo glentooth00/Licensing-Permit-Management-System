@@ -171,8 +171,7 @@
                                     </table>
                                     <div>
                                         <div class="text-center bg-dark text-light p-1 pt-2">
-                                            <h6>Note: For renewal application, do not fill up this section unless
-                                                certain information have changed.</h6>
+                                            <h6>Note: For renewal application, do not fill up this section unless certain information have changed.</h6>
                                         </div>
                                         <table class="table table-bordered table-sm">
                                             <thead>
@@ -237,9 +236,103 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                          <div class="bg-dark text-light p-1 pt-2">
+                                            <h6>Note: Full Up Only If Business Place is Rented</h6>
+                                        </div>
+                                        <table class="table table-bordered table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <td class="p-2"><b>Lessor's Full Name: </b><input name="owners_Tel_No_Mobile" style="width: 87%;" type="text" required>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2"><b>Lessor's Full Address: </b><input name="owners_Tel_No_Mobile" style="width: 80%;" type="text" required>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2"><b>Lessor's Full Tel/Mobile No.: </b><input name="owners_Tel_No_Mobile" style="width: 80%;" type="text" required>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2"><b>Lessor's Email Address: </b><input name="owners_Tel_No_Mobile" style="width: 80%;" type="text" required>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2"><b>Monthly Rental: </b><input name="owners_Tel_No_Mobile" style="width: 87%;" type="text" required>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2"><b>BUSINESS ACTIVITY </b><input name="owners_Tel_No_Mobile" style="width: 87%;" type="text" required>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <table class="table table-bordered table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <td class="bg-dark text-white text-center">Line Of Business</td>
+                                                    <td class="text-center">No. Of <br> Units/Rooms</td>
+                                                    <td class="text-center"><b>Capitalization</b> <br> (for new business)</td>
+                                                    <td class="text-center" colspan="2">Gross Sales/Receipts (for renewal)</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <ul>
+                                                                    <li>
+                                                                        <input type="checkbox" name="amendment" value="1">
+                                                                        Retail/Wholesale (essential commodities)
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="checkbox" name="amendment" value="2">
+                                                                        Retail/Wholesale
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="checkbox" name="amendment" value="3">
+                                                                        Manufacturing
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="checkbox" name="amendment" value="4">
+                                                                        Conructors
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                    <li>
+                                                                        <input type="checkbox" name="amendment" value="1">
+                                                                        Banks/Financial Institution
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="checkbox" name="amendment" value="2">
+                                                                        Dealers/Buy & Sell
+                                                                    </li>
+                                                                    <li>
+                                                                        <input type="checkbox" name="amendment" value="3">
+                                                                        Other Business
+                                                                        <input type="text" name="amendment">
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p></p>
+                                                        <textarea name="" id="" cols="20" rows="6"></textarea>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p></p>
+                                                        <textarea name="" id="" cols="20" rows="6"></textarea>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <b>Essential</b>
+                                                        <textarea name="" id="" cols="20" rows="6"></textarea>
+                                                    </td>
+                                                    <td class="text-center">
+                                                           <b>Non-Essential</b>
+                                                        <textarea name="" id="" cols="20" rows="6"></textarea>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <button class="btn btn-primary" style="float: right;">Submit</button>
-
                                 </div>
                             </div>
                         </div>

@@ -1,16 +1,31 @@
+
+
 @extends('includes.layouts.app')
 
 @section('page-title', 'Dashboard')
 
 @section('content')
-    <!-- Page-header end -->
-    <div class="pcoded-inner-content">
-        <div class="main-body">
-            <div class="page-wrapper">
-                <div class="page-body">
-                    <div class="row">
-                        <div class="col-sm-12 mt-5">
-                            <div class="card">
+    
+ <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Dashboard</h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+          <div class="row">
+                    <div class="col-sm-12 mt-5">
+                        <div class="card">
                                 <div class="card-header">
                                     <h5>New Registered Members</h5>
                                 </div>
@@ -67,20 +82,20 @@
                                                                         @csrf
                                                                         @method('PUT')
                                                                         <button type="submit"
-                                                                            class="btn waves-effect waves-light btn-success btn-outline-info btn-sm btn-round m-1">Approve</button>
+                                                                            class="btn btn-outline-info btn-sm btn-round m-1">Approve</button>
                                                                     </form>
                                                                 @endif
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-4">
                                                                 {{-- Approve Button --}}
                                                                 {{-- More Details Button with ID --}}
                                                                 <a type="button"
                                                                     href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
-                                                                    class="btn waves-effect waves-light btn-info btn-outline-info btn-sm btn-round m-1">More
+                                                                    class="btn btn-outline-success btn-sm btn-round m-1">More
                                                                     Details</a>
                                                             </div>
 
-                                                            <div class="col-md-3">
+                                                            <div class="col-5">
                                                                 {{-- Generate Permit Button --}}
                                                                 {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
                                                                 <form action="{{ route('generate.qrcode') }}"
@@ -91,7 +106,7 @@
                                                                     <input type="hidden" name="status"
                                                                         value="{{ $approved_permit->status }}">
                                                                     <button type="submit"
-                                                                        class="btn waves-effect waves-light btn-primary btn-outline-info btn-sm btn-round m-1">Generate
+                                                                        class="btn btn-outline-info btn-sm btn-round m-1">Generate
                                                                         Permit</button>
                                                                 </form>
                                                             </div>
@@ -104,10 +119,13 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
     </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
 @endsection
