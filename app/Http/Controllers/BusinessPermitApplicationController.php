@@ -14,22 +14,55 @@ class BusinessPermitApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
+
+    //      // Count pending applications
+    //      $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
+
+    //      // Count approved applications
+    //      $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
+    
+    //     return view('admin.dashboard', [
+    //         'businessPermits' => $businessPermits,
+    //         'pendingCount' => $pendingCount,
+    //         'approvedCount' => $approvedCount,
+    //     ]);
+    // }
+
+    public function index(Request $request)
     {
-        $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
-
-         // Count pending applications
-         $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
-
-         // Count approved applications
-         $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
+        $query = BusinessPermitApplication::query();
+    
+        // Handle search query
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('first_name', 'like', '%' . $search . '%')
+                  ->orWhere('middle_name', 'like', '%' . $search . '%')
+                  ->orWhere('last_name', 'like', '%' . $search . '%')
+                  ->orWhere('business_name', 'like', '%' . $search . '%');
+            });
+        }
+    
+        // Get paginated results
+        $businessPermits = $query->where('status', 'Pending')->paginate(10);
+    
+        // Count pending applications
+        $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
+    
+        // Count approved applications
+        $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
     
         return view('admin.dashboard', [
             'businessPermits' => $businessPermits,
             'pendingCount' => $pendingCount,
             'approvedCount' => $approvedCount,
+            'search' => $request->input('search') // pass the search term to the view
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
