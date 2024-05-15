@@ -103,6 +103,9 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
 
 
+
+
+
 // Auth routes (login, register, etc.)
 require __DIR__.'/auth.php';
 

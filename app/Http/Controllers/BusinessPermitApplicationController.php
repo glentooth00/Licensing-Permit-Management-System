@@ -245,6 +245,8 @@ public function show($id)
         return redirect()->back()->with('success', 'Permit approved successfully.');
     }
 
+    
+
     public function showApproved(){
 
        $approved_permits = BusinessPermitApplication::where('status', 'Approved')
