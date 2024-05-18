@@ -134,14 +134,14 @@
 
                                                         <a href="#" data-user-id="{{ $businessPermit->id }}"
                                                             class="btn btn-outline-info btn-sm btn-round m-1 viewMoreBtn">View
-                                                            More!</a>
+                                                            More</a>
 
                                                     </form>
                                                 @endif
                                                 {{-- Generate Permit Button --}}
                                                 {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
 
-                                                @if ($businessPermit->status == 'Pending')
+                                                {{-- @if ($businessPermit->status == 'Pending')
                                                 @else
                                                     <form action="" method="POST">
                                                         @csrf
@@ -149,7 +149,7 @@
                                                             class="btn btn-outline-primary btn-sm btn-round m-1">Generate
                                                             Permit</button>
                                                     </form>
-                                                @endif
+                                                @endif --}}
 
                                             </div>
                                         </td>
