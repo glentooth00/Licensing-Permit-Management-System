@@ -17,7 +17,78 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h4 class="text-c-purple">{{ $approvedCount }}</h4>
+                                <h6 class="text-muted m-b-0">No. of Registered Member</h6>
+                            </div>
+                            <div class="col-4 text-right text-primary">
+                                <i class="fa fa-users f-28"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-c-purple">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0"></p>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h4 class="text-danger">{{ $pendingCount }}</h4>
+                                <h6 class="text-muted m-b-0">No. of Pending Member</h6>
+                            </div>
+                            <div class="col-4 text-right text-danger">
+                                <i class="fa fa-users f-28"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-danger">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0"></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h4 class="text-danger">{{ $pendingCount }}</h4>
+                                <h6 class="text-muted m-b-0">No. of Pending Member</h6>
+                            </div>
+                            <div class="col-4 text-right text-danger">
+                                <i class="fa fa-users f-28"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-danger">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <p class="text-white m-b-0"></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
