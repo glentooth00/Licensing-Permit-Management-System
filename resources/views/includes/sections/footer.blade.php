@@ -37,7 +37,9 @@
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="/dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
-
+@push('scripts')
+  
+@endpush
 <script>
   $(function () {
     $("#example1").DataTable({
