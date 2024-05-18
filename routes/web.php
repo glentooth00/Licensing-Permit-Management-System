@@ -58,9 +58,9 @@ Route::get('/dashboard', [BusinessPermitApplicationController::class, 'index'])-
 
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/permit', function () {
-        return view('admin.permit.index');
-    });
+
+    // Route to show the approved permits
+    Route::get('/permit', [BusinessPermitApplicationController::class, 'showApproved'])->name('admin.permit');
 
     // Route for showing permit details
     Route::get('/permit/show/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
@@ -68,39 +68,33 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Route for approving permit using BusinessPermitApplicationController
     Route::put('/approve-permit/{id}', [BusinessPermitApplicationController::class, 'approvePermit'])->name('approve.permit');
 
-    // Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
-    Route::get('/admin/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+    // Route to edit a permit
+    Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
 
-
+    // Route to update a business registration
     Route::put('/business-registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
-    // Route::put('/business-registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
 
-
-
-
-    Route::get('/admin/permit', [BusinessPermitApplicationController::class, 'showApproved'])->name('admin.permit');
-
+    // Route to generate a QR code for a permit
     Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
         $permitId = $request->query('user_id');
         $status = $request->query('status');
         $permit = BusinessPermitApplication::findOrFail($permitId);
-    
+
         $qrCodeData = "Permit ID: $permitId\n";
         $qrCodeData .= "Status: $status\n";
         $qrCodeData .= "Business Name: {$permit->business_name}\n";
         $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
         // Add more details as needed
-    
+
         $qrCode = QrCode::size(300)->generate($qrCodeData);
-    
+
         return view('admin.permit.permit')->with([
             'qrCode' => $qrCode,
             'permit' => $permit,
         ]);
     })->name('generate.qrcode');
-    
-});
 
+});
 
 
 // Auth routes (login, register, etc.)
