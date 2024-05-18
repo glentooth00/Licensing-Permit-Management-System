@@ -56,14 +56,13 @@
                                             {{ $approved_permit->created_at }}
                                         </td>
                                         <td>
-                                            @php
-                                                if ($approved_permit->status == 'Pending') {
-                                                    echo '<span class="p-2 text-danger">Pending</span>';
-                                                } else {
-                                                    echo '<span class=" p-2 label label-success">Approved</span>';
-                                                }
-                                            @endphp
+                                            @if ($approved_permit->status == 'Pending')
+                                                <span class="badge badge-danger p-2">Pending</span>
+                                            @else
+                                                <span class="badge badge-success p-2">Approved</span>
+                                            @endif
                                         </td>
+
                                         <!-- Add more table cells for other fields -->
                                         <td>
                                             <div class="row">

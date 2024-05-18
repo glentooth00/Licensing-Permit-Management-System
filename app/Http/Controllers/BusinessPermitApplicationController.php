@@ -18,6 +18,8 @@ class BusinessPermitApplicationController extends Controller
     {
         $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
 
+        $allPermits = BusinessPermitApplication::all()->count();
+
          // Count pending applications
          $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
 
@@ -28,6 +30,7 @@ class BusinessPermitApplicationController extends Controller
             'businessPermits' => $businessPermits,
             'pendingCount' => $pendingCount,
             'approvedCount' => $approvedCount,
+            'allPermits' => $allPermits,
         ]);
     }
 
