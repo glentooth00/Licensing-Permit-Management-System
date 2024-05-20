@@ -30,6 +30,10 @@ Route::get('/business-registration', function () {
     return view('site.registration');
 });
 
+Route::get('/admin/permit-generate', function () {
+    return view('admin/permit/permit');
+});
+
 Route::get('/admin-permit-show', function () {
     return view('admin.permit.show');
 });
