@@ -30,7 +30,7 @@
 
 <script src="/dist/plugins/datatables/js/buttons.html5.min.js"></script>
 <script src="/dist/plugins/datatables/js/buttons.print.min.js"></script>
-<script src="../../plugins/datatables/js/buttons.colVis.min.js"></script>
+<script src="/dist/plugins/datatables/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
