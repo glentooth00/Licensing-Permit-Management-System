@@ -1,6 +1,6 @@
 @extends('includes.layouts.app')
 
-@section('page-title', 'Dashboard')
+@section('page-title', 'Registered Permits')
 
 @section('content')
 
