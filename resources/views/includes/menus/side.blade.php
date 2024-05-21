@@ -58,11 +58,17 @@
                     <a href="#" class="nav-link">
                         <i style='font-size:24px' class='far mr-3 ml-1'>&#xf2b9;</i>
                         <p>
-                            View Permits
+                            Registered Permits
 
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.permit') }}" class="nav-link">
+                                <i style="font-size:20px" class="fa ml-4">&#xf0f6; </i>
+                                <p class="ml-2"> View Permits</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.permit') }}" class="nav-link">
                                 <i style="font-size:20px" class="fa ml-4">&#xf0f6; </i>

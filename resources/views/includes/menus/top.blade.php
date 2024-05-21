@@ -18,7 +18,7 @@
                   <span class="dropdown-header">Settings</span>
                   <div class="dropdown-divider"></div>
                   <a href="#" class="dropdown-item">
-                      <i class="fas fa-user mr-2"></i> Profile
+                      <i class="fas fa-user mr-2"></i> Users
                   </a>
                   <div class="dropdown-divider"></div>
                   {{-- <a href="auth-normal-sign-in.html" class="dropdown-item"> --}}

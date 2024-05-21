@@ -26,7 +26,7 @@
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>{{ $approvedCount }}</h3>
-                                <h4>No. of Registered Member</h4>
+                                <h4>Number of Approved Permits</h4>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-users f-28"></i>
@@ -38,7 +38,7 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>{{ $pendingCount }}</h3>
-                                <h4>No. of Pending Member</h4>
+                                <h4>Renewal for Business Permits</h4>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-user f-28"></i>
@@ -50,7 +50,7 @@
                         <div class="small-box bg-danger">
                             <div class="inner">
                                 <h3>{{ $pendingCount }}</h3>
-                                <h4>Renewal for Business Permit</h4>
+                                <h4>Renewal for Business Permits</h4>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-user f-28"></i>
