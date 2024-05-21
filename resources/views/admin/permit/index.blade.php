@@ -91,7 +91,7 @@
                                                 <div class="col-5">
                                                     {{-- Generate Permit Button --}}
                                                     {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
-                                                    <form action="{{ route('generate.qrcode') }}" method="GET">
+                                                    {{-- <form action="{{ route('generate.qrcode') }}" method="GET">
                                                         @csrf
                                                         <input type="hidden" name="user_id"
                                                             value="{{ $approved_permit->id }}">
@@ -100,7 +100,8 @@
                                                         <button type="submit"
                                                             class="btn btn-outline-info btn-sm btn-round m-1">Generate
                                                             Permit</button>
-                                                    </form>
+                                                    </form> --}}
+                                                    <a href="/admin/permit-generate" class="btn btn-warning btn-sm">Generate Permit</a>
                                                 </div>
                                             </div>
                                         </td>
