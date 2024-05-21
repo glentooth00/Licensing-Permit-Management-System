@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -18,9 +18,9 @@
     <!-- Add more details as needed -->
 </body>
 
-</html>
+</html> --}}
 
-{{-- @extends('includes.layouts.app')
+@extends('includes.layouts.app')
 
 @section('page-title', 'Dashboard')
 
@@ -82,13 +82,17 @@
                         <div class="mt-3">
                             <div class="row">
                                 <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
-                                    <h5 class="fw-bold">This CERTIFIES that <span><b>TEST</b></span></h5>
+                                    <h5 class="fw-bold">This CERTIFIES that <span><b>{{ $permit->first_name }}
+                                                {{ $permit->middle_name }} {{ $permit->last_name }}</b></span></h5>
                                 </div>
                                 <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
                                     <h5 class="fw-bold">Nature of Business <span><b>TEST</b></span></h5>
                                 </div>
                                 <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
-                                    <h5 class="fw-bold">Business Address <span><b>TEST</b></span></h5>
+                                    <h5 class="fw-bold">Business Address <span><b>{{ $permit->business_street }}
+                                                {{ $permit->business_barangay }}
+                                                {{ $permit->business_city_municipality }}
+                                                {{ $permit->business_province }}</b></span></h5>
                                 </div>
                             </div>
                         </div>
@@ -109,14 +113,14 @@
                                 <div class="col-lg-8">
                                     <div class="card bg-secondary">
                                         <div class="card-body p-5 text-center">
-                                            <h1> S AND T <br> BUILDING</h1>
+                                            <h1> {{ $permit->business_name }}</h1>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="card bg-success">
+                                    <div class="card ">
                                         <div class="card-body p-5 text-center">
-                                            <h1> {{ $qrCode }}</h1>
+                                            <h1>{{ $qrCode }}</h1>
                                         </div>
                                     </div>
                                 </div>
@@ -192,4 +196,4 @@
     </div>
     <!-- /.content-wrapper -->
 
-@endsection --}}
+@endsection
