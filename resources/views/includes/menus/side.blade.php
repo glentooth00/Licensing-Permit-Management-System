@@ -19,7 +19,7 @@
                 <img src="{{ asset('admin/images/faq_man.png') }}" class="img-radius" alt="User-Profile-Image">
             </div>
             <div class="info">
-                {{-- <a href="#" class="d-block">Alexander Pierce</a> --}}
+                <a href="#" class="d-block">Admin</a>
             </div>
         </div>
 
@@ -31,21 +31,21 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fa-solid fa-gauge-high"></i>
+                    <a href="/dashboard" class="nav-link">
+                        <i class="fa fa-home mr-3 ml-1" aria-hidden="true"></i>
                         <p>
                             Dashboard
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fa-solid fa-user-tie"></i>
                         <p>
                             Users
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
             <a href="{{ route('admin.permit') }}" class="nav-link">
               <i class="nav-icon fa-solid fa-users"></i>
@@ -56,23 +56,23 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i style='font-size:24px' class='far mr-3 ml-1'>&#xf2b9;</i>
                         <p>
-                            Registered Permit
-                            <i class="right fas fa-angle-left"></i>
+                            View Permits
+
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.permit') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>New</p>
+                                <i style="font-size:20px" class="fa ml-4">&#xf0f6; </i>
+                                <p class="ml-2"> Renew</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Renew</p>
+                                <i style="font-size:20px" class="fa ml-4">&#xf0f6; </i>
+                                <p class="ml-2">Archive</p>
                             </a>
                         </li>
                     </ul>

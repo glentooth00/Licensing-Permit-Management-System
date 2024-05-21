@@ -1,4 +1,4 @@
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -18,9 +18,9 @@
     <!-- Add more details as needed -->
 </body>
 
-</html> --}}
+</html>
 
-@extends('includes.layouts.app')
+{{-- @extends('includes.layouts.app')
 
 @section('page-title', 'Dashboard')
 
@@ -62,20 +62,20 @@
                                     <span>DATE Issued</span>
                                 </div>
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
-                                     <span>Mayo's Permit No.</span>
+                                    <span>Mayo's Permit No.</span>
                                 </div>
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
-                                     <span>PERMIT Year</span>
+                                    <span>PERMIT Year</span>
                                 </div>
-                                
+
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
                                     <span>PERMIT Expires</span>
                                 </div>
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
-                                     <span>Plate Number</span>
+                                    <span>Plate Number</span>
                                 </div>
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
-                                     <span>CLASSIFICATION</span>
+                                    <span>CLASSIFICATION</span>
                                 </div>
                             </div>
                         </div>
@@ -94,11 +94,14 @@
                         </div>
                         <div class="mt-3">
                             <p>
-                              <strong>
-                                has been granted BUSINESS PERMIT to operate the started buiness subject to existing law, ordinances, rules and regulations of the Municipality
-                                of Estancia and to pertinent provisions of the Republic act 71600 otherwise known as the Local Government Code of 1991 and provided further
-                                that any infraction or violation therefore will be efficient ground for the revocation of this PERMIT.
-                              </strong>
+                                <strong>
+                                    has been granted BUSINESS PERMIT to operate the started buiness subject to existing law,
+                                    ordinances, rules and regulations of the Municipality
+                                    of Estancia and to pertinent provisions of the Republic act 71600 otherwise known as the
+                                    Local Government Code of 1991 and provided further
+                                    that any infraction or violation therefore will be efficient ground for the revocation
+                                    of this PERMIT.
+                                </strong>
                             </p>
                         </div>
                         <div>
@@ -113,7 +116,7 @@
                                 <div class="col-lg-4">
                                     <div class="card bg-success">
                                         <div class="card-body p-5 text-center">
-                                            <h1>QR <br> CODE</h1>
+                                            <h1> {{ $qrCode }}</h1>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +145,9 @@
                                                         </div>
                                                     </div>
                                                     <br><br><br>
-                                                    <span><b>Mode of Payment:</b> <input type="checkbox" name=""> Quarterly &nbsp;&nbsp;&nbsp; <input type="checkbox" name=""> Annual</span>
+                                                    <span><b>Mode of Payment:</b> <input type="checkbox" name="">
+                                                        Quarterly &nbsp;&nbsp;&nbsp; <input type="checkbox" name="">
+                                                        Annual</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -153,7 +158,7 @@
                                                         ERASURE AND/OR ALTERATION WILL
                                                         INVALIDATE THIS PERMIT
                                                     </h3>
-                                                </div>  
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +166,7 @@
                                 <div class="col-lg-6">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h4>APPROVED: </h4> 
+                                            <h4>APPROVED: </h4>
                                             <br><br><br><br><br><br><br><br><br>
                                             <h4 class="text-center">MAYOR MARY LYNN N. MOSQUEDA</h4>
                                         </div>
@@ -170,7 +175,8 @@
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-body">
-                                           <h5>This permit shall be posted consipicously at the place where the business is being conducted and shall be presented</h5>
+                                            <h5>This permit shall be posted consipicously at the place where the business is
+                                                being conducted and shall be presented</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -186,4 +192,4 @@
     </div>
     <!-- /.content-wrapper -->
 
-@endsection
+@endsection --}}
