@@ -33,7 +33,7 @@
                                     <th>COTANCT No.</th>
                                     <th>APPLIED ON</th>
                                     <th>STATUS</th>
-                                    <th></th>
+                                    <th>ACTION</th>
                                 </tr>
                                 </tr>
                             </thead>
@@ -53,7 +53,7 @@
                                             {{ $approved_permit->owners_Tel_No_Mobile }}
                                         </td>
                                         <td>
-                                            {{ $approved_permit->created_at }}
+                                            {{ $approved_permit->created_at->format('F j, Y') }}
                                         </td>
                                         <td>
                                             @if ($approved_permit->status == 'Pending')
@@ -66,6 +66,7 @@
                                         <!-- Add more table cells for other fields -->
                                         <td>
                                             <div class="row">
+
                                                 <div class="col-md-3">
                                                     @if ($approved_permit->status == 'Approved')
                                                     @else
@@ -102,7 +103,10 @@
                                                             Permit</button>
                                                     </form>
                                                     {{-- <a href="/admin/permit-generate" class="btn btn-warning btn-sm">Generate Permit</a> --}}
+
+
                                                 </div>
+
                                             </div>
                                         </td>
                                     </tr>

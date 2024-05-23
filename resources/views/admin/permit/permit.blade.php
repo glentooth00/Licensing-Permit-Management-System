@@ -82,14 +82,14 @@
                         <div class="mt-3">
                             <div class="row">
                                 <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
-                                    <h5 class="fw-bold">This CERTIFIES that <span><b>{{ $permit->first_name }}
+                                    <h5 class="fw-bold">This CERTIFIES that: <span><b>{{ $permit->first_name }}
                                                 {{ $permit->middle_name }} {{ $permit->last_name }}</b></span></h5>
                                 </div>
                                 <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
-                                    <h5 class="fw-bold">Nature of Business <span><b>TEST</b></span></h5>
+                                    <h5 class="fw-bold">Nature of Business: <span><b>TEST</b></span></h5>
                                 </div>
                                 <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
-                                    <h5 class="fw-bold">Business Address <span><b>{{ $permit->business_street }}
+                                    <h5 class="fw-bold">Business Address: <span><b>{{ $permit->business_street }}
                                                 {{ $permit->business_barangay }}
                                                 {{ $permit->business_city_municipality }}
                                                 {{ $permit->business_province }}</b></span></h5>
