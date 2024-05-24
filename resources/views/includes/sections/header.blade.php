@@ -22,8 +22,3 @@
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <!-- Your page content goes here -->
-    </div>
-</body>
-
-</html>
