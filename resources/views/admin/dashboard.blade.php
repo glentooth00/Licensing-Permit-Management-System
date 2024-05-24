@@ -50,7 +50,7 @@
                         <div class="small-box bg-danger">
                             <div class="inner">
                                 <h3>{{ $pendingCount }}</h3>
-                                <h4>Renewal for Business Permits</h4>
+                                <h4>Number of Registered Members</h4>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-user f-28"></i>
@@ -223,6 +223,56 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    Permit has been approved!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
+        aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Business permit updated successfully.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- @if (session('update'))
+        <script>
+            $(document).ready(function() {
+                $('#confirmationModal').modal('show');
+            });
+        </script>
+    @endif --}}
+
+    <!-- Confirmation Modal -->
+    {{-- <div class="modal fade" id="confirmationModal2" tabindex="-1" role="dialog"
+        aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     Permit approved successfully.
                 </div>
                 <div class="modal-footer">
@@ -231,6 +281,14 @@
             </div>
         </div>
     </div>
+    @if (session('success'))
+        <script>
+            $(document).ready(function() {
+                $('#confirmationModal2').modal('show');
+            });
+        </script>
+    @endif --}}
+
 
 
     <style>
@@ -242,6 +300,7 @@
 
         }
     </style>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
@@ -290,6 +349,33 @@
             @if (session('success'))
                 $('#successModal').modal('show');
             @endif
+        });
+
+        $(document).ready(function() {
+            @if (session('update'))
+                $('#confirmationModal').modal('show');
+            @endif
+        });
+
+        $(document).ready(function() {
+            $('#yourFormId').on('submit', function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: $(this).attr('method'),
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            $('#confirmationModal').modal('show');
+                        }
+                    },
+                    error: function(xhr) {
+                        // handle error
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
         });
     </script>
 
