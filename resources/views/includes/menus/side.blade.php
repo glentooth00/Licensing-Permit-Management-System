@@ -70,19 +70,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.permit') }}" class="nav-link">
+                            <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
                                 <i style="font-size:20px" class="fa ml-4">&#xf0f6; </i>
                                 <p class="ml-2"> Renew</p>
                             </a>
                         </li>
+                        <!-- Other nav items -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a class="nav-link" href="{{ route('business-permits.archived') }}">
                                 <i style="font-size:20px" class="fa ml-4">&#xf0f6; </i>
-                                <p class="ml-2">Archive</p>
+                                <p class="ml-2"> Archived</p>
                             </a>
                         </li>
                     </ul>
-                </li>
+            </ul>
+            </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

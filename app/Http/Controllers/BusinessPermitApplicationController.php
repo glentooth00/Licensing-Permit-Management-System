@@ -269,11 +269,69 @@ public function show($id)
         return response()->json(['qr_code' => $base64QRCode, 'status' => $status]);
     }
     
+    public function archivePermit($id)
+    {
+        // Find the business permit by ID
+        $businessPermit = BusinessPermitApplication::findOrFail($id);
+
+        // Update the status to 'Archived'
+        $businessPermit->status = 'Archived';
+        $businessPermit->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Permit archived successfully.');
+    }
+    
+    public function showArchived()
+    {
+        // Fetch permits with status 'Archived'
+        $archived_permits = BusinessPermitApplication::where('status', 'Archived')->orderByDesc('created_at')->get();
+
+        // Return the view with the archived permits
+        return view('admin.permit.archived', compact('archived_permits'));
+    }
+    
+    public function renewPermit($id)
+    {
+        // Find the business permit by ID
+        $businessPermit = BusinessPermitApplication::findOrFail($id);
+
+        // Update the status to 'Pending' (or any other status to renew)
+        $businessPermit->status = 'For Renewal';
+        $businessPermit->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Permit renewed successfully.');
+    }
+
+    public function showForRenewal()
+    {
+        // Fetch permits with status 'For Renewal'
+        $for_renewal_permits = BusinessPermitApplication::where('status', 'For Renewal')->orderByDesc('created_at')->get();
+
+        // Return the view with the 'For Renewal' permits
+        return view('admin.permit.renew', compact('for_renewal_permits'));
+    }
+
+    public function approveRenewal(Request $request, $id)
+    {
+        // Debugging: Output form data for inspection
+        // dd($request->all());
+    
+        // Find the permit by ID
+        $permit = BusinessPermitApplication::findOrFail($id);
+    
+        // Update the status to 'Approved'
+        $permit->status = 'Approved';
+        $permit->save();
+    
+        // Redirect back or to a specific route
+        return redirect()->back()->with('success', 'Renewal approved successfully.');
+    }
     
     
     
-    
-    
+        
     
     
 }

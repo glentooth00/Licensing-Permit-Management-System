@@ -27,14 +27,12 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                <tr>
                                     <th>NAME</th>
                                     <th>NAME OF BUSINESS</th>
-                                    <th>COTANCT No.</th>
+                                    <th>CONTACT No.</th>
                                     <th>APPLIED ON</th>
                                     <th>STATUS</th>
                                     <th>ACTION</th>
-                                </tr>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,7 +46,6 @@
                                         <td>
                                             {{ $approved_permit->business_name }}
                                         </td>
-
                                         <td>
                                             {{ $approved_permit->owners_Tel_No_Mobile }}
                                         </td>
@@ -62,58 +59,59 @@
                                                 <span class="badge badge-success p-2">Approved</span>
                                             @endif
                                         </td>
-
-                                        <!-- Add more table cells for other fields -->
                                         <td>
                                             <div class="row">
+                                                <div class="col-md-10">
+                                                    <div class="d-flex justify-content-start">
+                                                        {{-- Approve Button --}}
+                                                        @if ($approved_permit->status !== 'Approved')
+                                                            <form
+                                                                action="{{ route('approve.permit', ['id' => $approved_permit->id]) }}"
+                                                                method="POST" class="m-1">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit"
+                                                                    class="btn btn-outline-info btn-sm btn-round">Approve</button>
+                                                            </form>
+                                                        @endif
 
-                                                <div class="col-md-3">
-                                                    @if ($approved_permit->status == 'Approved')
-                                                    @else
-                                                        <form
-                                                            action="{{ route('approve.permit', ['id' => $approved_permit->id]) }}"
-                                                            method="POST">
+                                                        {{-- More Details Button with ID --}}
+                                                        <a href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
+                                                            class="btn btn-outline-success btn-sm btn-round m-1">
+                                                            More Details
+                                                        </a>
+
+                                                        {{-- Generate Permit Button --}}
+                                                        <form action="{{ route('generate.qrcode') }}" method="GET"
+                                                            class="m-1">
                                                             @csrf
-                                                            @method('PUT')
+                                                            <input type="hidden" name="user_id"
+                                                                value="{{ $approved_permit->id }}">
+                                                            <input type="hidden" name="status"
+                                                                value="{{ $approved_permit->status }}">
                                                             <button type="submit"
-                                                                class="btn btn-outline-info btn-sm btn-round m-1">Approve</button>
+                                                                class="btn btn-outline-info btn-sm btn-round">Generate
+                                                                Permit</button>
                                                         </form>
-                                                    @endif
+
+                                                        {{-- Archive Button --}}
+                                                        <form
+                                                            action="{{ route('business-permits.archive', $approved_permit->id) }}"
+                                                            method="POST" class="m-1" style="display: inline;">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button type="submit"
+                                                                class="btn btn-outline-danger btn-sm btn-round">Archive</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                                <div class="col-4">
-                                                    {{-- Approve Button --}}
-                                                    {{-- More Details Button with ID --}}
-                                                    <a type="button"
-                                                        href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
-                                                        class="btn btn-outline-success btn-sm btn-round m-1">More
-                                                        Details</a>
-                                                </div>
-
-                                                <div class="col-5">
-                                                    {{-- Generate Permit Button --}}
-                                                    {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
-                                                    <form action="{{ route('generate.qrcode') }}" method="GET">
-                                                        @csrf
-                                                        <input type="hidden" name="user_id"
-                                                            value="{{ $approved_permit->id }}">
-                                                        <input type="hidden" name="status"
-                                                            value="{{ $approved_permit->status }}">
-                                                        <button type="submit"
-                                                            class="btn btn-outline-info btn-sm btn-round m-1">Generate
-                                                            Permit</button>
-                                                    </form>
-                                                    {{-- <a href="/admin/permit-generate" class="btn btn-warning btn-sm">Generate Permit</a> --}}
-
-
-                                                </div>
-
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
+
                     </div>
                     <!-- /.card-body -->
                 </div>
