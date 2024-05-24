@@ -184,7 +184,7 @@ public function show($id)
          $businessPermit->update($validatedData);
      
          // Optionally, you can redirect back with a success message
-         return redirect()->back()->with('success', 'Business permit updated successfully');
+         return redirect()->back()->with('update', 'Business permit updated successfully');
      }
      
    
@@ -206,14 +206,15 @@ public function show($id)
     {
         // Find the business permit by ID
         $businessPermit = BusinessPermitApplication::findOrFail($id);
-
-        // Update the status to 'Approved' (or whatever status you use)
+    
+        // Update the status to 'Approved'
         $businessPermit->status = 'Approved';
         $businessPermit->save();
-
-        // Redirect back or to a specific route
+    
+        // Redirect back with a success message
         return redirect()->back()->with('success', 'Permit approved successfully.');
     }
+    
 
     public function showApproved(){
 
