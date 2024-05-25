@@ -1,9 +1,7 @@
-@extends('includes.layouts.app')
+@extends('includes.layouts.app2')
 
-@section('page-title', 'Dashboard')
 
 @section('content')
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
