@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-        @include('includes.sections.header')
-    <body>
-        @include('includes.menus.top')   
-        @include('includes.menus.side')
+@include('includes.sections.header')
 
-        @yield('content')
-        
-        @include('includes.sections.footer')
+<body>
+    @include('includes.menus.top')
+    @include('includes.menus.side')
 
-    </body>
+    @yield('content')
+
+    @include('includes.sections.footer')
+
+</body>
+
 </html>

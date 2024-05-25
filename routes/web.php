@@ -30,6 +30,10 @@ Route::get('/business-registration', function () {
     return view('site.registration');
 });
 
+Route::get('/admin/permit-generate', function () {
+    return view('admin/permit/permit');
+});
+
 Route::get('/admin-permit-show', function () {
     return view('admin.permit.show');
 });
@@ -93,6 +97,21 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
             'permit' => $permit,
         ]);
     })->name('generate.qrcode');
+
+    Route::patch('/business-permits/{id}/archive', [BusinessPermitApplicationController::class, 'archivePermit'])->name('business-permits.archive');
+
+    Route::get('/business-permits/archived', [BusinessPermitApplicationController::class, 'showArchived'])->name('business-permits.archived');
+
+    Route::patch('/business-permits/{id}/renew', [BusinessPermitApplicationController::class, 'renewPermit'])->name('business-permits.renew');
+
+    Route::get('/business-permits/for-renewal', [BusinessPermitApplicationController::class, 'showForRenewal'])->name('business-permits.for-renewal');
+
+    Route::patch('/business-permits/{id}/renew', [BusinessPermitApplicationController::class, 'renewPermit'])->name('business-permits.renew');
+
+
+    Route::patch('/business-permits/{id}/approve-renewal', [BusinessPermitApplicationController::class, 'approveRenewal'])
+    ->name('business-permits.approve-renewal');
+
 
 });
 
