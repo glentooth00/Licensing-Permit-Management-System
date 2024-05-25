@@ -3,7 +3,7 @@
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-    <div class="">
+    <div class="" style="width: 100%;">
         <!-- Content Header (Page header) -->
         {{-- <div class="content-header">
             <div class="container-fluid">
@@ -17,12 +17,12 @@
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <div class="content col-lg-12">
+        <div class="content col-lg-12" style="width: 100%;">
             <div class="container-fluid">
                 <div class="card" style="width: 100%;">
 
                     <!-- /.card-header -->
-                    <div class="card-body">
+                    <div class="card-body " style="width: 100%;">
 
                         <div class="text-center">
                             <span>Republic of the Philippines</span><br>

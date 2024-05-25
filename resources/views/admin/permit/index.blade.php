@@ -130,10 +130,9 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Generate Permit Modal -->
     <div class="modal fade" id="generatePermitModal" tabindex="-1" role="dialog"
         aria-labelledby="generatePermitModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-xl" style="width: 100%;" role="document">
             <div class="modal-content bg-white">
                 <div class="modal-header">
                     <button class="btn btn-primary" onclick="printPage()"> <i class="fa-solid fa-print"></i>
@@ -142,11 +141,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-
                 </div>
-
                 <div class="modal-body" id="generatePermitModalBody">
-
                     <!-- Content will be dynamically loaded here -->
                 </div>
                 <div class="modal-footer">
@@ -155,7 +151,6 @@
             </div>
         </div>
     </div>
-    <!-- /.content-wrapper -->
 
 
     <script>
@@ -177,6 +172,29 @@
                 });
             });
         });
+
+
+        function printPage() {
+            var modalContent = document.getElementById('generatePermitModalBody').innerHTML;
+            var newWindow = window.open('', '', 'width=800,height=600');
+            newWindow.document.write(`
+        <html>
+            <head>
+                <title>Print</title>
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; }
+                </style>
+            </head>
+            <body>
+                ${modalContent}
+            </body>
+        </html>
+    `);
+            newWindow.document.close();
+            newWindow.print();
+        }
     </script>
 
 @endsection
