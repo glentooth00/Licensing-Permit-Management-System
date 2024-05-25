@@ -22,11 +22,8 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="card">
-
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <button class="btn btn-primary" onclick="printPage()"> <i class="fa-solid fa-print"></i>
-                            Print</button>
                         <div class="text-center">
                             <span>Republic of the Philippines</span><br>
                             <span>Province of Iloilo</span>
@@ -40,7 +37,6 @@
                         <div>
                             <div class="row text-center">
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
-
                                     <span>DATE Issued</span>
                                 </div>
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
@@ -177,16 +173,5 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <style>
-        @media print {
-            .btn {
-                display: none;
-            }
-        }
-    </style>
-    <script>
-        function printPage() {
-            window.print();
-        }
-    </script>
+
 @endsection
