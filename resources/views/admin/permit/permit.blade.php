@@ -3,9 +3,9 @@
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="">
         <!-- Content Header (Page header) -->
-        <div class="content-header">
+        {{-- <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
@@ -13,18 +13,17 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
-        </div>
+        </div> --}}
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <div class="content">
+        <div class="content col-lg-12">
             <div class="container-fluid">
-                <div class="card">
+                <div class="card" style="width: 100%;">
 
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <button class="btn btn-primary" onclick="printPage()"> <i class="fa-solid fa-print"></i>
-                            Print</button>
+
                         <div class="text-center">
                             <span>Republic of the Philippines</span><br>
                             <span>Province of Iloilo</span>
@@ -182,9 +181,4 @@
             }
         }
     </style>
-    <script>
-        function printPage() {
-            window.print();
-        }
-    </script>
 @endsection

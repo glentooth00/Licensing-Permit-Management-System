@@ -47,8 +47,8 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gearDropdown">
               <a class="dropdown-item" href="#">Settings</a>
-              <hr>
-              <a class="dropdown-item" href="#">Users</a>
+              {{-- <hr>
+              <a class="dropdown-item" href="#">Users</a> --}}
               <hr>
               <form id="logoutForm" action="{{ route('logout') }}" method="POST">
                   @csrf
