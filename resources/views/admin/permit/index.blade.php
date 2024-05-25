@@ -82,7 +82,7 @@
                                                         </a>
 
                                                         {{-- Generate Permit Button --}}
-                                                        <form action="{{ route('generate.qrcode') }}" method="GET"
+                                                        {{-- <form action="{{ route('generate.qrcode') }}" method="GET"
                                                             class="m-1">
                                                             @csrf
                                                             <input type="hidden" name="user_id"
@@ -92,7 +92,11 @@
                                                             <button type="submit"
                                                                 class="btn btn-outline-info btn-sm btn-round">Generate
                                                                 Permit</button>
-                                                        </form>
+                                                        </form> --}}
+                                                        <a href="#" data-user-id="{{ $approved_permit->id }}"
+                                                            class="btn btn-outline-info btn-sm btn-round generatePermitBtn">Generate
+                                                            Permit</a>
+
 
                                                         {{-- Archive Button --}}
                                                         <form
@@ -120,6 +124,53 @@
         </div>
         <!-- /.content -->
     </div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Generate Permit Modal -->
+    <div class="modal fade" id="generatePermitModal" tabindex="-1" role="dialog"
+        aria-labelledby="generatePermitModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="generatePermitModalLabel">Generate Permit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="generatePermitModalBody">
+                    <!-- Content will be dynamically loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- /.content-wrapper -->
 
+
+    <script>
+        $(document).ready(function() {
+            $(".generatePermitBtn").click(function(e) {
+                e.preventDefault();
+                var userId = $(this).data('user-id');
+                var url = "{{ route('generate.qrcode') }}?user_id=" + userId;
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    success: function(response) {
+                        $("#generatePermitModalBody").html(response);
+                        $("#generatePermitModal").modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
