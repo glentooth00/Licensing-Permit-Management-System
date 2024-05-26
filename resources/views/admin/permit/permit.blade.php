@@ -1,35 +1,25 @@
 @extends('includes.layouts.app2')
 
-
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Permit</h1>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
+    <div class="" style="width: 100%;">
         <!-- Main content -->
-        <div class="content">
+        <button type="button" class="btn btn-sm btn-primary col-md-1 m-2" onclick="printDiv('printableArea')"><i
+                class="icon-printer"></i> Print</button>
+        <div class="content col-lg-12" style="width: 100%;">
+
             <div class="container-fluid">
-                <div class="card">
+                <div class="card" style="width: 100%;">
+
 
                     <!-- /.card-header -->
-                    <div class="card-body">
-                        <button class="btn btn-primary" onclick="printPage()"> <i class="fa-solid fa-print"></i>
-                            Print</button>
+                    <div class="card-body " id="printableArea" style="width: 100%;">
+
                         <div class="text-center">
                             <span>Republic of the Philippines</span><br>
                             <span>Province of Iloilo</span>
                             <h4>MUNICIPALITY OF ESTANCIA</h4>
-                            <span>National Highway cor. V Cudilla Ave. Estancia, Iloilo</span> <br>
+                            <span>National Highway cor. V Cudilla Ave. Estancia, Iloilo</span><br>
                             <span>Te. No. (033) 397-0232/Telefax (033) 397-0231</span>
                             <h4>OFFICE OF THE MUNICIPAL MAYOR</h4>
                             <h1>MAYOR'S BUSINESS PERMIT</h1>
@@ -38,7 +28,6 @@
                         <div>
                             <div class="row text-center">
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
-
                                     <span>DATE Issued</span>
                                 </div>
                                 <div class="col-lg-4 mt-5" style="border-top: 1px solid gray;">
@@ -61,6 +50,7 @@
                         </div>
                         <div class="mt-3">
                             <div class="row">
+                                {{-- <input type="text" value="{{ $permit->status }}"> --}}
                                 <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
                                     <h5 class="fw-bold">This CERTIFIES that: <span><b>{{ $permit->first_name }}
                                                 {{ $permit->middle_name }} {{ $permit->last_name }}</b></span></h5>
@@ -70,8 +60,7 @@
                                 </div>
                                 <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
                                     <h5 class="fw-bold">Business Address: <span><b>{{ $permit->business_street }}
-                                                {{ $permit->business_barangay }}
-                                                {{ $permit->business_city_municipality }}
+                                                {{ $permit->business_barangay }} {{ $permit->business_city_municipality }}
                                                 {{ $permit->business_province }}</b></span></h5>
                                 </div>
                             </div>
@@ -90,16 +79,16 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div class="col-lg-8">
+                                <div class="col-lg-7">
                                     <div class="card bg-secondary">
                                         <div class="card-body p-5 text-center">
                                             <h1> {{ $permit->business_name }}</h1>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-5">
                                     <div class="card ">
-                                        <div class="card-body p-5 text-center">
+                                        <div class="card-body p-2 text-center">
                                             <h1>{{ $qrCode }}</h1>
                                         </div>
                                     </div>
@@ -113,7 +102,7 @@
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <span><b>Paid under the following:</b></span> <br>
+                                                    <span><b>Paid under the following:</b></span><br>
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <span>O.R. No.</span><br>
@@ -150,7 +139,7 @@
                                 <div class="col-lg-6">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h4>APPROVED: </h4>
+                                            <h4>APPROVED:</h4>
                                             <br><br><br><br><br><br><br><br><br>
                                             <h4 class="text-center">MAYOR MARY LYNN N. MOSQUEDA</h4>
                                         </div>
@@ -175,6 +164,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
     <style>
         @media print {
             .btn {
@@ -183,8 +173,15 @@
         }
     </style>
     <script>
-        function printPage() {
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
             window.print();
+
+            document.body.innerHTML = originalContents;
         }
     </script>
 @endsection

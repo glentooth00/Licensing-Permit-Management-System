@@ -28,11 +28,11 @@
                             <thead>
                                 <tr>
                                     <th>NAME</th>
-                                    <th>NAME OF BUSINESS</th>
-                                    <th>CONTACT No.</th>
-                                    <th>APPLIED ON</th>
-                                    <th>STATUS</th>
-                                    <th>ACTION</th>
+                                    <th class="text-center">NAME OF BUSINESS</th>
+                                    <th class="text-center">CONTACT No.</th>
+                                    <th class="text-center">APPLIED ON</th>
+                                    <th class="text-center">STATUS</th>
+                                    <th class="text-center">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,23 +43,23 @@
                                             {{ $approved_permit->middle_name }}
                                             {{ $approved_permit->last_name }}
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             {{ $approved_permit->business_name }}
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             {{ $approved_permit->owners_Tel_No_Mobile }}
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             {{ $approved_permit->created_at->format('F j, Y') }}
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             @if ($approved_permit->status == 'Pending')
                                                 <span class="badge badge-danger p-2">Pending</span>
                                             @else
                                                 <span class="badge badge-success p-2">Approved</span>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <div class="d-flex justify-content-start">
@@ -94,7 +94,7 @@
                                                                 Permit</button>
                                                         </form> --}}
                                                         <a href="#" data-user-id="{{ $approved_permit->id }}"
-                                                            class="btn btn-outline-info btn-sm btn-round generatePermitBtn">Generate
+                                                            class="btn btn-outline-primary btn-sm btn-round m-1 generatePermitBtn">Generate
                                                             Permit</a>
 
 
@@ -130,13 +130,15 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Generate Permit Modal -->
     <div class="modal fade" id="generatePermitModal" tabindex="-1" role="dialog"
         aria-labelledby="generatePermitModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog modal-xl" style="width: 100%;" role="document">
+            <div class="modal-content bg-white">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="generatePermitModalLabel">Generate Permit</h5>
+                    <div class="col-lg-6 mt-5">
+
+                    </div>
+                    {{-- <h5 class="modal-title text-justify" id="generatePermitModalLabel">Generate Permit</h5> --}}
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -150,7 +152,6 @@
             </div>
         </div>
     </div>
-    <!-- /.content-wrapper -->
 
 
     <script>
@@ -173,4 +174,5 @@
             });
         });
     </script>
+
 @endsection
