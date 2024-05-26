@@ -84,11 +84,16 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         $status = $request->query('status');
         $permit = BusinessPermitApplication::findOrFail($permitId);
 
-        $qrCodeData = "Permit ID: $permitId\n";
-        $qrCodeData .= "Status: $status\n";
+        // $qrCodeData = "Permit ID: $permitId\n";
+        // $qrCodeData .= "Status: $status\n";
+        // $qrCodeData .= "Business Name: {$permit->business_name}\n";
+        // $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
+        // Add more details as needed
+
+          $qrCodeData = "Permit ID: {$permit->permitId}\n";
+        $qrCodeData .= "Status: {$permit->status}\n";
         $qrCodeData .= "Business Name: {$permit->business_name}\n";
         $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
-        // Add more details as needed
 
         $qrCode = QrCode::size(300)->generate($qrCodeData);
 

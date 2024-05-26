@@ -135,8 +135,9 @@
         <div class="modal-dialog modal-xl" style="width: 100%;" role="document">
             <div class="modal-content bg-white">
                 <div class="modal-header">
-                    <button class="btn btn-primary" onclick="printPage()"> <i class="fa-solid fa-print"></i>
-                        Print</button>
+                    <div class="col-lg-6 mt-5">
+
+                    </div>
                     {{-- <h5 class="modal-title text-justify" id="generatePermitModalLabel">Generate Permit</h5> --}}
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -172,29 +173,6 @@
                 });
             });
         });
-
-
-        function printPage() {
-            var modalContent = document.getElementById('generatePermitModalBody').innerHTML;
-            var newWindow = window.open('', '', 'width=800,height=600');
-            newWindow.document.write(`
-        <html>
-            <head>
-                <title>Print</title>
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-                <style>
-                    body { font-family: Arial, sans-serif; padding: 20px; }
-                </style>
-            </head>
-            <body>
-                ${modalContent}
-            </body>
-        </html>
-    `);
-            newWindow.document.close();
-            newWindow.print();
-        }
     </script>
 
 @endsection
