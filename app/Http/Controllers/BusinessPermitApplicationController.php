@@ -80,6 +80,7 @@ class BusinessPermitApplicationController extends Controller
             'owners_Tel_No_Mobile' => 'nullable|string|max:255',
             'mode_of_payment' => 'nullable|string|max:255',
             'transfer' => 'nullable|string|max:255',
+            'business_type' => 'nullable|string|max:255',
         ]);
         
 
@@ -173,6 +174,8 @@ public function show($id)
             'owners_Tel_No_Mobile' => 'nullable|string|max:255',
             'mode_of_payment' => 'nullable|string|max:255', // Ensure it's a string
             'transfer' => 'nullable|string|max:255', // Ensure it's a string
+            'business_type' => 'nullable|string|max:255',
+
         ]);
         
          $validatedData['status'] = 'Pending';

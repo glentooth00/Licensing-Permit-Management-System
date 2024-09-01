@@ -166,7 +166,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="p-2">
-                                                Type of Business: <select name="business_name" type="text" required
+                                                Type of Business: <select name="business_type" type="text" required
                                                     style="width: 80%;">
                                                     <option hidden>Select Business type</option>
                                                     <option value="Sari-sari Store">Sari-sari Store</option>

@@ -39,7 +39,8 @@ class BusinessPermitApplication extends Model
         'owners_Tel_No_Mobile',
         'mode_of_payment',
         'transfer',
-        'status'
+        'status',
+        'business_type'
         // Add more fields as needed
     ];
 }
