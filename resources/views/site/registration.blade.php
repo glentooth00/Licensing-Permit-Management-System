@@ -166,6 +166,18 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="p-2">
+                                                Type of Business: <select name="business_name" type="text" required
+                                                    style="width: 80%;">
+                                                    <option hidden>Select Business type</option>
+                                                    <option value="Sari-sari Store">Sari-sari Store</option>
+                                                    <option value="Gasoline Station">Gasoline Station</option>
+                                                    <option value="Hardware">Hardware</option>
+                                                    <option value="Restaurant">Restaurant</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="p-2">
                                                 Trade Name/Franchise: <input name="trade_name_franchise"
                                                     type="text" style="width: 76%;">
                                             </td>
