@@ -52,13 +52,13 @@
                                         <li><input type="checkbox" name="classification_cottage" value="2">
                                             Micro
                                             ( 3,000,000 below)</li>
-                                        <li><input type="checkbox" name="classification_cottage" value="2">
+                                        <li><input type="checkbox" name="classification_cottage" value="3">
                                             Small
                                             (3,000,001 to 15,000,000)</li>
-                                        <li><input type="checkbox" name="classification_cottage" value="3">
+                                        <li><input type="checkbox" name="classification_cottage" value="4">
                                             Medium
                                             (15,000,001 to 100,000,000)</li>
-                                        <li><input type="checkbox" name="classification_cottage" value="4">
+                                        <li><input type="checkbox" name="classification_cottage" value="5">
                                             Large
                                             (20M
                                             -> Up)</li>
@@ -113,9 +113,12 @@
                                 <hr>
                                 <table class="table table-bordered table-sm">
                                     <tr>
-                                        <td class="p-2"> Date of Application: <input name="date_of_application"
-                                                type="date" style="width: 70%;"></td>
-                                        <td> DTI/SEC/CDA Registration No.: <input name="DTI_SEC_CDA_registration No"
+                                        <td class="p-2"> <label for="date_of_application">Date of
+                                                Application:</label>
+                                            <input id="date_of_application" name="date_of_application" type="date"
+                                                style="width: 70%;">
+                                        </td>
+                                        <td> DTI/SEC/CDA Registration No. : <input name="DTI_SEC_CDA_registration No"
                                                 type="text" style="width: 60%;"></td>
                                     </tr>
                                     <tr>
@@ -168,11 +171,11 @@
                                             <td colspan="3" class="p-2">
                                                 Type of Business: <select name="business_type" type="text" required
                                                     style="width: 80%;">
-                                                    <option hidden>Select Business type</option>
-                                                    <option value="Sari-sari Store">Sari-sari Store</option>
-                                                    <option value="Gasoline Station">Gasoline Station</option>
-                                                    <option value="Hardware">Hardware</option>
-                                                    <option value="Restaurant">Restaurant</option>
+                                                    <option value ="" hidden>Select Business type</option>
+                                                    <option value ="Sari-sari Store">Sari-sari Store</option>
+                                                    <option value ="Gasoline Station">Gasoline Station</option>
+                                                    <option value ="Hardware">Hardware</option>
+                                                    <option value ="Restaurant">Restaurant</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -364,11 +367,24 @@
                                                         <b>Non-Essential</b>
                                                         <textarea name="" id="" cols="20" rows="6"></textarea>
                                                     </td>
+                                                    <td>
+
+                                                    </td>
+
                                                 </tr>
+
                                             </tbody>
+
                                         </table>
+                                        <div class="form-group">
+                                            <input type="checkbox" id="agreeCheckbox">
+                                            <label for="agreeCheckbox">I hereby declare that the following entered data
+                                                is true.</label>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-primary" style="float: right;">Submit</button>
+                                    {{-- <button class="btn btn-primary" style="float: right;">Submit</button> --}}
+                                    <button type="submit" class="btn btn-primary" style="float: right;"
+                                        id="submitButton" disabled>Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -377,7 +393,12 @@
             </div>
         </div>
     </section>
-
+    <script>
+        document.getElementById('agreeCheckbox').addEventListener('change', function() {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = !this.checked; // Disable if not checked, enable if checked
+        });
+    </script>
 </body>
 
 </html>
