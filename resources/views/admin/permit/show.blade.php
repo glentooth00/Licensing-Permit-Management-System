@@ -22,8 +22,8 @@
 
                                             {{-- <a href="{{ route('permit.edit', ['businessPermit' => $businessPermit->id]) }}"
                                                 class="btn btn-primary btn-sm" style="width: 10%;">EDIT</a> --}}
-                                            <a href="#" onclick="openEditModal({{ $businessPermit->id }})"
-                                                class="btn btn-primary btn-sm" style="width: 10%;">EDIT</a>
+                                            {{-- <a href="#" onclick="openEditModal({{ $businessPermit->id }})"
+                                                class="btn btn-primary btn-sm" style="width: 10%;">EDIT</a> --}}
 
 
 
