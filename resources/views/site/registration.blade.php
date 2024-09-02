@@ -398,15 +398,17 @@
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px;"><input
                                                             name="business_Tel_No_Mobile" type="text"
-                                                            pattern="[0-9]{10}" placeholder="Enter 10-digit number"
-                                                            type="text" required style="width: 65%;">
+                                                            pattern="[0-9]{10}" maxlength="10"
+                                                            placeholder="Enter 10-digit number" type="text"
+                                                            required style="width: 65%;">
                                                     </td>
                                                     <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px;"> <input
                                                             name="owners_Tel_No_Mobile" type="text"
-                                                            pattern="[0-9]{10}" placeholder="Enter 10-digit number"
-                                                            type="text" required style="width: 65%;">
+                                                            class="input-number" pattern="[0-9]{10}" maxlength="10"
+                                                            placeholder="Enter 10-digit number" type="text"
+                                                            required style="width: 65%;">
                                                     </td>
                                                 </tr>
                                             </tbody>
