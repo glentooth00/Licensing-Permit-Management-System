@@ -50,13 +50,15 @@
                                         <li><input type="checkbox" name="classification_cottage" value="1">
                                             Cottage (below 500,000)</li>
                                         <li><input type="checkbox" name="classification_cottage" value="2">
-                                            Small
-                                            (500,000 -> 5M)</li>
+                                            Micro
+                                            ( 3,000,000 below)</li>
                                         <li><input type="checkbox" name="classification_cottage" value="3">
-                                            Medium
-                                            (5M
-                                            -> 20M)</li>
+                                            Small
+                                            (3,000,001 to 15,000,000)</li>
                                         <li><input type="checkbox" name="classification_cottage" value="4">
+                                            Medium
+                                            (15,000,001 to 100,000,000)</li>
+                                        <li><input type="checkbox" name="classification_cottage" value="5">
                                             Large
                                             (20M
                                             -> Up)</li>
@@ -111,9 +113,12 @@
                                 <hr>
                                 <table class="table table-bordered table-sm">
                                     <tr>
-                                        <td class="p-2"> Date of Application: <input name="date_of_application"
-                                                type="date" style="width: 70%;"></td>
-                                        <td> DTI/SEC/CDA Registration No.: <input name="DTI_SEC_CDA_registration No"
+                                        <td class="p-2"> <label for="date_of_application">Date of
+                                                Application:</label>
+                                            <input id="date_of_application" name="date_of_application" type="date"
+                                                style="width: 70%;">
+                                        </td>
+                                        <td> DTI/SEC/CDA Registration No. : <input name="DTI_SEC_CDA_registration No"
                                                 type="text" style="width: 60%;"></td>
                                     </tr>
                                     <tr>
@@ -164,6 +169,18 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="p-2">
+                                                Type of Business: <select name="business_type" type="text" required
+                                                    style="width: 80%;">
+                                                    <option value ="" hidden>Select Business type</option>
+                                                    <option value ="Sari-sari Store">Sari-sari Store</option>
+                                                    <option value ="Gasoline Station">Gasoline Station</option>
+                                                    <option value ="Hardware">Hardware</option>
+                                                    <option value ="Restaurant">Restaurant</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="p-2">
                                                 Trade Name/Franchise: <input name="trade_name_franchise"
                                                     type="text" style="width: 76%;">
                                             </td>
@@ -171,7 +188,8 @@
                                     </table>
                                     <div>
                                         <div class="text-center bg-dark text-light p-1 pt-2">
-                                            <h6>Note: For renewal application, do not fill up this section unless certain information have changed.</h6>
+                                            <h6>Note: For renewal application, do not fill up this section unless
+                                                certain information have changed.</h6>
                                         </div>
                                         <table class="table table-bordered table-sm">
                                             <thead>
@@ -192,72 +210,221 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2">Street: <input name="business_street"
-                                                            type="text" required style="width: 90%;">
+                                                    <td class="p-2">Street:
+                                                        <select name="business_street" type="text" required
+                                                            style="width: 90%;">
+                                                            <option value="" hidden>Select Street</option>
+                                                            <option value="Aclaro Street">Aclaro Street</option>
+                                                            <option value="Bacos Road">Bacos Road
+                                                            </option>
+                                                            <option value="Bulaqueña-Gogo Road">Bulaqueña-Gogo Road
+                                                            </option>
+                                                            <option value="Clement Street">Clement Street</option>
+                                                            <option value="Cuenca Street">Cuenca Street</option>
+                                                            <option value="E. Reyes Avenue">E. Reyes Avenue
+                                                            </option>
+                                                            <option value="Golingan Street">Golingan Street</option>
+                                                            <option value="Iloilo East Coast-Capiz Road">
+                                                                Iloilo East Coast-Capiz Road
+                                                            </option>
+                                                            <option value="Iloilo East Coast-Capiz Road">
+                                                                Iloilo East Coast-Capiz Road
+                                                            </option>
+                                                            <option value="Iloilo East Coast-Estancia Wharf Road">
+                                                                Iloilo East Coast-Estancia Wharf Road
+                                                            </option>
+                                                            <option value="Inventor Street">Inventor
+                                                                Street</option>
+                                                            <option value="Julian Paraiso Street">Julian
+                                                                Paraiso Street
+                                                            </option>
+                                                            <option value="Paon-Daculan Road">Paon-Daculan Road
+                                                            </option>
+                                                            <option value="Pio Reyes Street">Pio Reyes
+                                                                Street</option>
+                                                            <option value="Somes Street">Somes Street
+                                                            </option>
+                                                            <option value="V. Cudilla, Sr. Avenue">V. Cudilla, Sr.
+                                                                Avenue</option>
+                                                            <option value="Villa Reyes Road">Villa Reyes Road</option>
+                                                            <option value="Zone III Road">Zone III Road</option>
+                                                        </select>
                                                     </td>
-                                                    <td class="p-2">Street: <input name="owners_street"
+                                                    <td class="p-2">Street: <select name="business_street"
                                                             type="text" required style="width: 90%;">
+                                                            <option value="" hidden>Select Street</option>
+                                                            <option value="Aclaro Street">Aclaro Street</option>
+                                                            <option value="Bacos Road">Bacos Road
+                                                            </option>
+                                                            <option value="Bulaqueña-Gogo Road">Bulaqueña-Gogo Road
+                                                            </option>
+                                                            <option value="Clement Street">Clement Street</option>
+                                                            <option value="Cuenca Street">Cuenca Street</option>
+                                                            <option value="E. Reyes Avenue">E. Reyes Avenue
+                                                            </option>
+                                                            <option value="Golingan Street">Golingan Street</option>
+                                                            <option value="Iloilo East Coast-Capiz Road">
+                                                                Iloilo East Coast-Capiz Road
+                                                            </option>
+                                                            <option value="Iloilo East Coast-Capiz Road">
+                                                                Iloilo East Coast-Capiz Road
+                                                            </option>
+                                                            <option value="Iloilo East Coast-Estancia Wharf Road">
+                                                                Iloilo East Coast-Estancia Wharf Road
+                                                            </option>
+                                                            <option value="Inventor Street">Inventor
+                                                                Street</option>
+                                                            <option value="Julian Paraiso Street">Julian
+                                                                Paraiso Street
+                                                            </option>
+                                                            <option value="Paon-Daculan Road">Paon-Daculan Road
+                                                            </option>
+                                                            <option value="Pio Reyes Street">Pio Reyes
+                                                                Street</option>
+                                                            <option value="Somes Street">Somes Street
+                                                            </option>
+                                                            <option value="V. Cudilla, Sr. Avenue">V. Cudilla, Sr.
+                                                                Avenue</option>
+                                                            <option value="Villa Reyes Road">Villa Reyes Road</option>
+                                                            <option value="Zone III Road">Zone III Road</option>
+                                                        </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Barangay: </b><input
+                                                    <td class="p-2"><b>Barangay: </b>
+                                                        <select name="business_barangay" type="text" required
+                                                            style="width: 85%;">
+                                                            <option value="" hidden>Select Barangay</option>
+                                                            <option value="Brgy Bayas">Bayas</option>
+                                                            <option value="Brgy Bayuyan">Bayuyan</option>
+                                                            <option value="Brgy Botongon">Botongon</option>
+                                                            <option value="Brgy Bulaqueña">Bulaqueña</option>
+                                                            <option value="Brgy Calapdan">Calapdan</option>
+                                                            <option value="Brgy Cano-an">Cano-an</option>
+                                                            <option value="Brgy Daan Banua">Daan Banua</option>
+                                                            <option value="Brgy Daculan">Daculan</option>
+                                                            <option value="Brgy Gogo">Gogo</option>
+                                                            <option value="Brgy Jolog">Jolog</option>
+                                                            <option value="Brgy Lumbia (Ana Cuenca)">Lumbia (Ana
+                                                                Cuenca)</option>
+                                                            <option value="Brgy Malbog">Malbog</option>
+                                                            <option value="Brgy Manipulon">Manipulon</option>
+                                                            <option value="Brgy Pa-on">Pa-on</option>
+                                                            <option value="Brgy San Roque">San Roque</option>
+                                                            <option value="Brgy Santa Ana">Santa Ana</option>
+                                                            <option value="Brgy Tabu-an">Tabu-an</option>
+                                                            <option value="Brgy Tacbuyan">Tacbuyan</option>
+                                                            <option value="Brgy Tanza">Tanza</option>
+                                                            <option value="Brgy Poblacion Zone II">Poblacion Zone II
+                                                            </option>
+                                                            <option value="Brgy Poblacion Zone III">Poblacion Zone III
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="p-2"><b>Barangay: </b> <select
                                                             name="business_barangay" type="text" required
-                                                            style="width: 85%;"></td>
-                                                    <td class="p-2"><b>Barangay: </b><input name="owners_barangay"
-                                                            type="text" required style="width: 85%;"></td>
+                                                            style="width: 85%;">
+                                                            <option value="" hidden>Select Barangay</option>
+                                                            <option value="Brgy Bayas">Bayas</option>
+                                                            <option value="Brgy Bayuyan">Bayuyan</option>
+                                                            <option value="Brgy Botongon">Botongon</option>
+                                                            <option value="Brgy Bulaqueña">Bulaqueña</option>
+                                                            <option value="Brgy Calapdan">Calapdan</option>
+                                                            <option value="Brgy Cano-an">Cano-an</option>
+                                                            <option value="Brgy Daan Banua">Daan Banua</option>
+                                                            <option value="Brgy Daculan">Daculan</option>
+                                                            <option value="Brgy Gogo">Gogo</option>
+                                                            <option value="Brgy Jolog">Jolog</option>
+                                                            <option value="Brgy Lumbia (Ana Cuenca)">Lumbia (Ana
+                                                                Cuenca)</option>
+                                                            <option value="Brgy Malbog">Malbog</option>
+                                                            <option value="Brgy Manipulon">Manipulon</option>
+                                                            <option value="Brgy Pa-on">Pa-on</option>
+                                                            <option value="Brgy San Roque">San Roque</option>
+                                                            <option value="Brgy Santa Ana">Santa Ana</option>
+                                                            <option value="Brgy Tabu-an">Tabu-an</option>
+                                                            <option value="Brgy Tacbuyan">Tacbuyan</option>
+                                                            <option value="Brgy Tanza">Tanza</option>
+                                                            <option value="Brgy Poblacion Zone II">Poblacion Zone II
+                                                            </option>
+                                                            <option value="Brgy Poblacion Zone III">Poblacion Zone III
+                                                            </option>
+                                                        </select></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">City/Municipality: <input
-                                                            name="business_city_municipality" type="text" required
+                                                            name="business_city_municipality" type="text"
+                                                            value="Estancia" disabled required class="text-dark"
                                                             style="width: 75%;">
                                                     </td>
                                                     <td class="p-2">City/Municipality: <input
-                                                            name="owners_city_municipality" type="text" required
-                                                            style="width: 75%;">
+                                                            name="owners_city_municipality" value="Estancia"
+                                                            type="text" required class="text-dark"
+                                                            style="width: 75%;" disabled>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">Province: <input name="business_province"
-                                                            type="text" required style="width: 85%;">
+                                                            type="text" value="Iloilo" class="text-dark" disabled
+                                                            required style="width: 85%;">
                                                     </td>
                                                     <td class="p-2">Province: <input name="owners_province"
-                                                            type="text" required style="width: 85%;">
+                                                            type="text" value="Iloilo" class="text-dark" disabled
+                                                            required style="width: 85%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Tel. No./Mobile: </b><input
-                                                            name="business_Tel_No_Mobile" type="text" required
-                                                            style="width: 75%;">
+                                                    <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
+                                                            disabled class="text-dark"
+                                                            style="width:55px;margin-right:5px;"><input
+                                                            name="business_Tel_No_Mobile" type="tel"
+                                                            pattern="[1-9]{10}" placeholder="Enter 10-digit number"
+                                                            type="text" required style="width: 65%;">
                                                     </td>
-                                                    <td class="p-2"><b>Tel. No./Mobile: </b><input
-                                                            name="owners_Tel_No_Mobile" type="text" required
-                                                            style="width: 75%;">
+                                                    <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
+                                                            disabled class="text-dark"
+                                                            style="width:55px;margin-right:5px;"> <input
+                                                            name="owners_Tel_No_Mobile" type="tel"
+                                                            pattern="[1-9]{10}" placeholder="Enter 10-digit number"
+                                                            type="text" required style="width: 65%;">
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                          <div class="bg-dark text-light p-1 pt-2">
+                                        <div class="bg-dark text-light p-1 pt-2">
                                             <h6>Note: Full Up Only If Business Place is Rented</h6>
                                         </div>
                                         <table class="table table-bordered table-sm">
                                             <thead>
                                                 <tr>
-                                                    <td class="p-2"><b>Lessor's Full Name: </b><input name="owners_Tel_No_Mobile" style="width: 87%;" type="text" required>
+                                                    <td class="p-2"><b>Lessor's Full Name: </b><input
+                                                            name="owners_Tel_No_Mobile" style="width: 87%;"
+                                                            type="text" required>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Lessor's Full Address: </b><input name="owners_Tel_No_Mobile" style="width: 80%;" type="text" required>
+                                                    <td class="p-2"><b>Lessor's Full Address: </b><input
+                                                            name="owners_Tel_No_Mobile" style="width: 80%;"
+                                                            type="text" required>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Lessor's Full Tel/Mobile No.: </b><input name="owners_Tel_No_Mobile" style="width: 80%;" type="text" required>
+                                                    <td class="p-2"><b>Lessor's Full Tel/Mobile No.: </b><input
+                                                            name="owners_Tel_No_Mobile" style="width: 80%;"
+                                                            type="text" required>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Lessor's Email Address: </b><input name="owners_Tel_No_Mobile" style="width: 80%;" type="text" required>
+                                                    <td class="p-2"><b>Lessor's Email Address: </b><input
+                                                            name="owners_Tel_No_Mobile" style="width: 80%;"
+                                                            type="text" required>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Monthly Rental: </b><input name="owners_Tel_No_Mobile" style="width: 87%;" type="text" required>
+                                                    <td class="p-2"><b>Monthly Rental: </b><input
+                                                            name="owners_Tel_No_Mobile" style="width: 87%;"
+                                                            type="text" required>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>BUSINESS ACTIVITY </b><input name="owners_Tel_No_Mobile" style="width: 87%;" type="text" required>
+                                                    <td class="p-2"><b>BUSINESS ACTIVITY </b><input
+                                                            name="owners_Tel_No_Mobile" style="width: 87%;"
+                                                            type="text" required>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -266,8 +433,10 @@
                                                 <tr>
                                                     <td class="bg-dark text-white text-center">Line Of Business</td>
                                                     <td class="text-center">No. Of <br> Units/Rooms</td>
-                                                    <td class="text-center"><b>Capitalization</b> <br> (for new business)</td>
-                                                    <td class="text-center" colspan="2">Gross Sales/Receipts (for renewal)</td>
+                                                    <td class="text-center"><b>Capitalization</b> <br> (for new
+                                                        business)</td>
+                                                    <td class="text-center" colspan="2">Gross Sales/Receipts (for
+                                                        renewal)</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -277,37 +446,44 @@
                                                             <div class="col-md-5">
                                                                 <ul>
                                                                     <li>
-                                                                        <input type="checkbox" name="amendment" value="1">
+                                                                        <input type="checkbox" name="amendment"
+                                                                            value="1">
                                                                         Retail/Wholesale (essential commodities)
                                                                     </li>
                                                                     <li>
-                                                                        <input type="checkbox" name="amendment" value="2">
+                                                                        <input type="checkbox" name="amendment"
+                                                                            value="2">
                                                                         Retail/Wholesale
                                                                     </li>
                                                                     <li>
-                                                                        <input type="checkbox" name="amendment" value="3">
+                                                                        <input type="checkbox" name="amendment"
+                                                                            value="3">
                                                                         Manufacturing
                                                                     </li>
                                                                     <li>
-                                                                        <input type="checkbox" name="amendment" value="4">
+                                                                        <input type="checkbox" name="amendment"
+                                                                            value="4">
                                                                         Conructors
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                             <div class="col-md-5">
-                                                                    <li>
-                                                                        <input type="checkbox" name="amendment" value="1">
-                                                                        Banks/Financial Institution
-                                                                    </li>
-                                                                    <li>
-                                                                        <input type="checkbox" name="amendment" value="2">
-                                                                        Dealers/Buy & Sell
-                                                                    </li>
-                                                                    <li>
-                                                                        <input type="checkbox" name="amendment" value="3">
-                                                                        Other Business
-                                                                        <input type="text" name="amendment">
-                                                                    </li>
+                                                                <li>
+                                                                    <input type="checkbox" name="amendment"
+                                                                        value="1">
+                                                                    Banks/Financial Institution
+                                                                </li>
+                                                                <li>
+                                                                    <input type="checkbox" name="amendment"
+                                                                        value="2">
+                                                                    Dealers/Buy & Sell
+                                                                </li>
+                                                                <li>
+                                                                    <input type="checkbox" name="amendment"
+                                                                        value="3">
+                                                                    Other Business
+                                                                    <input type="text" name="amendment">
+                                                                </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -325,14 +501,27 @@
                                                         <textarea name="" id="" cols="20" rows="6"></textarea>
                                                     </td>
                                                     <td class="text-center">
-                                                           <b>Non-Essential</b>
+                                                        <b>Non-Essential</b>
                                                         <textarea name="" id="" cols="20" rows="6"></textarea>
                                                     </td>
+                                                    <td>
+
+                                                    </td>
+
                                                 </tr>
+
                                             </tbody>
+
                                         </table>
+                                        <div class="form-group">
+                                            <input type="checkbox" id="agreeCheckbox">
+                                            <label for="agreeCheckbox">I hereby declare that the following entered data
+                                                is true.</label>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-primary" style="float: right;">Submit</button>
+                                    {{-- <button class="btn btn-primary" style="float: right;">Submit</button> --}}
+                                    <button type="submit" class="btn btn-primary" style="float: right;"
+                                        id="submitButton" disabled>Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -341,7 +530,12 @@
             </div>
         </div>
     </section>
-
+    <script>
+        document.getElementById('agreeCheckbox').addEventListener('change', function() {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = !this.checked; // Disable if not checked, enable if checked
+        });
+    </script>
 </body>
 
 </html>

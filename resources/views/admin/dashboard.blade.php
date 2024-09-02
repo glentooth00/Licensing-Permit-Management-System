@@ -82,6 +82,7 @@
                                 <tr>
                                     <th>NAME</th>
                                     <th>NAME OF BUSINESS</th>
+                                    <th>BUSINESS TYPE</th>
                                     <th>CONTACT No.</th>
                                     <th>APPLIED ON</th>
                                     <th>STATUS</th>
@@ -99,7 +100,9 @@
                                         <td>
                                             {{ $businessPermit->business_name }}
                                         </td>
-
+                                        <td>
+                                            {{ $businessPermit->business_type }}
+                                        </td>
                                         <td>
                                             {{ $businessPermit->owners_Tel_No_Mobile }}
                                         </td>

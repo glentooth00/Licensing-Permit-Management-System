@@ -3,10 +3,10 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link text-center">
         <img src="{{ asset('dist/images/logo.png') }}" alt="AdminLTE Logo" width="60" class="img-circle">
-            <br>
+        <br>
         <span class="brand-text font-weight-light w-10 justify-center" style="font-size: 20px">Estancia LGU
-            Business<br>and Licensing Permit
-            <br>Information
+            Business<br>Permit and Licensing
+            <br>Information System
             System</span>
     </a>
 
@@ -36,29 +36,29 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                   <i class="fa-regular fa-folder-open nav-icon"></i>
-                    <p>
-                         Registered Permits
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
+                        <i class="fa-regular fa-folder-open nav-icon"></i>
+                        <p>
+                            Registered Permits
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.permit') }}" class="nav-link">
-                            <i class="fa-solid fa-file-lines nav-icon"></i>
-                            <p> View Permits</p>
+                                <i class="fa-solid fa-file-lines nav-icon"></i>
+                                <p> View Permits</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
-                            <i class="fa-solid fa-file-lines nav-icon"></i>
-                            <p>Renew</p>
+                                <i class="fa-solid fa-file-lines nav-icon"></i>
+                                <p>Renew</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('business-permits.archived') }}" class="nav-link">
-                            <i class="fa-solid fa-box-archive nav-icon"></i>
-                            <p>Archived</p>
+                                <i class="fa-solid fa-box-archive nav-icon"></i>
+                                <p>Archived</p>
                             </a>
                         </li>
                     </ul>
