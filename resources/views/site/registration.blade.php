@@ -176,6 +176,26 @@
                                                     <option value ="Gasoline Station">Gasoline Station</option>
                                                     <option value ="Hardware">Hardware</option>
                                                     <option value ="Restaurant">Restaurant</option>
+                                                    <option value ="Bakery">Bakery</option>
+                                                    <option value ="Fish Broker">Fish Broker</option>
+                                                    <option value ="Fruit and Vegetable Business">Fruit and Vegetable
+                                                        Business</option>
+                                                    <option value="Meat Shop">Meat Shop</option>
+                                                    <option value="Cake and Pastry Business">Cake and Pastry Business
+                                                    </option>
+                                                    <option value="Beauty Products Reselling Business">Beauty Products
+                                                        Reselling Business</option>
+                                                    <option value="Fashion Boutique">Fashion Boutique</option>
+                                                    <option value="Hair and Grooming Services">Hair and Grooming
+                                                        Services</option>
+                                                    <option value="Bicycle Shop Business">Bicycle Shop Business
+                                                    </option>
+                                                    <option value="Car Wash">Car Wash</option>
+                                                    <option value="Food Cart Franchise">Food Cart Franchise</option>
+                                                    <option value="Laundry Shop Business">Laundry Shop Business
+                                                    </option>
+                                                    <option value="Water Refilling Station">Water Refilling Station
+                                                    </option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -354,22 +374,22 @@
                                                 <tr>
                                                     <td class="p-2">City/Municipality: <input
                                                             name="business_city_municipality" type="text"
-                                                            value="Estancia" disabled required class="text-dark"
+                                                            value="Estancia" readonly required class="text-dark"
                                                             style="width: 75%;">
                                                     </td>
                                                     <td class="p-2">City/Municipality: <input
                                                             name="owners_city_municipality" value="Estancia"
                                                             type="text" required class="text-dark"
-                                                            style="width: 75%;" disabled>
+                                                            style="width: 75%;" readonly>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">Province: <input name="business_province"
-                                                            type="text" value="Iloilo" class="text-dark" disabled
+                                                            type="text" value="Iloilo" class="text-dark" readonly
                                                             required style="width: 85%;">
                                                     </td>
                                                     <td class="p-2">Province: <input name="owners_province"
-                                                            type="text" value="Iloilo" class="text-dark" disabled
+                                                            type="text" value="Iloilo" class="text-dark" readonly
                                                             required style="width: 85%;">
                                                     </td>
                                                 </tr>
@@ -377,15 +397,15 @@
                                                     <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px;"><input
-                                                            name="business_Tel_No_Mobile" type="tel"
-                                                            pattern="[1-9]{10}" placeholder="Enter 10-digit number"
+                                                            name="business_Tel_No_Mobile" type="text"
+                                                            pattern="[0-9]{10}" placeholder="Enter 10-digit number"
                                                             type="text" required style="width: 65%;">
                                                     </td>
                                                     <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px;"> <input
-                                                            name="owners_Tel_No_Mobile" type="tel"
-                                                            pattern="[1-9]{10}" placeholder="Enter 10-digit number"
+                                                            name="owners_Tel_No_Mobile" type="text"
+                                                            pattern="[0-9]{10}" placeholder="Enter 10-digit number"
                                                             type="text" required style="width: 65%;">
                                                     </td>
                                                 </tr>
@@ -398,33 +418,31 @@
                                             <thead>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Name: </b><input
-                                                            name="owners_Tel_No_Mobile" style="width: 87%;"
-                                                            type="text" required>
+                                                            name="" style="width: 87%;" type="text"
+                                                            required>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Address: </b><input
-                                                            name="owners_Tel_No_Mobile" style="width: 80%;"
-                                                            type="text" required>
+                                                            name="" style="width: 80%;" type="text"
+                                                            required>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Tel/Mobile No.: </b><input
-                                                            name="owners_Tel_No_Mobile" style="width: 80%;"
-                                                            type="text" required>
+                                                            name="" style="width: 80%;" type="text"
+                                                            required>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Email Address: </b><input
-                                                            name="owners_Tel_No_Mobile" style="width: 80%;"
-                                                            type="text" required>
+                                                            name="" style="width: 80%;" type="text"
+                                                            required>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Monthly Rental: </b><input
-                                                            name="owners_Tel_No_Mobile" style="width: 87%;"
-                                                            type="text" required>
+                                                    <td class="p-2"><b>Monthly Rental: </b><input name=""
+                                                            style="width: 87%;" type="text" required>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>BUSINESS ACTIVITY </b><input
-                                                            name="owners_Tel_No_Mobile" style="width: 87%;"
-                                                            type="text" required>
+                                                    <td class="p-2"><b>BUSINESS ACTIVITY </b><input name=""
+                                                            style="width: 87%;" type="text" required>
                                                 </tr>
                                             </thead>
                                         </table>

@@ -47,9 +47,7 @@ class BusinessPermitApplicationController extends Controller
      */
     public function store(Request $request)
     {
-       
-        // dd($request->all());
-
+        // Validate the incoming data
         $validatedData = $request->validate([
             'business_application' => 'nullable|string|max:255',
             'classification_cottage' => 'nullable|string|max:255',
@@ -83,18 +81,22 @@ class BusinessPermitApplicationController extends Controller
             'business_type' => 'nullable|string|max:255',
         ]);
         
-
+        // Prepend the country code to the mobile number
+        if (!empty($validatedData['business_Tel_No_Mobile'])) {
+            $validatedData['business_Tel_No_Mobile'] = '+639' . $validatedData['business_Tel_No_Mobile'];
+            $validatedData['owners_Tel_No_Mobile'] = '+639' . $validatedData['owners_Tel_No_Mobile'];
+        }
+    
         $validatedData['status'] = 'Pending';
-
+    
+        // Create the record in the database
         $product = BusinessPermitApplication::create($validatedData);
-
-        // Optionally, you can return a response or redirect to another page
-        // return redirect()->route('registration_complete')->with('success', 'Registration complete!');
+    
+        // Set a flash message for successful registration
         session()->flash('registration_success', true);
-
-    // Redirect back to the login page
-    return redirect()->route('login');
-
+    
+        // Redirect to the login page
+        return redirect()->route('login');
     }
 
     /**
