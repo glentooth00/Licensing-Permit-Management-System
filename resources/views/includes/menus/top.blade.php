@@ -49,11 +49,11 @@
               <a class="dropdown-item" href="#">Settings</a>
               <hr>
               <div>
-                  <a style="font-size: 15px;" class="dropdown-item" href="#">Maintenance
-                      <hr>
+                  <a style="font-size: 14px;" class="dropdown-item" href="#">Maintenance
                   </a>
-                  <a style="font-size: 15px;" class="dropdown-item" href="#">Permit Expiration
-                      <hr>
+                  <a style="font-size: 14px;" class="dropdown-item" href="#">Permit Expiration
+                  </a>
+                  <a style="font-size: 14px;" class="dropdown-item" href="#">User Management
                   </a>
               </div>
 
