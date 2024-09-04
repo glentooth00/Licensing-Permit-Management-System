@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\activity_log;
 use App\Models\BusinessPermitApplication;
 use Illuminate\Http\Request;
 use Endroid\QrCode\QrCode;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 use Endroid\QrCode\Response\QrCodeResponse;
 
@@ -16,6 +19,7 @@ class BusinessPermitApplicationController extends Controller
      */
     public function index()
     {
+
         $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
 
         $allPermits = BusinessPermitApplication::all()->count();
@@ -25,6 +29,7 @@ class BusinessPermitApplicationController extends Controller
 
          // Count approved applications
          $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
+
     
         return view('admin.dashboard', [
             'businessPermits' => $businessPermits,
@@ -207,7 +212,7 @@ public function show($id)
         return view('site.registration_complete');
     }
 
-    public function approvePermit($id)
+    public function approvePermit($id, Request $request)
     {
         // Find the business permit by ID
         $businessPermit = BusinessPermitApplication::findOrFail($id);
@@ -216,6 +221,25 @@ public function show($id)
         $businessPermit->status = 'Approved';
         $businessPermit->save();
     
+        // Check if the 'Approve' button was clicked
+        if ($request->input('action') == 'log_approve') {
+
+            $businessPermit = BusinessPermitApplication::findOrFail($id);
+
+            $client_firstname = $businessPermit->first_name;
+            $client_middlename = $businessPermit->middle_name;
+            $client_lastname = $businessPermit->last_name;
+
+
+            $ApproveLog['firstname'] = Auth::user()->firstname; 
+            $ApproveLog['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
+            $ApproveLog['user_activity'] = 'has <span class="badge badge-success p-2">APPROVED</span> the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' .  $client_lastname . '</b>';
+        
+           $approvedLog = activity_log::create($ApproveLog);
+
+           }    
+        
+    
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Permit approved successfully.');
     }
@@ -223,31 +247,15 @@ public function show($id)
 
     public function showApproved(){
 
-       $approved_permits = BusinessPermitApplication::where('status', 'Approved')
-    ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
-    ->get();
+        $approved_permits = BusinessPermitApplication::where('status', 'Approved')
+        ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
+        ->get();
 
     
         return view('admin.permit.index', [
             'approved_permits' => $approved_permits,
         ]);
     }
-
-    // public function generatePermit(Request $request)
-    // {
-    //     $userId = $request->input('user_id');
-    //     // Fetch user data based on $userId, e.g., $user = User::find($userId);
-    
-    //     // Generate QR code based on user data
-    //     $qrCode = new QrCode('Your QR Code Data'); // Replace 'Your QR Code Data' with the actual data you want to encode
-    //     $qrCode->setSize(200); // Set QR code size
-    
-    //     // Generate base64-encoded QR code image
-    //     $base64QRCode = base64_encode($qrCode->writeString());
-    
-    //     // Return the base64-encoded QR code image as a response
-    //     return response()->json(['qr_code' => $base64QRCode]);
-    // }
     
     public function generatePermit(Request $request)
     {
@@ -275,19 +283,42 @@ public function show($id)
         return response()->json(['qr_code' => $base64QRCode, 'status' => $status]);
     }
     
-    public function archivePermit($id)
+
+
+    public function archivePermit(Request $request, $id)
     {
+
         // Find the business permit by ID
         $businessPermit = BusinessPermitApplication::findOrFail($id);
 
-        // Update the status to 'Archived'
-        $businessPermit->status = 'Archived';
-        $businessPermit->save();
+        if ($request->input('action') == 'archive') {
 
-        // Redirect back with a success message
-        return redirect()->back()->with('success', 'Permit archived successfully.');
+            $businessPermit = BusinessPermitApplication::findOrFail($id);
+
+            $client_firstname = $businessPermit->first_name;
+            $client_middlename = $businessPermit->middle_name;
+            $client_lastname = $businessPermit->last_name;
+
+            $archive['firstname'] = Auth::user()->firstname; 
+              $archive['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
+              $archive['user_activity'] = 'has moved the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' .  $client_lastname . '</b>' . ' '.'to <span class="badge badge-warning p-2">ARCHIVED</span>';
+
+            $archived = activity_log::create(  $archive);
+
+            // Update the status to 'Archived'
+            $businessPermit->status = 'Archived';
+            $businessPermit->save();
+
+            // Redirect back with a success message
+            return redirect()->back()->with('success', 'Permit archived successfully.');
+
+        } 
+
+
     }
     
+
+
     public function showArchived()
     {
         // Fetch permits with status 'Archived'
@@ -297,17 +328,37 @@ public function show($id)
         return view('admin.permit.archived', compact('archived_permits'));
     }
     
-    public function renewPermit($id)
+    public function renewPermit(Request $request, $id)
     {
         // Find the business permit by ID
         $businessPermit = BusinessPermitApplication::findOrFail($id);
 
-        // Update the status to 'Pending' (or any other status to renew)
-        $businessPermit->status = 'For Renewal';
-        $businessPermit->save();
 
-        // Redirect back with a success message
-        return redirect()->back()->with('success', 'Permit renewed successfully.');
+        if ($request->input('action') == 'renew') {
+
+            $businessPermit = BusinessPermitApplication::findOrFail($id);
+
+            $client_firstname = $businessPermit->first_name;
+            $client_middlename = $businessPermit->middle_name;
+            $client_lastname = $businessPermit->last_name;
+
+            $archive['firstname'] = Auth::user()->firstname; 
+              $archive['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
+              $archive['user_activity'] = 'has moved the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' .  $client_lastname . '</b>' . ' '.'for <span class="badge badge-primary text-white p-2">RENEWAL</span>';
+
+            $archived = activity_log::create(  $archive);
+
+            // Update the status to 'Pending' (or any other status to renew)
+            $businessPermit->status = 'For Renewal';
+            $businessPermit->save();
+
+           // Redirect back with a success message
+            return redirect()->back()->with('success', 'Permit renewed successfully.');
+
+
+        }
+
+       
     }
 
     public function showForRenewal()
@@ -321,18 +372,30 @@ public function show($id)
 
     public function approveRenewal(Request $request, $id)
     {
-        // Debugging: Output form data for inspection
-        // dd($request->all());
-    
-        // Find the permit by ID
-        $permit = BusinessPermitApplication::findOrFail($id);
-    
-        // Update the status to 'Approved'
-        $permit->status = 'Approved';
-        $permit->save();
-    
-        // Redirect back or to a specific route
-        return redirect()->back()->with('success', 'Renewal approved successfully.');
+
+        if ($request->input('action') == 'renew') {
+
+             // Find the permit by ID
+            $permit = BusinessPermitApplication::findOrFail($id);
+
+            $client_firstname = $permit->first_name;
+            $client_middlename = $permit->middle_name;
+            $client_lastname = $permit->last_name;
+
+            $renewal['firstname'] = Auth::user()->firstname; 
+            $renewal['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
+            $renewal['user_activity'] = 'has <span class="badge badge-success text-dark p-2">RENEWED</span>  the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' .  $client_lastname .'.';
+
+            $forRenewal = activity_log::create($renewal);
+
+            // Update the status to 'Approved'
+            $permit->status = 'Approved';
+            $permit->save();
+        
+            // Redirect back or to a specific route
+            return redirect()->back()->with('success', 'Renewal approved successfully.');   
+
+        }
     }
     
     

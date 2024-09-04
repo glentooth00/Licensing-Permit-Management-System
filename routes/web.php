@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
 use App\Http\Controllers\UserController;
@@ -70,7 +71,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/permit/show/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
 
     // Route for approving permit using BusinessPermitApplicationController
-    Route::put('/approve-permit/{id}', [BusinessPermitApplicationController::class, 'approvePermit'])->name('approve.permit');
+    Route::post('/approve-permit/{id}', [BusinessPermitApplicationController::class, 'approvePermit'])->name('approve.permit');
 
     // Route to edit a permit
     Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
@@ -117,10 +118,15 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::patch('/business-permits/{id}/approve-renewal', [BusinessPermitApplicationController::class, 'approveRenewal'])
     ->name('business-permits.approve-renewal');
 
+
     //USER MANAGEMENT
     Route::get('admin/user', [UserController::class, 'index'])->name('admin.permit.user');
     Route::post('user', [UserController::class, 'store'])->name('user.store');
+    Route::get('admin/activity-logs', [ActivityLogsController::class, 'index'])->name('admin.permit.logs');
+    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
 
+    //logout
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 });
 

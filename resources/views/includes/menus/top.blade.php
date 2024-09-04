@@ -55,16 +55,16 @@
                       Expiration
                   </a>
                   <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.user') }}">User
-                      Management
-                  </a>
-                  <a style="font-size: 14px;" class="dropdown-item" href="#">Activity Logs
-                  </a>
+                      Management</a>
+                  <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.logs') }}">Activity
+                      Logs</a>
+
               </div>
 
               <hr>
               <form id="logoutForm" action="{{ route('logout') }}" method="POST">
                   @csrf
-                  <button type="submit" class="dropdown-item">Logout</button>
+                  <button type="submit" class="dropdown-item" name="action" value="logout">Logout</button>
               </form>
           </div>
       </div>

@@ -61,8 +61,8 @@
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit"
-                                                    class="btn btn-outline-success btn-sm btn-round">Approve
+                                                <button type="submit" class="btn btn-outline-success btn-sm btn-round"
+                                                    name="action" value="renew">Approve
                                                     Renewal</button>
                                             </form>
 

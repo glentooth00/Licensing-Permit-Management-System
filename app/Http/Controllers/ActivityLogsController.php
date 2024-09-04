@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
+use App\Models\activity_log;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
-class ActivityController extends Controller
+class ActivityLogsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $activities = Activity::all();
-        return view('admin.permit.logs');
+        $activities = activity_log::orderBy('time', 'desc')->get()->map(function ($activity) {
+            $activity->formatted_date = Carbon::parse($activity->time)->format('M-D-Y'); // 'Sep-Wed-2024'
+            $activity->formatted_time = Carbon::parse($activity->time)->format('h:i:s A'); // '12-hour:MM:SS AM/PM'
+            return $activity;
+        });
+
+        return view('admin.permit.logs',[
+            'activities' => $activities,
+        ]);
     }
 
     /**
@@ -35,7 +43,7 @@ class ActivityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Activity $activity)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +51,7 @@ class ActivityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Activity $activity)
+    public function edit(string $id)
     {
         //
     }
@@ -51,7 +59,7 @@ class ActivityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Activity $activity)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +67,7 @@ class ActivityController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Activity $activity)
+    public function destroy(string $id)
     {
         //
     }

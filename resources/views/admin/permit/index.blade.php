@@ -20,8 +20,10 @@
 
         <!-- Main content -->
         <div class="content">
+
             <div class="container-fluid">
                 <div class="card">
+
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
@@ -105,7 +107,8 @@
                                                             @csrf
                                                             @method('PATCH')
                                                             <button type="submit"
-                                                                class="btn btn-outline-danger btn-sm btn-round">Archive</button>
+                                                                class="btn btn-outline-danger btn-sm btn-round"
+                                                                name="action" value="archive">Archive</button>
                                                         </form>
                                                     </div>
                                                 </div>

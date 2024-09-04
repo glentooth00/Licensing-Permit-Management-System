@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\activity_log;
 
 class UserController extends Controller
 {
@@ -60,7 +61,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-
+        
     }
 
     /**
@@ -93,11 +94,43 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication successful, redirect to dashboard or desired route
+
+            // Assign values to both variables and the array
+            $validateData['firstname'] = Auth::user()->firstname; 
+            $validateData['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
+            $validateData['user_activity'] = 'has <span class="badge badge-info text-dark p-2">logged in</span>';
+
+            $log = activity_log::create($validateData);
+            
             return redirect()->intended('/dashboard');
         } else {
             // Authentication failed, redirect back with error message
             return redirect()->route('login')->with('error', 'Invalid username or password.');
         }
+    }
+
+    public function logout(Request $request)
+    {
+        // dd('this is custom logout');
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Log the logout activity
+        if ($request->input('action') == 'logout') {
+
+            $logout['firstname'] = Auth::user()->firstname; 
+            $logout['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
+            $logout['user_activity'] = 'has <span class="badge badge-secondary text-white p-2">logged out</span>';
+
+        $logout = activity_log::create($logout);
+
+        } 
+
+        // Perform logout
+        Auth::logout();
+
+        // Redirect to the login page or any desired route
+        return redirect()->route('login')->with('success', 'You have been logged out successfully.');
     }
 
 }
