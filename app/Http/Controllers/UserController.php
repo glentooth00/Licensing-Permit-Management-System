@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -12,7 +13,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        // return view('login')
+        $users = User::all();
+
+        return view('admin.permit.user',[
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -28,15 +33,34 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'firstname' => 'nullable|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'lastname' => 'nullable|string|max:255',
+            'gender' => 'nullable|string|max:255',
+            'username' => 'nullable|string|max:255',
+            'password' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users',
+            'contactno' => 'nullable|string|max:255',
+            'role' => 'nullable|string|max:255'
+        ]);
+    
+        $createUser = User::create($validateData);
+    
+        // Set a flash message for successful user creation
+        session()->flash('success', 'User created successfully!');
+    
+        // Redirect to the desired page
+        return redirect()->route('admin.permit.user');
     }
+    
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**

@@ -117,6 +117,10 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::patch('/business-permits/{id}/approve-renewal', [BusinessPermitApplicationController::class, 'approveRenewal'])
     ->name('business-permits.approve-renewal');
 
+    //USER MANAGEMENT
+    Route::get('admin/user', [UserController::class, 'index'])->name('admin.permit.user');
+    Route::post('user', [UserController::class, 'store'])->name('user.store');
+
 
 });
 
