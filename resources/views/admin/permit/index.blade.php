@@ -23,7 +23,7 @@
 
             <div class="container-fluid">
                 <div class="card">
-
+                    {{ $now }}
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
@@ -34,6 +34,7 @@
                                     <th class="text-center">CONTACT No.</th>
                                     <th class="text-center">APPLIED ON</th>
                                     <th class="text-center">STATUS</th>
+                                    <th class="text-center">APPROVED ON</th>
                                     <th class="text-center">ACTION</th>
                                 </tr>
                             </thead>
@@ -53,6 +54,7 @@
                                         </td>
                                         <td class="text-center">
                                             {{ $approved_permit->created_at->format('F j, Y') }}
+
                                         </td>
                                         <td class="text-center">
                                             @if ($approved_permit->status == 'Pending')
@@ -60,6 +62,9 @@
                                             @else
                                                 <span class="badge badge-success p-2">Approved</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $approved_permit->approved_on }}
                                         </td>
                                         <td class="text-center">
                                             <div class="row">

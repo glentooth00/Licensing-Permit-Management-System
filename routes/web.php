@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityLogsController;
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
 use App\Http\Controllers\UserController;
@@ -41,6 +42,8 @@ Route::get('/admin-permit-show', function () {
 
 Route::post('/custom-login', [UserController::class, 'authenticate'])->name('custom.login');
 
+// web.php
+
 
 // Handle registration form submission
 Route::post('/business-registration', [BusinessPermitApplicationController::class, 'store'])->name('business-registration.store');
@@ -63,6 +66,8 @@ Route::get('/dashboard', [BusinessPermitApplicationController::class, 'index'])-
 
 // Admin routes
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+
+
 
     // Route to show the approved permits
     Route::get('/permit', [BusinessPermitApplicationController::class, 'showApproved'])->name('admin.permit');
@@ -124,6 +129,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::post('user', [UserController::class, 'store'])->name('user.store');
     Route::get('admin/activity-logs', [ActivityLogsController::class, 'index'])->name('admin.permit.logs');
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+
+    Route::get('/dashboard', [ApprovalController::class, 'showDashboard']);
 
     //logout
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');

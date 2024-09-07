@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Endroid\QrCode\QrCode;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Carbon\Carbon;
 
 use Endroid\QrCode\Response\QrCodeResponse;
 
@@ -19,6 +20,8 @@ class BusinessPermitApplicationController extends Controller
      */
     public function index()
     {
+
+        $now  = now()->setTimezone('Asia/Manila')->toDateTimeString();
 
         $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
 
@@ -36,6 +39,7 @@ class BusinessPermitApplicationController extends Controller
             'pendingCount' => $pendingCount,
             'approvedCount' => $approvedCount,
             'allPermits' => $allPermits,
+            'now' => $now
         ]);
     }
 
@@ -84,6 +88,7 @@ class BusinessPermitApplicationController extends Controller
             'mode_of_payment' => 'nullable|string|max:255',
             'transfer' => 'nullable|string|max:255',
             'business_type' => 'nullable|string|max:255',
+            'approved_on' => 'nullable|string|max:255',
         ]);
         
         // Prepend the country code to the mobile number
@@ -215,16 +220,23 @@ public function show($id)
     public function approvePermit($id, Request $request)
     {
         // Find the business permit by ID
-        $businessPermit = BusinessPermitApplication::findOrFail($id);
+        // $businessPermit = BusinessPermitApplication::findOrFail($id);
     
-        // Update the status to 'Approved'
-        $businessPermit->status = 'Approved';
-        $businessPermit->save();
+        // // Update the status to 'Approved'
+        // $businessPermit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
+        // $businessPermit->status = 'Approved';
+        // $businessPermit->save();
     
         // Check if the 'Approve' button was clicked
         if ($request->input('action') == 'log_approve') {
 
             $businessPermit = BusinessPermitApplication::findOrFail($id);
+
+                    // Update the status to 'Approved'
+            $businessPermit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
+            $businessPermit->status = 'Approved';
+            $businessPermit->save();
+    
 
             $client_firstname = $businessPermit->first_name;
             $client_middlename = $businessPermit->middle_name;
@@ -235,7 +247,7 @@ public function show($id)
             $ApproveLog['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $ApproveLog['user_activity'] = 'has <span class="badge badge-success p-2">APPROVED</span> the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' .  $client_lastname . '</b>';
         
-           $approvedLog = activity_log::create($ApproveLog);
+            $approvedLog = activity_log::create($ApproveLog);
 
            }    
         
@@ -247,6 +259,8 @@ public function show($id)
 
     public function showApproved(){
 
+        $now = Carbon::now('Asia/Manila');
+
         $approved_permits = BusinessPermitApplication::where('status', 'Approved')
         ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
         ->get();
@@ -254,6 +268,7 @@ public function show($id)
     
         return view('admin.permit.index', [
             'approved_permits' => $approved_permits,
+            'now' => $now,
         ]);
     }
     
@@ -349,7 +364,7 @@ public function show($id)
             $archived = activity_log::create(  $archive);
 
             // Update the status to 'Pending' (or any other status to renew)
-            $businessPermit->status = 'For Renewal';
+            $businessPermit->status = 'Renewal';
             $businessPermit->save();
 
            // Redirect back with a success message
@@ -364,7 +379,7 @@ public function show($id)
     public function showForRenewal()
     {
         // Fetch permits with status 'For Renewal'
-        $for_renewal_permits = BusinessPermitApplication::where('status', 'For Renewal')->orderByDesc('created_at')->get();
+        $for_renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->orderByDesc('created_at')->get();
 
         // Return the view with the 'For Renewal' permits
         return view('admin.permit.renew', compact('for_renewal_permits'));
@@ -389,6 +404,7 @@ public function show($id)
             $forRenewal = activity_log::create($renewal);
 
             // Update the status to 'Approved'
+            $permit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $permit->status = 'Approved';
             $permit->save();
         
