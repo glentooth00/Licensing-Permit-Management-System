@@ -60,8 +60,8 @@
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit"
-                                                    class="btn btn-outline-success btn-sm btn-round">Renew</button>
+                                                <button type="submit" class="btn btn-outline-success btn-sm btn-round"
+                                                    name="action" value="renew">Renew</button>
                                             </form>
                                         </td>
                                     </tr>

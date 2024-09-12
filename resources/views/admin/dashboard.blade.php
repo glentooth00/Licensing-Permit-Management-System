@@ -75,8 +75,9 @@
                 <br><br>
 
                 <div class="card">
-                    <!-- /.card-header -->
+                    <!-- /.card-header -->{{ $now }}
                     <div class="card-body">
+                        {{-- <p>Welcome, {{ $user->firstname }}!</p> --}}
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -123,13 +124,14 @@
                                                 {{-- Approve Button --}}
                                                 @if ($businessPermit->status == 'Approved')
                                                 @else
-                                                    <form
-                                                        action="{{ route('approve.permit', ['id' => $businessPermit->id]) }}"
+                                                    <form action="{{ route('approve.permit', $businessPermit->id) }}"
                                                         method="POST">
                                                         @csrf
-                                                        @method('PUT')
-                                                        <button type="submit"
+                                                        <button type="submit" name="action" value="log_approve"
                                                             class="btn btn-outline-success btn-sm btn-round m-1">Approve</button>
+                                                        {{-- <button type="submit"
+                                                            class="btn btn-outline-success btn-sm btn-round m-1"
+                                                            name="action" value="log_approve">Approve</button> --}}
                                                         {{-- Show more details --}}
                                                         {{-- <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}"
                                                             class="btn waves-effect waves-light btn-info btn-sm btn-round m-1">View

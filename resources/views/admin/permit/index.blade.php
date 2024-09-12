@@ -20,8 +20,10 @@
 
         <!-- Main content -->
         <div class="content">
+
             <div class="container-fluid">
                 <div class="card">
+                    {{ $now }}
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
@@ -32,6 +34,7 @@
                                     <th class="text-center">CONTACT No.</th>
                                     <th class="text-center">APPLIED ON</th>
                                     <th class="text-center">STATUS</th>
+                                    <th class="text-center">APPROVED ON</th>
                                     <th class="text-center">ACTION</th>
                                 </tr>
                             </thead>
@@ -51,6 +54,7 @@
                                         </td>
                                         <td class="text-center">
                                             {{ $approved_permit->created_at->format('F j, Y') }}
+
                                         </td>
                                         <td class="text-center">
                                             @if ($approved_permit->status == 'Pending')
@@ -58,6 +62,9 @@
                                             @else
                                                 <span class="badge badge-success p-2">Approved</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $approved_permit->approved_on }}
                                         </td>
                                         <td class="text-center">
                                             <div class="row">
@@ -105,7 +112,8 @@
                                                             @csrf
                                                             @method('PATCH')
                                                             <button type="submit"
-                                                                class="btn btn-outline-danger btn-sm btn-round">Archive</button>
+                                                                class="btn btn-outline-danger btn-sm btn-round"
+                                                                name="action" value="archive">Archive</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -173,6 +181,14 @@
                 });
             });
         });
+
+        //AUTO CHECK 
+        setInterval(function() {
+            fetch('/check-permits')
+                .then(response => response.text())
+                .then(data => console.log(data)) // Logs response message to the console
+                .catch(error => console.error('Error:', error)); // Logs errors
+        }, 60000); // Calls the route every 60,000 milliseconds (1 minute)
     </script>
 
 @endsection

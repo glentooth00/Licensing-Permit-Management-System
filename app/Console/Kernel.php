@@ -2,26 +2,37 @@
 
 namespace App\Console;
 
+use App\Models\BusinessPermitApplication;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Carbon;
+use App\Models\Permit; // Assuming your model is called Permit
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     */
-    protected function schedule(Schedule $schedule): void
+    protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // Schedule the task to run every minute
+        $schedule->call(function () {
+            // Get all permits approved within the last minute
+            $permits = BusinessPermitApplication::where('status', 'approved') // Assuming status is 'approved'
+                ->where('approved_on', '<=', Carbon::now()->subMinute())
+                ->get();
+
+            // Loop through and check each permit
+            foreach ($permits as $permit) {
+                // Display the status update for testing purposes
+                dd('status has been updated');
+            }
+        })->everyMinute();
     }
 
-    /**
-     * Register the commands for the application.
-     */
-    protected function commands(): void
+    protected function commands()
     {
+        // Load the commands within the project
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }
 }
+

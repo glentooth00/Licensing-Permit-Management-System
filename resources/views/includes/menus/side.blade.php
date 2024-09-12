@@ -6,7 +6,7 @@
         <br>
         <span class="brand-text font-weight-light w-10 justify-center" style="font-size: 20px">Estancia LGU
             Business<br>Permit and Licensing
-            <br>Information System
+            <br>Information
             System</span>
     </a>
 

@@ -378,9 +378,9 @@
                                                             style="width: 75%;">
                                                     </td>
                                                     <td class="p-2">City/Municipality: <input
-                                                            name="owners_city_municipality" value="Estancia"
+                                                            name="owners_city_municipality" value=""
                                                             type="text" required class="text-dark"
-                                                            style="width: 75%;" readonly>
+                                                            style="width: 75%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -397,17 +397,16 @@
                                                     <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px;"><input
-                                                            name="business_Tel_No_Mobile" type="text"
-                                                            pattern="[0-9]{10}" maxlength="10"
-                                                            placeholder="Enter 10-digit number" type="text"
-                                                            required style="width: 65%;">
+                                                            name="business_Tel_No_Mobile" pattern="[0-9]{10}"
+                                                            maxlength="10" placeholder="Enter 10-digit number"
+                                                            type="number" required style="width: 65%;">
                                                     </td>
                                                     <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px;"> <input
-                                                            name="owners_Tel_No_Mobile" type="text"
-                                                            class="input-number" pattern="[0-9]{10}" maxlength="10"
-                                                            placeholder="Enter 10-digit number" type="text"
+                                                            name="owners_Tel_No_Mobile" class="input-number"
+                                                            pattern="[0-9]{10}" maxlength="10"
+                                                            placeholder="Enter 10-digit number" type="number"
                                                             required style="width: 65%;">
                                                     </td>
                                                 </tr>

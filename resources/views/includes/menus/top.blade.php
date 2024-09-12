@@ -49,18 +49,22 @@
               <a class="dropdown-item" href="#">Settings</a>
               <hr>
               <div>
-                  <a style="font-size: 15px;" class="dropdown-item" href="#">Maintenance
-                      <hr>
+                  <a style="font-size: 14px;" class="dropdown-item" href="#">Maintenance
                   </a>
-                  <a style="font-size: 15px;" class="dropdown-item" href="#">Permit Expiration
-                      <hr>
+                  <a style="font-size: 14px;" class="dropdown-item" href="">Permit
+                      Expiration
                   </a>
+                  <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.user') }}">User
+                      Management</a>
+                  <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.logs') }}">Activity
+                      Logs</a>
+
               </div>
 
               <hr>
               <form id="logoutForm" action="{{ route('logout') }}" method="POST">
                   @csrf
-                  <button type="submit" class="dropdown-item">Logout</button>
+                  <button type="submit" class="dropdown-item" name="action" value="logout">Logout</button>
               </form>
           </div>
       </div>
