@@ -181,6 +181,14 @@
                 });
             });
         });
+
+        //AUTO CHECK 
+        setInterval(function() {
+            fetch('/check-permits')
+                .then(response => response.text())
+                .then(data => console.log(data)) // Logs response message to the console
+                .catch(error => console.error('Error:', error)); // Logs errors
+        }, 60000); // Calls the route every 60,000 milliseconds (1 minute)
     </script>
 
 @endsection

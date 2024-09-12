@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\activity_log;
 use App\Models\BusinessPermitApplication;
+use DB;
 use Illuminate\Http\Request;
 use Endroid\QrCode\QrCode;
 use Illuminate\Support\Facades\Auth;
@@ -257,20 +258,59 @@ public function show($id)
     }
     
 
-    public function showApproved(){
+    public function showApproved()
+{
+    $now = Carbon::now('Asia/Manila');
 
-        $now = Carbon::now('Asia/Manila');
-
-        $approved_permits = BusinessPermitApplication::where('status', 'Approved')
+    // Retrieve all approved permits
+    $approved_permits = BusinessPermitApplication::where('status', 'Approved')
         ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
         ->get();
 
+        foreach ($approved_permits as $permit) {
+            // Check if the approved_on time is older than 1 month
+            if ($now->diffInMonths($permit->approved_on) >= 1) {
+                // Update status to 'Renewal' if more than 1 month has passed
+                $permit->status = 'Renewal';
+                $permit->save();
+            }
+        }
+
+    // foreach ($approved_permits as $permit) {
+
+    //     // dd($permit->approved_on);
+
+    //     // Check if the approved_on time is older than 1 minute
+    //     if ($now->diffInMinutes($permit->approved_on) > 1) {
+    //         // Update status to 'Renewal' if more than 1 minute has passed
+    //         $permit->status = 'Renewal';
+    //         $permit->save();
+    //     }
+    // }
+
+    return view('admin.permit.index', [
+        'approved_permits' => $approved_permits,
+        'now' => $now,
+    ]);
+}
+
+
+    // public function showApproved(){
+
+    //     $now = Carbon::now('Asia/Manila');
+
+    //     $approved_permits = BusinessPermitApplication::where('status', 'Approved')
+    //     ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
+    //     ->get();
+
+    //     // dd( $approved_permits );
+
     
-        return view('admin.permit.index', [
-            'approved_permits' => $approved_permits,
-            'now' => $now,
-        ]);
-    }
+    //     return view('admin.permit.index', [
+    //         'approved_permits' => $approved_permits,
+    //         'now' => $now,
+    //     ]);
+    // }
     
     public function generatePermit(Request $request)
     {
@@ -413,7 +453,35 @@ public function show($id)
 
         }
     }
+
+
+    public function checkMinutePassed()
+    {
+        // Get the current time
+        $currentTime = Carbon::now('Asia/Manila');
+
+        // Example: timestamp stored in the database (e.g., permit's last action time)
+        $storedTimestamp = '2024-09-12 05:30:00'; // You can replace this with the actual timestamp from your database
     
+        // Convert to Carbon instance
+        $storedTime = Carbon::parse($storedTimestamp);
+    
+    
+        // Check if 1 minute has passed
+        if ($currentTime->diffInMinutes($storedTime) >= 1) {
+            // Dump data when a minute has passed
+            dd("A minute has passed since the last check!");
+            return view('admin.permit.index');
+        } else {
+            dd("Less than a minute has passed.");
+            return view('admin.permit.index');
+        }
+
+
+    }
+    
+
+
     
     
         

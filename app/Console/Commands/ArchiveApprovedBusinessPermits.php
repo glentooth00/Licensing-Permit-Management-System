@@ -26,7 +26,6 @@ class ArchiveApprovedBusinessPermits extends Command
             ->whereNotNull('approved_on')   // Ensure 'approved_on' is not null
             ->where('status', 'Approved')   // Check that status is 'Approved'
             ->where('approved_on', '<=', $now->subDay()) // Approved for at least 24 hours
-            ->where('status', '!=', 'Renewal') // Check that status is not already 'Archived'
             ->get();
 
         if ($approvedPermits->isEmpty()) {

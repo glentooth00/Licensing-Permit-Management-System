@@ -135,6 +135,13 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     //logout
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
+
+
+    //autoupdate 
+    Route::get('/dashboard', [BusinessPermitApplicationController::class, 'checkMinutePassed']);
+
+
+
 });
 
 
