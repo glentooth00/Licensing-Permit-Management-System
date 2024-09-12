@@ -15,7 +15,7 @@ input[type=text]:focus {
 }
 
 input[type=number] {
-    width: 40%;
+    width: 67%;
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
