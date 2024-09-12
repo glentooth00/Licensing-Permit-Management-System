@@ -1,6 +1,47 @@
-body
-{
-    background-image: url('/dist/images/hall.webp');
-    background-repeat: no-repeat;
-    background-size: cover;
+
+input[type=text] {
+    width: 100%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid red;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    outline: none;
+}
+
+input[type=text]:focus {
+    border: 1px solid #ffffff !important;
+}
+
+input[type=number] {
+    width: 40%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid red;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    outline: none;
+}
+
+input[type=number]:focus {
+    border: 0px solid #ffffff !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+textarea{
+    border: #ffffff;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    outline: none;
+}
+textarea:focus {
+    border: 0px solid #ffffff !important;
 }
