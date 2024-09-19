@@ -163,13 +163,14 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="p-2">
-                                                Business Name: <input name="business_name" type="text" required>
+                                                Business Name: <input name="business_name" type="text" required
+                                                    style="width: 80%;">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="p-2">
-                                                Type of Business: <select name="business_type" type="text"
-                                                    required>
+                                                Type of Business: <select name="business_type" type="text" required
+                                                    style="width: 80%;">
                                                     <option value ="" hidden>Select Business type</option>
                                                     <option value ="Sari-sari Store">Sari-sari Store</option>
                                                     <option value ="Gasoline Station">Gasoline Station</option>
@@ -201,7 +202,7 @@
                                         <tr>
                                             <td colspan="3" class="p-2">
                                                 Trade Name/Franchise: <input name="trade_name_franchise"
-                                                    type="text">
+                                                    type="text" style="width: 76%;">
                                             </td>
                                         </tr>
                                     </table>
@@ -220,16 +221,18 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="p-2">Building Name: <input
-                                                            name="business_building_name" type="text" required ">
+                                                            name="business_building_name" type="text" required
+                                                            style="width: 75%;">
                                                     </td>
                                                     <td class="p-2">Building Name: <input
                                                             name="owners_building_name" type="text" required
-                                                            ">
+                                                            style="width: 75%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">Street:
-                                                        <select name="business_street" type="text" required ">
+                                                        <select name="business_street" type="text" required
+                                                            style="width: 90%;">
                                                             <option value="" hidden>Select Street</option>
                                                             <option value="Aclaro Street">Aclaro Street</option>
                                                             <option value="Bacos Road">Bacos Road
@@ -268,7 +271,7 @@
                                                         </select>
                                                     </td>
                                                     <td class="p-2">Street: <select name="business_street"
-                                                            type="text" required ">
+                                                            type="text" required style="width: 90%;">
                                                             <option value="" hidden>Select Street</option>
                                                             <option value="Aclaro Street">Aclaro Street</option>
                                                             <option value="Bacos Road">Bacos Road
@@ -309,7 +312,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Barangay: </b>
-                                                        <select name="business_barangay" type="text" required ">
+                                                        <select name="business_barangay" type="text" required
+                                                            style="width: 85%;">
                                                             <option value="" hidden>Select Barangay</option>
                                                             <option value="Brgy Bayas">Bayas</option>
                                                             <option value="Brgy Bayuyan">Bayuyan</option>
@@ -339,7 +343,7 @@
                                                     </td>
                                                     <td class="p-2"><b>Barangay: </b> <select
                                                             name="business_barangay" type="text" required
-                                                            ">
+                                                            style="width: 85%;">
                                                             <option value="" hidden>Select Barangay</option>
                                                             <option value="Brgy Bayas">Bayas</option>
                                                             <option value="Brgy Bayuyan">Bayuyan</option>
@@ -365,28 +369,28 @@
                                                             </option>
                                                             <option value="Brgy Poblacion Zone III">Poblacion Zone III
                                                             </option>
-                                                        </select>
-                                                    </td>
+                                                        </select></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">City/Municipality: <input
                                                             name="business_city_municipality" type="text"
-                                                            value="Estancia" readonly required class="text-dark" ">
+                                                            value="Estancia" readonly required class="text-dark"
+                                                            style="width: 75%;">
                                                     </td>
                                                     <td class="p-2">City/Municipality: <input
-                                                            name="owners_city_municipality" value="Estancia"
+                                                            name="owners_city_municipality" value=""
                                                             type="text" required class="text-dark"
-                                                            ">
+                                                            style="width: 75%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">Province: <input name="business_province"
                                                             type="text" value="Iloilo" class="text-dark" readonly
-                                                            required ">
+                                                            required style="width: 85%;">
                                                     </td>
                                                     <td class="p-2">Province: <input name="owners_province"
                                                             type="text" value="Iloilo" class="text-dark" readonly
-                                                            required ">
+                                                            required style="width: 85%;">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -394,19 +398,16 @@
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px;"><input
                                                             name="business_Tel_No_Mobile" pattern="[0-9]{10}"
-                                                            placeholder="Enter 10-digit number" type="number"
-                                                            required"
-                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                            type = "number" maxlength = "10">
+                                                            maxlength="10" placeholder="Enter 10-digit number"
+                                                            type="number" required style="width: 65%;">
                                                     </td>
                                                     <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
                                                             disabled class="text-dark"
-                                                            style="width:55px;margin-right:5px;">
-                                                        <input name="owners_Tel_No_Mobile" class="input-number"
-                                                            pattern="[0-9]{10}" placeholder="Enter 10-digit number"
-                                                            type="number" required"
-                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                            type = "number" maxlength = "10">
+                                                            style="width:55px;margin-right:5px;"> <input
+                                                            name="owners_Tel_No_Mobile" class="input-number"
+                                                            pattern="[0-9]{10}" maxlength="10"
+                                                            placeholder="Enter 10-digit number" type="number"
+                                                            required style="width: 65%;">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -418,27 +419,31 @@
                                             <thead>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Name: </b><input
-                                                            name="" type="text" required>
+                                                            name="" style="width: 87%;" type="text"
+                                                            required>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Address: </b><input
-                                                            name="" type="text" required>
+                                                            name="" style="width: 80%;" type="text"
+                                                            required>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Tel/Mobile No.: </b><input
-                                                            name="" type="text" required>
+                                                            name="" style="width: 80%;" type="text"
+                                                            required>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Email Address: </b><input
-                                                            name="" type="text" required>
+                                                            name="" style="width: 80%;" type="text"
+                                                            required>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Monthly Rental: </b><input name=""
-                                                            type="text" required>
+                                                            style="width: 87%;" type="text" required>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>BUSINESS ACTIVITY </b><input name=""
-                                                            type="text" required>
+                                                            style="width: 87%;" type="text" required>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -504,19 +509,19 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <p></p>
-                                                        <textarea name="" id="" cols="20" rows="6" placeholder="Input here...." class="mt-5"></textarea>
+                                                        <textarea name="" id="" cols="20" rows="6"></textarea>
                                                     </td>
                                                     <td class="text-center">
                                                         <p></p>
-                                                        <textarea name="" id="" cols="20" rows="6" placeholder="Input here...." class="mt-5"></textarea>
+                                                        <textarea name="" id="" cols="20" rows="6"></textarea>
                                                     </td>
                                                     <td class="text-center">
                                                         <b>Essential</b>
-                                                        <textarea name="" id="" cols="20" rows="6" placeholder="Input here...." class="mt-5"></textarea>
+                                                        <textarea name="" id="" cols="20" rows="6"></textarea>
                                                     </td>
                                                     <td class="text-center">
                                                         <b>Non-Essential</b>
-                                                        <textarea name="" id="" cols="20" rows="6" placeholder="Input here...." class="mt-5"></textarea>
+                                                        <textarea name="" id="" cols="20" rows="6"></textarea>
                                                     </td>
                                                     <td>
 

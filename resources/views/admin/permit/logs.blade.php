@@ -33,7 +33,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <!-- table example 1 has import options -->
-                        <table id="example3" class="table table-bordered table-striped table-sm">
+                        <table id="example3" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Logs</th>

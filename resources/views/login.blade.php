@@ -8,13 +8,7 @@
 
     <title>Licensing Permit </title>
     <link rel="stylesheet" href="{{ asset('dist/css/app.min.css') }}">
-    <style>
-        body {
-            background-image: url('/dist/images/hall.webp');
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
 </head>
 
 <body>
