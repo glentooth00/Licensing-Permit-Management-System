@@ -49,11 +49,11 @@
               <a class="dropdown-item" href="#">Settings</a>
               <hr>
               <div>
-                  <a style="font-size: 14px;" class="dropdown-item" href="#">Maintenance
+                  {{-- <a style="font-size: 14px;" class="dropdown-item" href="#">Maintenance
                   </a>
                   <a style="font-size: 14px;" class="dropdown-item" href="">Permit
                       Expiration
-                  </a>
+                  </a> --}}
                   <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.user') }}">User
                       Management</a>
                   <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.logs') }}">Activity

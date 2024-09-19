@@ -76,7 +76,7 @@
 
                 <div class="card">
                     <!-- /.card-header -->
-                    <div class="card-header">{{ $now }}</div>
+                    <div class="card-header"></div>
                     <div class="card-body">
                         {{-- <p>Welcome, {{ $user->firstname }}!</p> --}}
                         <table id="example1" class="table table-bordered table-striped">

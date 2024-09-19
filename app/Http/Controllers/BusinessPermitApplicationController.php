@@ -40,7 +40,6 @@ class BusinessPermitApplicationController extends Controller
             'pendingCount' => $pendingCount,
             'approvedCount' => $approvedCount,
             'allPermits' => $allPermits,
-            'now' => $now
         ]);
     }
 
@@ -275,18 +274,6 @@ public function show($id)
                 $permit->save();
             }
         }
-
-    // foreach ($approved_permits as $permit) {
-
-    //     // dd($permit->approved_on);
-
-    //     // Check if the approved_on time is older than 1 minute
-    //     if ($now->diffInMinutes($permit->approved_on) > 1) {
-    //         // Update status to 'Renewal' if more than 1 minute has passed
-    //         $permit->status = 'Renewal';
-    //         $permit->save();
-    //     }
-    // }
 
     return view('admin.permit.index', [
         'approved_permits' => $approved_permits,
