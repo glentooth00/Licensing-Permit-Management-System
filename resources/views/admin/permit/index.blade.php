@@ -63,7 +63,7 @@
                                                 <span class="badge badge-success p-2">Approved</span>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             {{ $approved_permit->approved_on }}
                                         </td>
                                         <td class="text-center">
