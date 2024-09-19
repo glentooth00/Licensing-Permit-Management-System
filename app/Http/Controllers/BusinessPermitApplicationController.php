@@ -281,23 +281,6 @@ public function show($id)
     ]);
 }
 
-
-    // public function showApproved(){
-
-    //     $now = Carbon::now('Asia/Manila');
-
-    //     $approved_permits = BusinessPermitApplication::where('status', 'Approved')
-    //     ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
-    //     ->get();
-
-    //     // dd( $approved_permits );
-
-    
-    //     return view('admin.permit.index', [
-    //         'approved_permits' => $approved_permits,
-    //         'now' => $now,
-    //     ]);
-    // }
     
     public function generatePermit(Request $request)
     {
