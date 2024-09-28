@@ -29,56 +29,117 @@
             @endif
 
             <div class="container-fluid">
-                <div class="card">
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <!-- table example 1 has import options -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Add user
-                        </button>
-                        <table id="example2" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>NAME</th>
-                                    <th class="text-center">CONTACT No.</th>
-                                    <th class="text-center">USERNAME</th>
-                                    <th class="text-center">STATUS</th>
-                                    <th class="text-center">ACTION</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <td>
-                                            {{ $user->firstname }}
-                                            {{ $user->middlename }}
-                                            {{ $user->lastname }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $user->contactno }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $user->username }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $user->role }}
-                                        </td>
-                                        <td class="text-center">
-                                            <a type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#userData" data-id="{{ $user->id }}">EDIT</a>
+              <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                              <form action="{{ route('user.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">First name</label>
+                            <input type="text" class="form-control" name="firstname" id="formGroupExampleInput"
+                                placeholder="First name">
+                            <label for="formGroupExampleInput">Middle name</label>
+                            <input type="text" class="form-control" name="middlename" id="formGroupExampleInput"
+                                placeholder="Middle name">
+                            <label for="formGroupExampleInput">Last name</label>
+                            <input type="text" class="form-control" name="lastname" id="formGroupExampleInput"
+                                placeholder="Last name">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Gender</label>
+                            <select type="text" class="form-control" name="gender" id="formGroupExampleInput"
+                                placeholder="First name">
+                                <option value="" hidden>Select gender...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Email</label>
+                            <input type="text" class="form-control" name="email" id="formGroupExampleInput2"
+                                placeholder="email">
+                            <label for="formGroupExampleInput2">Contact #</label>
+                            <input type="text" class="form-control" name="contactno" id="formGroupExampleInput2"
+                                placeholder="contact #">
+                            <label for="formGroupExampleInput2">Username</label>
+                            <input type="text" class="form-control" name="username" id="formGroupExampleInput2"
+                                placeholder="username">
+                            <label for="formGroupExampleInput2">Password</label>
+                            <input type="text" class="form-control" name="password" id="formGroupExampleInput2"
+                                placeholder="password">
+                            <label for="formGroupExampleInput">User role</label>
+                            <select type="text" class="form-control" name="role" id="formGroupExampleInput"
+                                placeholder="First name">
+                                <option value="" hidden>Select Role...</option>
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                        </div>
 
-                                            <button class="btn bg-danger"
-                                                onclick="confirmDelete({{ $user->id }})">DELETE</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <!-- /.card-body -->
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create user</button>
+                </div>
+                </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                          <div class="card">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- table example 1 has import options -->
+                            {{-- <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                Add user
+                            </button> --}}
+                            <table id="example2" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <th class="text-center">CONTACT No.</th>
+                                        <th class="text-center">USERNAME</th>
+                                        <th class="text-center">STATUS</th>
+                                        <th class="text-center">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td>
+                                                {{ $user->firstname }}
+                                                {{ $user->middlename }}
+                                                {{ $user->lastname }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $user->contactno }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $user->username }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $user->role }}
+                                            </td>
+                                            <td class="text-center">
+                                                <a type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    data-target="#userData" data-id="{{ $user->id }}">EDIT</a>
+    
+                                                <button class="btn bg-danger btn-sm"
+                                                    onclick="confirmDelete({{ $user->id }})">DELETE</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+    
+                                </tbody>
+                            </table>
+    
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    </div>
+                </div>
+              </div>
                 <!-- /.row -->
             </div>
         </div>
@@ -91,7 +152,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -154,7 +215,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <!-- USER DATA MODAL -->
