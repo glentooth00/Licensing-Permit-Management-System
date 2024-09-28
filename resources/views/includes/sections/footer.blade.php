@@ -33,15 +33,12 @@
 <script src="/dist/plugins/datatables/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
+@stack('scripts')
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="/dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
 
 <!-- for ajax model view -->
-
-
-@push('scripts')
-@endpush
 <script>
     $(function() {
         $("#example1").DataTable({

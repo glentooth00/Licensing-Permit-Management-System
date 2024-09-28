@@ -82,7 +82,7 @@
 
                 <div class="card">
                     <!-- /.card-header -->
-                    <div class="card-header"></div>
+                    <div class="card-header"><h3>Pending Permits</h3></div>
                     <div class="card-body">
                         {{-- <p>Welcome, {{ $user->firstname }}!</p> --}}
                         <table id="example1" class="table table-bordered table-striped">
