@@ -2,10 +2,9 @@
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
+         <button type="button" class="btn btn-sm btn-primary" onclick="printDiv('printableArea')" ><i class="fas fa-printer"></i> Print</button> 
     <div class="" style="width: 100%;">
         <!-- Main content -->
-        <button type="button" class="btn btn-sm btn-primary" onclick="printDiv('printableArea')" ><i class="fas fa-printer"></i> Print</button> 
-
         <div class="content col-lg-12" style="width: 100%;">
             <div class="container-fluid">
                 <div class="" style="width: 100%;">
@@ -13,16 +12,8 @@
                         <div id="printableArea">
                         <!-- /.card-header -->
                             <div class="card-body" style="width: 100%;">
-                                <div class="text-center">
-                                    <span>Republic of the Philippines</span><br>
-                                    <span>Province of Iloilo</span>
-                                    <h4>MUNICIPALITY OF ESTANCIA</h4>
-                                    <span>National Highway cor. V Cudilla Ave. Estancia, Iloilo</span><br>
-                                    <span>Te. No. (033) 397-0232/Telefax (033) 397-0231</span>
-                                    <h3>OFFICE OF THE MUNICIPAL MAYOR</h3>
-                                    <h1>MAYOR'S BUSINESS PERMIT</h1>
+                                <div class="text-center" style="background-image: url('/dist/images/print.png'); height: 340px;">
                                 </div>
-                                <hr>
                                 <div>
                                     <div class="text-center" style="display: flex;">
                                         <div class="mt-5" style="border-top: 1px solid gray; width: 100%;">
@@ -64,7 +55,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-3">
+                                <div class="mt-1">
                                     <p>
                                         <strong>
                                             has been granted BUSINESS PERMIT to operate the started buiness subject to existing law,
@@ -79,7 +70,7 @@
                                 <div>
                                     <div class="" style="display: flex; align-items: center;">
                                         <div class="">
-                                            <div class="" style="background-color: rgba(51, 51, 51, 0.336); width: 500px; margin-right: 50px;  border: 1px solid rgba(33, 33, 34, 0.589);">
+                                            <div class="" style="background-color: rgb(3, 35, 218); width: 500px; color: #fff; margin-right: 50px;  border: 1px solid rgba(33, 33, 34, 0.589);">
                                                 <div class=" p-5 text-center">
                                                     <h1> {{ $permit->business_name }}</h1>
                                                 </div>
@@ -117,7 +108,7 @@
                                                                     <span><b>15,700.00</b></span>
                                                                 </div>
                                                             </div>
-                                                            <br><br><br>
+                                                            <br>
                                                             <span><b>Mode of Payment:</b> <input type="checkbox" name="">
                                                                 Quarterly &nbsp;&nbsp;&nbsp; <input type="checkbox" name="">
                                                                 Annual</span>
@@ -140,7 +131,7 @@
                                             <div class="" style="border: 1px solid rgba(33, 33, 34, 0.589);">
                                                 <div class="card-body">
                                                     <h4>APPROVED:</h4>
-                                                    <br><br><br><br><br><br><br><br><br>
+                                                    <br><br><br><br><br><br><br>
                                                     <h4 class="text-center">MAYOR MARY LYNN N. MOSQUEDA</h4>
                                                 </div>
                                             </div>
