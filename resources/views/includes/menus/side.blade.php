@@ -46,7 +46,7 @@
                     <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
                         <i class="fa-solid fa-file-lines nav-icon mr-3 ml-1" aria-hidden="true"></i>
                         <p>
-                          Renew
+                          Permits For Renewal
                         </p>
                     </a>
                 </li>
