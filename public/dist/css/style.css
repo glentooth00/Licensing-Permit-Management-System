@@ -4,7 +4,7 @@ input[type=text] {
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid gray;
     -webkit-transition: 0.3s;
     transition: 0.3s;
     outline: none;
@@ -19,7 +19,7 @@ input[type=number] {
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid gray;
     -webkit-transition: 0.3s;
     transition: 0.3s;
     outline: none;

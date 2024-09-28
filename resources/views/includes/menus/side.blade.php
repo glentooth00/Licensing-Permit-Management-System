@@ -35,6 +35,30 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.permit') }}" class="nav-link">
+                        <i class="fa-solid fa-file-lines nav-icon mr-3 ml-1" aria-hidden="true"></i>
+                        <p>
+                           Registered Permits
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
+                        <i class="fa-solid fa-file-lines nav-icon mr-3 ml-1" aria-hidden="true"></i>
+                        <p>
+                          Permits For Renewal
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('business-permits.archived') }}" class="nav-link">
+                        <i class="fa-solid fa-box-archive nav-icon mr-3 ml-1" aria-hidden="true"></i>
+                        <p>
+                          Archived
+                        </p>
+                    </a>
+                </li>
+                {{-- <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="fa-regular fa-folder-open nav-icon"></i>
                         <p>
@@ -43,12 +67,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.permit') }}" class="nav-link">
-                                <i class="fa-solid fa-file-lines nav-icon"></i>
-                                <p> View Permits</p>
-                            </a>
-                        </li>
+                     
                         <li class="nav-item">
                             <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
                                 <i class="fa-solid fa-file-lines nav-icon"></i>
@@ -62,7 +81,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
