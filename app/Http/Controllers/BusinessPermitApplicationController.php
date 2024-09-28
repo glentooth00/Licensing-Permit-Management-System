@@ -237,6 +237,7 @@ public function show($id)
                     // Update the status to 'Approved'
             $businessPermit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $businessPermit->status = 'Approved';
+            $businessPermit->notified = '1';
             $businessPermit->save();
     
 
