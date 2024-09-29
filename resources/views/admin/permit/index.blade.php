@@ -23,7 +23,7 @@
 
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">{{ $now }}</div>
+                    <div class="card-header"></div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped table-sm">
@@ -63,15 +63,15 @@
                                                 <span class="badge badge-success p-2">Approved</span>
                                             @endif
                                         </td>
-                                        <td>
-                                            {{ $approved_permit->approved_on }}
+                                        <td class="text-center">
+                                            {{ \Carbon\Carbon::parse($approved_permit->approved_on)->format('F j, Y') }}
                                         </td>
                                         <td class="text-center">
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <div class="d-flex justify-content-start">
                                                         {{-- Approve Button --}}
-                                                        @if ($approved_permit->status !== 'Approved')
+                                                        {{-- @if ($approved_permit->status !== 'Approved')
                                                             <form
                                                                 action="{{ route('approve.permit', ['id' => $approved_permit->id]) }}"
                                                                 method="POST" class="m-1">
@@ -80,7 +80,7 @@
                                                                 <button type="submit"
                                                                     class="btn btn-outline-info btn-sm btn-round">Approve</button>
                                                             </form>
-                                                        @endif
+                                                        @endif --}}
 
                                                         {{-- More Details Button with ID --}}
                                                         <a href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"

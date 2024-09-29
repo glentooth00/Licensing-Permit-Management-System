@@ -10,8 +10,10 @@ use Endroid\QrCode\QrCode;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 use Endroid\QrCode\Response\QrCodeResponse;
+// use Log;
 
 
 class BusinessPermitApplicationController extends Controller
@@ -40,7 +42,6 @@ class BusinessPermitApplicationController extends Controller
             'pendingCount' => $pendingCount,
             'approvedCount' => $approvedCount,
             'allPermits' => $allPermits,
-            'now' => $now
         ]);
     }
 
@@ -236,6 +237,7 @@ public function show($id)
                     // Update the status to 'Approved'
             $businessPermit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $businessPermit->status = 'Approved';
+            $businessPermit->notified = '1';
             $businessPermit->save();
     
 
@@ -257,60 +259,174 @@ public function show($id)
         return redirect()->back()->with('success', 'Permit approved successfully.');
     }
     
+//     public function showApproved()
+// {
+//     $now = Carbon::now('Asia/Manila');
 
-    public function showApproved()
+//     // Retrieve all approved permits
+//     $approved_permits = BusinessPermitApplication::where('status', 'Approved')
+//         ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
+//         ->get();
+
+//     foreach ($approved_permits as $permit) {
+//         // Check if the approved_on time is older than 12 months
+//         // $now->diffInMonths($permit->approved_on) >= 12
+//         if ($now->diffInMonths($permit->approved_on) >= 1) {
+//             // Update status to 'Renewal' if more than 12 months have passed
+//             $permit->status = 'Renewal';
+//             $permit->save();
+//         }
+//     }
+
+//         // Retrieve all permits with 'Renewal' status
+//         $renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->get();
+
+   
+//         foreach ($renewal_permits as $permit) {
+//             $number = $permit->business_Tel_No_Mobile; // Assuming this is the field for the phone number
+    
+//                 // Check if the phone number starts with 0 and replace it
+//             if (substr($number, 0, 1) === '0') {
+//                 $number = '+639' . substr($number, 1); // Replace '0' with '+639'
+//             } elseif (substr($number, 0, 3) !== '+63') {
+//                 $number = '+63' . $number; // Ensure it starts with +63 if needed
+//             }
+
+//             // dd($phoneNumber);
+//             // Send SMS notification
+//             $this->sendSms( $number, "Your permit has expired. Please renew it.");
+//         }
+
+//     return view('admin.permit.index', [
+//         'approved_permits' => $approved_permits,
+//     ]);
+// }
+
+// Example function to send SMS using Semaphore
+// public function sendSms($number, $message)
+// {
+//     $ch = curl_init();
+//     $parameters = array(
+//         'apikey' => 'fa26af247b91bffadd1d1c07c7a9e124', // Your API KEY
+//         'number' => $number,
+//         'message' => $message,
+//         'sendername' => 'SEMAPHORE'
+//     );
+    
+//     curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
+//     curl_setopt($ch, CURLOPT_POST, 1);
+//     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
+//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+//     $output = curl_exec($ch);
+    
+//     // Check for cURL errors and log if any
+//     if (curl_errno($ch)) {
+//         Log::error('SMS Error: ' . curl_error($ch));
+//     } else {
+//         // Optionally, log the output for debugging
+//         Log::info('SMS Response: ' . $output);
+//     }
+    
+//     curl_close($ch);
+
+//     return $output; // Return the response if needed
+// }
+
+//TEST STARTS HERE
+
+public function showApproved()
 {
     $now = Carbon::now('Asia/Manila');
 
     // Retrieve all approved permits
     $approved_permits = BusinessPermitApplication::where('status', 'Approved')
-        ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
+        ->orderByDesc('created_at')
         ->get();
 
-        foreach ($approved_permits as $permit) {
-            // Check if the approved_on time is older than 1 month
-            if ($now->diffInMonths($permit->approved_on) >= 1) {
-                // Update status to 'Renewal' if more than 1 month has passed
-                $permit->status = 'Renewal';
-                $permit->save();
-            }
+    foreach ($approved_permits as $permit) {
+        // Check if the approved_on time is older than 12 months
+        if ($now->diffInMonths($permit->approved_on) >= 1) {
+            // Update status to 'Renewal' if more than 12 months have passed
+            $permit->status = 'Renewal';
+            $permit->save();
+        }
+    }
+
+    // Retrieve all permits with 'Renewal' status
+    $renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->get();
+
+    foreach ($renewal_permits as $permit) {
+        $number = $permit->business_Tel_No_Mobile; // Assuming this is the field for the phone number
+
+        // Convert the number if it starts with '+63'
+        if (substr($number, 0, 3) === '+63') {
+            $number = '0' . substr($number, 3); // Convert to '09998887777' format
+        } elseif (substr($number, 0, 1) === '0') {
+            // If it starts with '0', keep it as is
+        } elseif (substr($number, 0, 2) === '63') {
+            $number = '0' . substr($number, 2); // Convert to '09998887777' format
         }
 
-    // foreach ($approved_permits as $permit) {
-
-    //     // dd($permit->approved_on);
-
-    //     // Check if the approved_on time is older than 1 minute
-    //     if ($now->diffInMinutes($permit->approved_on) > 1) {
-    //         // Update status to 'Renewal' if more than 1 minute has passed
-    //         $permit->status = 'Renewal';
-    //         $permit->save();
-    //     }
-    // }
+        // Check if the SMS has already been sent
+        if ($permit->notified == 0) {
+            // Send SMS notification
+            $response = $this->sendSms($number, "Your permit has expired. Please renew it.");
+            $permit->notified = 1;
+            $permit->save();
+            // Check the response to see if the SMS was sent successfully
+            if (isset($response['status']) && $response['status'] === 'Sent') {
+                // Update notified status to 1
+                $permit->notified = 1;
+                $permit->save();
+            } else {
+                // Log or handle the case where SMS was not sent successfully
+                Log::warning('Failed to send SMS to ' . $number . '. Response: ' . json_encode($response));
+            }
+        }
+    }
 
     return view('admin.permit.index', [
         'approved_permits' => $approved_permits,
-        'now' => $now,
     ]);
 }
 
+// Example function to send SMS using Semaphore
+public function sendSms($number, $message)
+{
+    $ch = curl_init();
+    $parameters = array(
+        'apikey' => 'fa26af247b91bffadd1d1c07c7a9e124', // Your API KEY
+        'number' => $number,
+        'message' => $message,
+        'sendername' => 'SEMAPHORE'
+    );
 
-    // public function showApproved(){
+    curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-    //     $now = Carbon::now('Asia/Manila');
-
-    //     $approved_permits = BusinessPermitApplication::where('status', 'Approved')
-    //     ->orderByDesc('created_at') // or orderByDesc('updated_at') for latest updated
-    //     ->get();
-
-    //     // dd( $approved_permits );
-
+    $output = curl_exec($ch);
     
-    //     return view('admin.permit.index', [
-    //         'approved_permits' => $approved_permits,
-    //         'now' => $now,
-    //     ]);
-    // }
+    // Check for cURL errors and log if any
+    if (curl_errno($ch)) {
+        Log::error('SMS Error: ' . curl_error($ch));
+    } else {
+        // Log the output for debugging
+        Log::info('SMS Response: ' . $output);
+    }
+    
+    curl_close($ch);
+
+    return json_decode($output, true); // Return the response as an array
+}
+
+
+
+
+//TEST ENDS HERE
+
     
     public function generatePermit(Request $request)
     {
@@ -446,6 +562,8 @@ public function show($id)
             // Update the status to 'Approved'
             $permit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $permit->status = 'Approved';
+            $permit->notified = '0';
+            $permit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $permit->save();
         
             // Redirect back or to a specific route
@@ -480,6 +598,15 @@ public function show($id)
 
     }
     
+    public function dateNow(){
+
+        $DateNow = now()->setTimezone('Asia/Manila')->toDateTimeString();
+
+        return view('site.registration',[
+            'DateNow' => $DateNow,
+        ]);
+
+    }
 
 
     

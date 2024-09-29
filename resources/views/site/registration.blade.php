@@ -24,6 +24,7 @@
                     </div>
                     <hr>
                     <div>
+
                         <h6>INSTRUCTIONS:</h6>
                         <ol>
                             <li>Provide accurate information and print legibly to avoid delays. Incomplete
@@ -115,8 +116,9 @@
                                     <tr>
                                         <td class="p-2"> <label for="date_of_application">Date of
                                                 Application:</label>
-                                            <input id="date_of_application" name="date_of_application" type="date"
-                                                style="width: 70%;">
+
+                                            <input id="date_of_application" value="{{ date('Y-m-d') }}"
+                                                name="date_of_application" type="date" style="width: 70%;" readonly>
                                         </td>
                                         <td> DTI/SEC/CDA Registration No. : <input name="DTI_SEC_CDA_registration No"
                                                 type="text" style="width: 60%;"></td>
