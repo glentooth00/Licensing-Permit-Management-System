@@ -121,14 +121,16 @@
                                                 name="date_of_application" type="date" style="width: 70%;" readonly>
                                         </td>
                                         <td> DTI/SEC/CDA Registration No. : <input name="DTI_SEC_CDA_registration No"
-                                                type="text" style="width: 60%;"></td>
+                                                type="text"
+                                                style="width: 60%; border: none; border-bottom: 1px solid black;"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-2">Date Business Started: <input name="date_business_started"
-                                                type="date" style="width: 60%;"></td>
+                                                type="date"
+                                                style="width: 60%; border: none; border-bottom: 1px solid black;"></td>
                                         <td> DTI/SEC/CDA Date of Registration: <input
                                                 name="DTI_SEC_CDA_date_of_Registration" type="date"
-                                                style="width: 55%;"></td>
+                                                style="width: 60%; border: none; border-bottom: 1px solid black;"></td>
                                     </tr>
                                     <tr>
                                         <td class="p-2">
@@ -145,8 +147,10 @@
                                                 Coop</span>
                                         </td>
                                         <td>
-                                            <span>CTC No.: <input name="ctc_no" type="text" style="width: 40%;">
-                                                TIN: <input name="TIN" type="text" style="width: 40%;"></span>
+                                            <span>CTC No.: <input name="ctc_no" type="text"
+                                                    style="width: 40%; border: none; border-bottom: 1px solid black;">
+                                                TIN: <input name="TIN" type="text"
+                                                    style="width: 40%; border: none; border-bottom: 1px solid black;"></span>
                                         </td>
                                     </tr>
                                 </table>
@@ -157,21 +161,25 @@
                                     <table class="table table-bordered table-sm">
                                         <tr>
                                             <td class="p-2">Last Name: <input name="last_name" type="text"
-                                                    style="width: 70%;" required></td>
+                                                    style="width: 70%;border: none; border-bottom: 1px solid black;""
+                                                    required></td>
                                             <td>First Name: <input name="first_name" type="text"
-                                                    style="width: 70%;" required></td>
+                                                    style="width: 70%; border: none; border-bottom: 1px solid black;"
+                                                    required></td>
                                             <td>Middle Name: <input name="middle_name" type="text"
-                                                    style="width: 70%;" required></td>
+                                                    style="width: 70%; border: none; border-bottom: 1px solid black;"
+                                                    required></td>
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="p-2">
-                                                Business Name: <input name="business_name" type="text" required>
+                                                Business Name: <input name="business_name" type="text"
+                                                    style="border: none; border-bottom: 1px solid black;" required>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="p-2">
                                                 Type of Business: <select name="business_type" type="text"
-                                                    required>
+                                                    style="border: none; border-bottom: 1px solid black;" required>
                                                     <option value ="" hidden>Select Business type</option>
                                                     <option value ="Sari-sari Store">Sari-sari Store</option>
                                                     <option value ="Gasoline Station">Gasoline Station</option>
@@ -203,7 +211,8 @@
                                         <tr>
                                             <td colspan="3" class="p-2">
                                                 Trade Name/Franchise: <input name="trade_name_franchise"
-                                                    type="text">
+                                                    type="text"
+                                                    style="border: none; border-bottom: 1px solid black;">
                                             </td>
                                         </tr>
                                     </table>
@@ -222,11 +231,11 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="p-2">Building Name: <input
-                                                            name="business_building_name" type="text" required ">
+                                                            name="business_building_name" type="text" required "  style="border: none; border-bottom: 1px solid black;" >
                                                     </td>
                                                     <td class="p-2">Building Name: <input
                                                             name="owners_building_name" type="text" required
-                                                            ">
+                                                            " style="border: none; border-bottom: 1px solid black;">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -373,42 +382,46 @@
                                                 <tr>
                                                     <td class="p-2">City/Municipality: <input
                                                             name="business_city_municipality" type="text"
-                                                            value="Estancia" readonly required class="text-dark" ">
+                                                            value="Estancia" readonly required class="text-dark" " style="border: none; border-bottom: 1px solid black;">
                                                     </td>
                                                     <td class="p-2">City/Municipality: <input
                                                             name="owners_city_municipality" value="Estancia"
                                                             type="text" required class="text-dark"
-                                                            ">
+                                                            " style="border: none; border-bottom: 1px solid black;">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2">Province: <input name="business_province"
                                                             type="text" value="Iloilo" class="text-dark" readonly
-                                                            required ">
+                                                            required " style="border: none; border-bottom: 1px solid black;">
                                                     </td>
                                                     <td class="p-2">Province: <input name="owners_province"
                                                             type="text" value="Iloilo" class="text-dark" readonly
-                                                            required ">
+                                                            required "
+                                                            style="border: none; border-bottom: 1px solid black;">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
                                                             disabled class="text-dark"
-                                                            style="width:55px;margin-right:5px;"><input
+                                                            style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
                                                             name="business_Tel_No_Mobile" pattern="[0-9]{10}"
                                                             placeholder="Enter 10-digit number" type="number"
                                                             required"
                                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                            type = "number" maxlength = "10">
+                                                            type = "number" maxlength = "10"
+                                                            style=" border: none; border-bottom: 1px solid black;">
+
                                                     </td>
                                                     <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
                                                             disabled class="text-dark"
-                                                            style="width:55px;margin-right:5px;">
+                                                            style="width:55px;margin-right:5px; ">
                                                         <input name="owners_Tel_No_Mobile" class="input-number"
                                                             pattern="[0-9]{10}" placeholder="Enter 10-digit number"
                                                             type="number" required"
                                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                            type = "number" maxlength = "10">
+                                                            type = "number" maxlength = "10"
+                                                            style=" border: none; border-bottom: 1px solid black;">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -420,27 +433,33 @@
                                             <thead>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Name: </b><input
-                                                            name="" type="text" required>
+                                                            name="" type="text" required
+                                                            style=" border: none; border-bottom: 1px solid black;">
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Address: </b><input
-                                                            name="" type="text" required>
+                                                            name="" type="text" required
+                                                            style=" border: none; border-bottom: 1px solid black;">
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Full Tel/Mobile No.: </b><input
-                                                            name="" type="text" required>
+                                                            name="" type="text" required
+                                                            style=" border: none; border-bottom: 1px solid black;">
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Lessor's Email Address: </b><input
-                                                            name="" type="text" required>
+                                                            name="" type="text" required
+                                                            style=" border: none; border-bottom: 1px solid black;">
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>Monthly Rental: </b><input name=""
-                                                            type="text" required>
+                                                            type="text" required
+                                                            style=" border: none; border-bottom: 1px solid black;">
                                                 </tr>
                                                 <tr>
                                                     <td class="p-2"><b>BUSINESS ACTIVITY </b><input name=""
-                                                            type="text" required>
+                                                            type="text" required
+                                                            style=" border: none; border-bottom: 1px solid black;">
                                                 </tr>
                                             </thead>
                                         </table>
@@ -498,7 +517,8 @@
                                                                     <input type="checkbox" name="amendment"
                                                                         value="3">
                                                                     Other Business
-                                                                    <input type="text" name="amendment">
+                                                                    <input type="text" name="amendment"
+                                                                        style=" border: none; border-bottom: 1px solid black;">
                                                                 </li>
                                                                 </ul>
                                                             </div>
