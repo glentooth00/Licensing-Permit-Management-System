@@ -38,7 +38,7 @@
                     <a href="{{ route('admin.permit') }}" class="nav-link">
                         <i class="fa-solid fa-file-lines nav-icon mr-3 ml-1" aria-hidden="true"></i>
                         <p>
-                           Registered Permits
+                            Registered Permits
                         </p>
                     </a>
                 </li>
@@ -46,7 +46,7 @@
                     <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
                         <i class="fa-solid fa-file-lines nav-icon mr-3 ml-1" aria-hidden="true"></i>
                         <p>
-                          Permits For Renewal
+                            Permits For Renewal
                         </p>
                     </a>
                 </li>
@@ -54,7 +54,7 @@
                     <a href="{{ route('business-permits.archived') }}" class="nav-link">
                         <i class="fa-solid fa-box-archive nav-icon mr-3 ml-1" aria-hidden="true"></i>
                         <p>
-                          Archived
+                            Archived
                         </p>
                     </a>
                 </li>
