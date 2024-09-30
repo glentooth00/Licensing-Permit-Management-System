@@ -4,7 +4,7 @@
 
 <body>
     @include('includes.menus.top')
-    @include('includes.menus.side')
+    @include('includes.menus.side2')
 
     @yield('content')
 
