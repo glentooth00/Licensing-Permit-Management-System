@@ -36,7 +36,9 @@ class BusinessPermitApplicationController extends Controller
          // Count approved applications
          $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
 
-         $archivedCount = BusinessPermitApplication::where('status', 'Approved')->count();
+         $archivedCount = BusinessPermitApplication::where('status', 'Archived')->count();
+
+         $renewalCount = BusinessPermitApplication::where('status', 'Renewal')->count();
 
     
         return view('admin.dashboard', [
@@ -45,6 +47,7 @@ class BusinessPermitApplicationController extends Controller
             'approvedCount' => $approvedCount,
             'allPermits' => $allPermits,
             'archivedCount' => $archivedCount,
+            'renewalCount' => $renewalCount,
         ]);
     }
 

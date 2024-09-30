@@ -39,7 +39,7 @@
                         <div class="small-box bg-warning">
                             <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
                                 <div class="inner">
-                                    <h3>{{ $pendingCount }}</h3>
+                                    <h3>{{ $renewalCount }}</h3>
                                     <h4>Renewal for Business Permits</h4>
                                 </div>
                             </a>
@@ -54,7 +54,7 @@
                         <div class="small-box bg-danger">
                             <a href="{{ route('business-permits.archived') }}" class="nav-link">
                                 <div class="inner">
-                                    <h3>{{ $archivedCount }}</h3>
+                                    <h3>{{ $pendingCount }}</h3>
                                     <h4>Number of Archive Members</h4>
                                 </div>
                             </a>
