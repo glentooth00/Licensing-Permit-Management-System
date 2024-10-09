@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\activity_log;
 use App\Models\BusinessPermitApplication;
+use App\Models\Sms_messages;
 use DB;
 use Illuminate\Http\Request;
 use Endroid\QrCode\QrCode;
@@ -557,10 +558,22 @@ public static function sendSimpleSMS($phone_number, $message) {
     
         foreach ($for_renewal_permits as $permit) {
             if ($permit->notified == 0) {
+
                 $phone_number = $permit->business_Tel_No_Mobile;
+                $client_name = $permit->first_name . ' ' . $permit->middle_name . ' ' . $permit->last_name;
                 $message = "Your business permit is due for renewal. Please take action.";
+                $date_time_sent = Carbon::now('asia/manila');
     
                 $smsResult = self::sendSimpleSMS($phone_number, $message);
+
+                // dd($phone_number,  $message, $client_name, $date_time_sent);
+
+                Sms_messages::create([
+                    'phone_number' => $phone_number,
+                    'message' => $message,
+                    'client_name' => $client_name,
+                    'date_time_sent' => $date_time_sent
+                ]);
     
                 if ($smsResult) {
                     // Check for errors in the result
