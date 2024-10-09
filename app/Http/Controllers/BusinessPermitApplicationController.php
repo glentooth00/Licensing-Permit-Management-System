@@ -353,80 +353,76 @@ public function showApproved()
     foreach ($approved_permits as $permit) {
         // Check if the approved_on time is older than 12 months
         if ($now->diffInMonths($permit->approved_on) >= 1) {
-            // Update status to 'Renewal' if more than 12 months have passed
+            // Update status to 'Renewal'
             $permit->status = 'Renewal';
             $permit->save();
-        }
-    }
 
-    // Retrieve all permits with 'Renewal' status
-    $renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->get();
-
-    foreach ($renewal_permits as $permit) {
-        $number = $permit->business_Tel_No_Mobile; // Assuming this is the field for the phone number
-
-        // Convert the number if it starts with '+63'
-        if (substr($number, 0, 3) === '+63') {
-            $number = '0' . substr($number, 3); // Convert to '09998887777' format
-        } elseif (substr($number, 0, 1) === '0') {
-            // If it starts with '0', keep it as is
-        } elseif (substr($number, 0, 2) === '63') {
-            $number = '0' . substr($number, 2); // Convert to '09998887777' format
-        }
-
-        // Check if the SMS has already been sent
-        if ($permit->notified == 0) {
             // Send SMS notification
-            $response = $this->sendSms($number, "Your permit has expired. Please renew it.");
-            $permit->notified = 1;
-            $permit->save();
-            // Check the response to see if the SMS was sent successfully
-            if (isset($response['status']) && $response['status'] === 'Sent') {
-                // Update notified status to 1
-                $permit->notified = 1;
-                $permit->save();
-            } else {
-                // Log or handle the case where SMS was not sent successfully
-                Log::warning('Failed to send SMS to ' . $number . '. Response: ' . json_encode($response));
-            }
+            $phone_number = $permit->business_Tel_No_Mobile;
+            // dd($phone_number);
+            // Log::info('Sending SMS to: ' . $phone_number);
+
+            $message = "Your business permit has been updated to 'Renewal'. Please check your dashboard for details.";
+            $smsResult = self::sendSimpleSMS($phone_number, $message);
+
+            // Check and log SMS result
+            // Log::info('SMS sent result: ', (array)$smsResult);
+            dd($smsResult); // Use this for debugging
         }
     }
 
+       //Return to your view
     return view('admin.permit.index', [
         'approved_permits' => $approved_permits,
     ]);
 }
 
-// Example function to send SMS using Semaphore
-public function sendSms($number, $message)
-{
-    $ch = curl_init();
-    $parameters = array(
-        'apikey' => 'fa26af247b91bffadd1d1c07c7a9e124', // Your API KEY
-        'number' => $number,
-        'message' => $message,
-        'sendername' => 'SEMAPHORE'
-    );
+       
 
-    curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-    $output = curl_exec($ch);
+public static function sendSimpleSMS($phone_number, $message) {
+    $SMSMessage = [
+        "secret" => env('SMS_GATEWAY_API'),
+        "mode" => "devices",
+        "device" => env('SMS_GATEWAY_DEVICE_ID'),
+        "sim" => 1,
+        "priority" => 1,
+        "phone" => $phone_number,
+        "message" => $message
+    ];
     
-    // Check for cURL errors and log if any
-    if (curl_errno($ch)) {
-        Log::error('SMS Error: ' . curl_error($ch));
-    } else {
-        // Log the output for debugging
-        Log::info('SMS Response: ' . $output);
+    // Log the SMS message being sent
+    Log::info('Sending SMS:', $SMSMessage);
+
+    // Send SMS via the gateway
+    $cURL = curl_init(env('SMS_GATEWAY_URL') . "api/send/sms");
+    curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($cURL, CURLOPT_POSTFIELDS, $SMSMessage);
+    $response = curl_exec($cURL);
+
+    if(curl_errno($cURL)){
+        // Log curl error
+        $error_msg = curl_error($cURL);
+        Log::error("SMS Gateway cURL Error: " . $error_msg);
+        return null; // Stop if there's an error
     }
-    
-    curl_close($ch);
 
-    return json_decode($output, true); // Return the response as an array
+    curl_close($cURL);
+
+    // Decode the response
+    $result = json_decode($response, true);
+    Log::info('SMS API Response:', (array)$result); // Log the full response for debugging
+
+    // Return result for further debugging
+    return $result;
 }
+
+
+
+
+
+
+
 
 
 
@@ -538,14 +534,57 @@ public function sendSms($number, $message)
        
     }
 
+    // public function showForRenewal()
+    // {
+    //     // Fetch permits with status 'For Renewal'
+    //     $for_renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->orderByDesc('created_at')->get();
+
+    //     foreach($for_renewal_permits as $permits){
+    //         // dd($permits->notified);
+    //         if($permits->notified == 0){
+    //             dd('send sms');
+    //         }
+    //     }   
+
+    //     // Return the view with the 'For Renewal' permits
+    //     // return view('admin.permit.renew', compact('for_renewal_permits'));
+    // }
+
+
     public function showForRenewal()
     {
-        // Fetch permits with status 'For Renewal'
         $for_renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->orderByDesc('created_at')->get();
+    
+        foreach ($for_renewal_permits as $permit) {
+            if ($permit->notified == 0) {
+                $phone_number = $permit->business_Tel_No_Mobile;
+                $message = "Your business permit is due for renewal. Please take action.";
+    
+                $smsResult = self::sendSimpleSMS($phone_number, $message);
+    
+                if ($smsResult) {
+                    // Check for errors in the result
+                    if ($smsResult['status'] == 200) {
+                        $permit->notified = 1;
+                        $permit->save();
+                    } else {
+                        // Log the failure response
+                        Log::error('SMS failed: ', (array)$smsResult);
+                    }
+                } else {
+                    // Log the null response
+                    Log::error('SMS result returned null');
+                }
+    
+                // dd($smsResult); // Check what result was returned
+            }
+        }
 
-        // Return the view with the 'For Renewal' permits
+          //     // Return the view with the 'For Renewal' permits
         return view('admin.permit.renew', compact('for_renewal_permits'));
     }
+    
+
 
     public function approveRenewal(Request $request, $id)
     {
