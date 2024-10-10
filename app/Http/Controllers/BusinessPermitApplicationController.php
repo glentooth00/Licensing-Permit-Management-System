@@ -368,7 +368,7 @@ public function showApproved()
 
             // Check and log SMS result
             // Log::info('SMS sent result: ', (array)$smsResult);
-            dd($smsResult); // Use this for debugging
+            // dd($smsResult); // Use this for debugging
         }
     }
 
