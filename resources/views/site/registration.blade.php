@@ -402,7 +402,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
+                                                    <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+63"
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
                                                             name="business_Tel_No_Mobile" pattern="[0-9]{10}"
@@ -413,7 +413,7 @@
                                                             style=" border: none; border-bottom: 1px solid black;">
 
                                                     </td>
-                                                    <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+639"
+                                                    <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+63"
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px; ">
                                                         <input name="owners_Tel_No_Mobile" class="input-number"

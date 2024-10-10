@@ -54,8 +54,8 @@
                         <div class="small-box bg-danger">
                             <a href="{{ route('business-permits.archived') }}" class="nav-link">
                                 <div class="inner">
-                                    <h3>{{ $pendingCount }}</h3>
-                                    <h4>Number of Archive Members</h4>
+                                    <h3>{{ $archivedCount }}</h3>
+                                    <h4>Number of Archived Members</h4>
                                 </div>
                             </a>
                             <div class="icon">
