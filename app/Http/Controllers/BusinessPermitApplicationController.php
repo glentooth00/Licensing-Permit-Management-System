@@ -102,8 +102,8 @@ class BusinessPermitApplicationController extends Controller
         
         // Prepend the country code to the mobile number
         if (!empty($validatedData['business_Tel_No_Mobile'])) {
-            $validatedData['business_Tel_No_Mobile'] = '+639' . $validatedData['business_Tel_No_Mobile'];
-            $validatedData['owners_Tel_No_Mobile'] = '+639' . $validatedData['owners_Tel_No_Mobile'];
+            $validatedData['business_Tel_No_Mobile'] = '+63' . $validatedData['business_Tel_No_Mobile'];
+            $validatedData['owners_Tel_No_Mobile'] = '+63' . $validatedData['owners_Tel_No_Mobile'];
         }
     
         $validatedData['status'] = 'Pending';
