@@ -96,7 +96,9 @@
                                     <th>CONTACT No.</th>
                                     <th>APPLIED ON</th>
                                     <th>STATUS</th>
-                                    <th>ACTIONS</th>
+                                    <th>
+                                        <center>ACTIONS</center>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,7 +130,7 @@
                                         </td>
 
                                         <!-- Add more table cells for other fields -->
-                                        <td>
+                                        <td class="d-flex justify-content-center">
                                             <div class="btn-group">
                                                 {{-- Approve Button --}}
                                                 @if ($businessPermit->status == 'Approved')
@@ -147,7 +149,7 @@
                                                             More!</a> --}}
 
                                                         <a href="#" data-user-id="{{ $businessPermit->id }}"
-                                                            class="btn btn-outline-info btn-sm btn-round m-1 viewMoreBtn">View
+                                                            class="btn btn-outline-info btn-sm btn-round  viewMoreBtn">View
                                                             More</a>
 
                                                     </form>
@@ -196,6 +198,7 @@
                 </div>
                 <!-- Modal Footer -->
                 <div class="modal-footer">
+
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>

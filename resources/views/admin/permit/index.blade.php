@@ -69,41 +69,29 @@
                                         <td class="text-center">
                                             <div class="row">
                                                 <div class="col-md-10">
-                                                    <div class="d-flex justify-content-start">
-                                                        {{-- Approve Button --}}
-                                                        {{-- @if ($approved_permit->status !== 'Approved')
-                                                            <form
-                                                                action="{{ route('approve.permit', ['id' => $approved_permit->id]) }}"
-                                                                method="POST" class="m-1">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button type="submit"
-                                                                    class="btn btn-outline-info btn-sm btn-round">Approve</button>
-                                                            </form>
-                                                        @endif --}}
-
-                                                        {{-- More Details Button with ID --}}
+                                                    <div class="d-flex justify-content-center">
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        {{-- More Details Button --}}
                                                         <a href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
                                                             class="btn btn-outline-success btn-sm btn-round m-1">
                                                             More Details
                                                         </a>
 
                                                         {{-- Generate Permit Button --}}
-                                                        {{-- <form action="{{ route('generate.qrcode') }}" method="GET"
-                                                            class="m-1">
-                                                            @csrf
-                                                            <input type="hidden" name="user_id"
-                                                                value="{{ $approved_permit->id }}">
-                                                            <input type="hidden" name="status"
-                                                                value="{{ $approved_permit->status }}">
-                                                            <button type="submit"
-                                                                class="btn btn-outline-info btn-sm btn-round">Generate
-                                                                Permit</button>
-                                                        </form> --}}
                                                         <a href="#" data-user-id="{{ $approved_permit->id }}"
                                                             class="btn btn-outline-primary btn-sm btn-round m-1 generatePermitBtn">Generate
                                                             Permit</a>
-
 
                                                         {{-- Archive Button --}}
                                                         <form
@@ -113,9 +101,13 @@
                                                             @method('PATCH')
                                                             <button type="submit"
                                                                 class="btn btn-outline-danger btn-sm btn-round"
-                                                                name="action" value="archive">Archive</button>
+                                                                name="action" value="archive">
+                                                                Archive
+                                                            </button>
                                                         </form>
+
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </td>

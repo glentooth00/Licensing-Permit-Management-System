@@ -360,10 +360,15 @@ public function showApproved()
 
             // Send SMS notification
             $phone_number = $permit->business_Tel_No_Mobile;
+            $lastName = $permit->last_name;
             // dd($phone_number);
             // Log::info('Sending SMS to: ' . $phone_number);
 
-            $message = "Your business permit has been updated to 'Renewal'. Please check your dashboard for details.";
+            $currentYear = date('Y');
+
+            $message = "Mr/Mrs " . $lastName . " Your business permit is due for renewal. Please proceed to the BPL office for the renewal of your business permit not later than December 31, " . $currentYear;
+
+            
             $smsResult = self::sendSimpleSMS($phone_number, $message);
 
             // Check and log SMS result
