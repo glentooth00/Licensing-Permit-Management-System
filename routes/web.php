@@ -29,7 +29,7 @@ Route::get('/', function () {
 });
 
 Route::get('/business-registration', function () {
-    return view('site.registration');
+    return view('site.registration3');
 });
 
 Route::get('/admin/permit-generate', function () {
