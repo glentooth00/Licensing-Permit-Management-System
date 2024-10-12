@@ -65,12 +65,14 @@
                     <div class="col-md-4">   
                         <div class="text-end" style="right: 0; margin-top: 20px;">
                         <span><i>(Do Not Fill-out-For BPLO use)</i></span><br>
-                        <span>Date of Receipt:_______________</span><br>
-                        <span>Tracking Number:_____________</span>
+                        <span>Date of Receipt: <input type="text" style="width: 20% !important;"></span><br>
+                        <span>Tracking Number:<input type="text" style="width: 18% !important;"></span>
                     </div>
                 </div>
                 </div>
-                <div class="card-header bg-dark text-light"><span>A. BUSINESS INFORMATION AND REGISTRATION</span></div>
+                <div class="card-header bg-dark text-light">
+                    <span>A. BUSINESS INFORMATION AND REGISTRATION</span>
+                </div>
                     <div class="card-body">
                         <div class="card">
                             <div class="card-body">
@@ -118,15 +120,15 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <table class="table">
+                                <table class="table table-bordered">
                                     <tr>
-                                        <td rowspan="2">
+                                        <td rowspan=2">
                                             <b>Name Address/Main Office Address:</b>
                                         </td>
                                         <td>
                                             <span>Bldg. No. <input type="text"></span>
                                         </td>
-                                        <td>
+                                        <td colspan="3">
                                             <span>Name of Bldg. <input type="text"></span>
                                         </td>
                                         <td>
@@ -135,12 +137,7 @@
                                         <td>
                                             <span>Block no. <input type="text"></span>
                                         </td>
-                                        <td>
-                                            {{-- <span>Block no. <input type="text"></span> --}}
-                                        </td>
-                                        <td>
-                                            {{-- <span>Block no. <input type="text"></span> --}}
-                                        </td>
+                                     
                                     </tr>
                                     <tr>
                                         <td>
@@ -241,6 +238,174 @@
                                         </td>
                                         <td colspan="2">
                                             <b>Contact No.:</b>
+                                            <input type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <p><i>***Write OLD address if CHANGE of Business address/ Write old kind/ item if change of item/ kind:</i></p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                         <div class="card-header bg-dark text-light">
+                            <span>B. BUSINESS OPERATION</span>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td colspan="2">
+                                            <b>Business Area</b>(in sq.m);
+                                            <input type="text">
+                                        </td>
+                                        <td colspan="2">
+                                            <b>Total No. of employees in establishment:</b><br>
+                                            <span><input type="text" style="width: 20% !important;">Male</span>
+                                            <span><input type="text" style="width: 20% !important;">Female</span>
+                                        </td>
+                                        <td >
+                                            <b>No. of Employees residing within Estancia, Iloilo </b>
+                                            <input type="text">
+                                        </td>
+                                        <td colspan="2">
+                                            <b>No. of Delivery Vehicles </b>(if applicable) <br>
+                                            <span><input type="text" style="width: 20% !important;">Van/Truck</span>
+                                            <span><input type="text" style="width: 20% !important;">Motorcycle</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7">
+                                            <span><b><input type="checkbox" class="form-check-input"> Same as Home Address/ Main Office Address.</b>(if same as Home/ Main Office Address, DO NOT FILL-UP bellow)</span>
+                                        </td>
+                                    </tr>
+                                   <tr>
+                                        <td rowspan="2" style="width: 15%;">
+                                            <b>Business Location Address:</b>
+                                        </td>
+                                        <td>
+                                            <span>Bldg. No. <input type="text"></span>
+                                        </td>
+                                        <td colspan="3">
+                                            <span>Name of Bldg. <input type="text"></span>
+                                        </td>
+                                        <td>
+                                            <span>Lot No. <input type="text"></span>
+                                        </td>
+                                        <td>
+                                            <span>Block no. <input type="text"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span>Street <input type="text"></span>
+                                        </td>
+                                        <td>
+                                            <span>Barangay <input type="text"></span>
+                                        </td>
+                                        <td>
+                                            <span>Subdivision <input type="text"></span>
+                                        </td>
+                                        <td>
+                                            <span>City/ Municipality <input type="text" value="ESTANCIA"></span>
+                                        </td>
+                                          <td>
+                                            <span>Province  <input type="text" value="ILOILO"></span>
+                                        </td>
+                                        <td>
+                                            <span>Zip Code  <input type="text" value="5017"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7">
+                                            <span>Business Location, Owned? <input type="checkbox"> Yes, if Yes, Tax Declaration <input type="text" style="width: 27% !important;"> or Property ID No. <input type="text" style="width: 27% !important;"></span><br>
+                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" class="form-check-input"> No, If No please present any of the following: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" class="form-check-input"> Contract of lease &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" class="form-check-input"> MOA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" class="form-check-input"> Written consent of owner</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7">
+                                            <span>
+                                                <b>Do you have tax incentives from any Government Entity?</b>
+                                                <span><input type="checkbox" class="form-check-input"> Yes (please attach a softcopy of your Certificate) <input type="file"> <input type="checkbox" class="form-check-input"> No</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b>Business Activity</b>(Please check one):
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input"> Main Business/ Office
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input"> Branch Office
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input"> Admin. Office Only
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input"> Warehouse
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="form-check-input"> Onthers. Please specify: <br>
+                                            <input type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <th colspan="2">
+                                            Line of Business
+                                        </th>
+                                        <td colspan="2">
+                                            Philippines Standard Industrial Code <br>
+                                            (PSIC), If available
+                                        </td>
+                                         <th colspan="2">
+                                            Product/ Services
+                                        </th>
+                                         <th>
+                                            No. of Units
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td>
+                                            <input type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td>
+                                            <input type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td colspan="2">
+                                            <input type="text">
+                                        </td>
+                                        <td>
                                             <input type="text">
                                         </td>
                                     </tr>
