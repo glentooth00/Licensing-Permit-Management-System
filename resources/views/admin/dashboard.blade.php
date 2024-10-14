@@ -105,9 +105,9 @@
                                 @foreach ($businessPermits as $businessPermit)
                                     <tr>
                                         <td>
-                                            {{ $businessPermit->first_name }}
-                                            {{ $businessPermit->middle_name }}
-                                            {{ $businessPermit->last_name }}
+                                            {{ $businessPermit->owner_first_name }}
+                                            {{ $businessPermit->owner_middle_name }}
+                                            {{ $businessPermit->owner_last_name }}
                                         </td>
                                         <td>
                                             {{ $businessPermit->business_name }}
@@ -116,7 +116,7 @@
                                             {{ $businessPermit->business_type }}
                                         </td>
                                         <td>
-                                            {{ $businessPermit->owners_Tel_No_Mobile }}
+                                            {{ $businessPermit->telephone_no }} / {{ $businessPermit->mobile_no }}
                                         </td>
                                         <td>
                                             {{ $businessPermit->created_at->format('F j, Y') }}

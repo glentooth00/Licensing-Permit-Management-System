@@ -52,7 +52,7 @@ Route::get('/business_registration', [StreetsController::class, 'regDisplay'])->
 
 
 // Handle registration form submission
-Route::post('/business_registration', [BusinessPermitApplicationController::class, 'store'])->name('business_registration.store');
+Route::post('business_registration', [BusinessPermitApplicationController::class, 'store'])->name('business_registration.store');
 
 
 // After registration page

@@ -74,11 +74,16 @@ class BusinessPermitApplicationController extends Controller
         // Validate the request data including arrays for line_of_business, PSIC, product_services, and no_of_units
         $validatedData = $request->validate([
             'business_application' => 'required|string|max:255',
+            'business_type' => 'nullable|string|max:255',
             'mode_of_payment' => 'nullable|string|max:255',
             'DTI_SEC_CDA_registration_No' => 'nullable|string|max:255',
             'TIN' => 'nullable|string|max:255',
             'business_name' => 'nullable|string|max:255',
             'franchise' => 'nullable|string|max:255',
+            'corp_type' => 'nullable|string|max:255',
+            'requirement' => 'nullable|string|max:255',
+            'tax_declaration' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'building_no2' => 'nullable|string|max:255',
             'building_no' => 'nullable|string|max:255',
             'business_building_name' => 'nullable|string|max:255',
             'business_building_name2' => 'nullable|string|max:255',
@@ -87,12 +92,15 @@ class BusinessPermitApplicationController extends Controller
             'block_no2' => 'nullable|string|max:255',
             'street' => 'nullable|string|max:255',
             'street2' => 'nullable|string|max:255',
+            'gov_entity' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'business_activity' => 'nullable|string|max:255',
+            'others' => 'nullable|string|max:255',
             'barangay' => 'nullable|string|max:255',
             'barangay2' => 'nullable|string|max:255',
             'subdivision' => 'nullable|string|max:255',
             'subdivision2' => 'nullable|string|max:255',
-            'city_municipality' => 'required|string|max:255',
-            'city_municipality2' => 'required|string|max:255',
+            'city_municipality' => 'nullable|string|max:255',
+            'city_municipality2' => 'nullable|string|max:255',
             'province' => 'nullable|string|max:255',
             'province2' => 'nullable|string|max:255',
             'zip_code' => 'nullable|string|max:10',
@@ -119,7 +127,6 @@ class BusinessPermitApplicationController extends Controller
             'building_name' => 'nullable|string|max:255',
             'lot_no' => 'nullable|string|max:255',
             'block_no' => 'nullable|string|max:255',
-            // Handle the multiple inputs as arrays
             'line_of_business' => 'nullable|array',
             'line_of_business.*' => 'nullable|string|max:255',
             'PSIC' => 'nullable|array',
@@ -128,29 +135,41 @@ class BusinessPermitApplicationController extends Controller
             'product_services.*' => 'nullable|string|max:255',
             'no_of_units' => 'nullable|array',
             'no_of_units.*' => 'nullable|string|max:255',
-            'tax_declaration' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
     
-        // Handle the tax declaration file upload
-        if ($request->hasFile('tax_declaration')) {
-            $file = $request->file('tax_declaration');
-            $filePath = $file->store('tax_declarations', 'public');
-            $validatedData['tax_declaration'] = $filePath;
-        }
-    
-        // Prepend the country code to the mobile numbers
-        if (!empty($validatedData['mobile_no'])) {
-            $validatedData['mobile_no'] = '+63' . ltrim($validatedData['mobile_no'], '0');
-        }
-    
-        // Convert the array fields to JSON
-        $validatedData['line_of_business'] = json_encode($validatedData['line_of_business']);
-        $validatedData['PSIC'] = json_encode($validatedData['PSIC']);
-        $validatedData['product_services'] = json_encode($validatedData['product_services']);
-        $validatedData['no_of_units'] = json_encode($validatedData['no_of_units']);
-    
-        // Set default status to 'Pending'
-        $validatedData['status'] = 'Pending';
+    // Handle file upload for 'tax_declaration'
+    if ($request->hasFile('tax_declaration')) {
+        $taxDeclarationFile = $request->file('tax_declaration');
+        // Store the file and save the path
+        $taxDeclarationPath = $taxDeclarationFile->store('files', 'public');
+        $validatedData['tax_declaration'] = $taxDeclarationPath;
+    }
+
+    // Handle file upload for 'gov_entity'
+    if ($request->hasFile('gov_entity')) {
+        $govEntityFile = $request->file('gov_entity');
+        // Store the file and save the path
+        $govEntityPath = $govEntityFile->store('files', 'public');
+        $validatedData['gov_entity'] = $govEntityPath;
+    }
+
+    // Prepend the country code to the mobile number
+    if (!empty($validatedData['mobile_no'])) {
+        $validatedData['mobile_no'] = '+63' . ltrim($validatedData['mobile_no'], '0');
+    }
+
+    // Convert array fields to JSON if present
+    $validatedData['line_of_business'] = isset($validatedData['line_of_business']) ? json_encode($validatedData['line_of_business']) : null;
+    $validatedData['PSIC'] = isset($validatedData['PSIC']) ? json_encode($validatedData['PSIC']) : null;
+    $validatedData['product_services'] = isset($validatedData['product_services']) ? json_encode($validatedData['product_services']) : null;
+    $validatedData['no_of_units'] = isset($validatedData['no_of_units']) ? json_encode($validatedData['no_of_units']) : null;
+
+    // Set default status and notification
+    $validatedData['status'] = 'Pending';
+    $validatedData['notified'] = '0';
+
+    // Debugging purposes, remove or replace after testing
+    // dd($validatedData);
     
         // Create the record in the database
         $product = BusinessPermitApplication::create($validatedData);
@@ -158,6 +177,7 @@ class BusinessPermitApplicationController extends Controller
         // Redirect or return response after saving
         return redirect()->back()->with('success', 'Business data saved successfully!');
     }
+    
     
     
 
