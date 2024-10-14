@@ -213,15 +213,14 @@
                                             <input type="text">
                                         </td>
                                         <td>
-                                           <b>Tel. No./Mobile </b><br> <input value="+63"
-                                                            disabled class="text-dark"
-                                                            style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
-                                                            name="business_Tel_No_Mobile" pattern="[0-9]{10}"
-                                                            placeholder="Enter 10-digit number" type="number"
-                                                            required"
-                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                            type = "number" maxlength = "10"
-                                                            style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
+                                            <b>Tel. No./Mobile </b><br> <input value="+63" disabled
+                                                class="text-dark"
+                                                style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
+                                                name="business_Tel_No_Mobile" pattern="[0-9]{10}"
+                                                placeholder="Enter 10-digit number" type="number" required"
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                type = "number" maxlength = "10"
+                                                style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
                                         </td>
                                         <td>
                                             <b>Email Address</b>
@@ -291,15 +290,13 @@
                                             <input type="text">
                                         </td>
                                         <td colspan="2">
-                                            <b>Contact No.: </b><br> <input value="+63"
-                                            disabled class="text-dark"
-                                            style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
-                                            name="business_Tel_No_Mobile" pattern="[0-9]{10}"
-                                            placeholder="Enter 10-digit number" type="number"
-                                            required"
-                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                            type = "number" maxlength = "10"
-                                            style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
+                                            <b>Contact No.: </b><br> <input value="+63" disabled class="text-dark"
+                                                style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
+                                                name="business_Tel_No_Mobile" pattern="[0-9]{10}"
+                                                placeholder="Enter 10-digit number" type="number" required"
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                type = "number" maxlength = "10"
+                                                style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -537,7 +534,7 @@
                                                 (For Renewal)
                                             </span>
                                         </td>
-                                          <td class="text-center pt-5" colspan="3">
+                                        <td class="text-center pt-5" colspan="3">
                                             <input type="text">
                                         </td>
                                     </tr>
