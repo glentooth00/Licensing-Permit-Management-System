@@ -213,8 +213,15 @@
                                             <input type="text">
                                         </td>
                                         <td>
-                                            <b>Mobile No.:</b>
-                                            <input type="text">
+                                           <b>Tel. No./Mobile </b><br> <input value="+63"
+                                                            disabled class="text-dark"
+                                                            style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
+                                                            name="business_Tel_No_Mobile" pattern="[0-9]{10}"
+                                                            placeholder="Enter 10-digit number" type="number"
+                                                            required"
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                            type = "number" maxlength = "10"
+                                                            style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
                                         </td>
                                         <td>
                                             <b>Email Address</b>
@@ -284,8 +291,15 @@
                                             <input type="text">
                                         </td>
                                         <td colspan="2">
-                                            <b>Contact No.:</b>
-                                            <input type="text">
+                                            <b>Contact No.: </b><br> <input value="+63"
+                                            disabled class="text-dark"
+                                            style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
+                                            name="business_Tel_No_Mobile" pattern="[0-9]{10}"
+                                            placeholder="Enter 10-digit number" type="number"
+                                            required"
+                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            type = "number" maxlength = "10"
+                                            style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -507,7 +521,30 @@
                                             <input type="text" value="test">
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            <span>
+                                                <b>Capitalization</b><br>
+                                                (For New Application)
+                                            </span>
+                                        </td>
+                                        <td class="text-center pt-5" colspan="3">
+                                            <input type="text">
+                                        </td>
+                                        <td class="text-center">
+                                            <span>
+                                                <b>Last Year's Gross <br> Sales/ Receipt</b><br>
+                                                (For Renewal)
+                                            </span>
+                                        </td>
+                                          <td class="text-center pt-5" colspan="3">
+                                            <input type="text">
+                                        </td>
+                                    </tr>
                                 </table>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
