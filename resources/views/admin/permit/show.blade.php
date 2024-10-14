@@ -47,7 +47,7 @@
                                                         <h6>1. APPLICANT SECTION-BASIC INFORMATION</h6>
 
                                                     </div>
-                                                    <form action="{{ route('business-registration.store') }}"
+                                                    <form action="{{ route('business_registration.store') }}"
                                                         method="POST">
                                                         @csrf
                                                         <div class="mt-3">

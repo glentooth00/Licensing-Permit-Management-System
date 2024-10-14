@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
+use App\Http\Controllers\StreetsController;
 use App\Http\Controllers\UserController;
 use App\Models\BusinessPermitApplication;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +30,8 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/business-registration', function () {
-    return view('site.registration3');
+Route::get('/business_registration', function () {
+    return view('site.registration2');
 });
 
 Route::get('/admin/permit-generate', function () {
@@ -41,12 +43,16 @@ Route::get('/admin-permit-show', function () {
 });
 
 Route::post('/custom-login', [UserController::class, 'authenticate'])->name('custom.login');
+Route::get('/business_registration', [StreetsController::class, 'regDisplay'])->name('business.registration.street');
+// Route::get('/business-registration', [BarangayController::class, 'regDisplayBrgy'])->name('business.registration.barangay');
+
+
 
 // web.php
 
 
 // Handle registration form submission
-Route::post('/business-registration', [BusinessPermitApplicationController::class, 'store'])->name('business-registration.store');
+Route::post('/business_registration', [BusinessPermitApplicationController::class, 'store'])->name('business_registration.store');
 
 
 // After registration page
@@ -73,7 +79,10 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/permit', [BusinessPermitApplicationController::class, 'showApproved'])->name('admin.permit');
 
     // Route for showing permit details
-    Route::get('/permit/show/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
+    // Route::get('/permit/show/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
+
+    Route::get('/permits/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
+
 
     // Route for approving permit using BusinessPermitApplicationController
     Route::post('/approve-permit/{id}', [BusinessPermitApplicationController::class, 'approvePermit'])->name('approve.permit');
@@ -82,7 +91,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
 
     // Route to update a business registration
-    Route::put('/business-registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
+    Route::put('/business_registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
 
     // Route to generate a QR code for a permit
     Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
@@ -135,8 +144,16 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     //logout
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
+    //street
+    Route::get('admin/street/index', [StreetsController::class, 'index'])->name('admin.permit.street');
+    Route::post('/admin/street/store', [StreetsController::class, 'store'])->name('street.store');
 
+    //Barangay
+    Route::get('admin/barangay/index', [BarangayController::class, 'index'])->name('admin.permit.barangay');
+    Route::post('/admin/barangay/store', [BarangayController::class, 'store'])->name('barangay.store');
 
+    Route::get('/business_registration', [StreetsController::class, 'editDisplay'])->name('business.edit.street');
+    // Route::get('/business-registration', [BusinessPermitApplicationController::class, 'editDisplay'])->name('business.edit.street');
     //autoupdate 
     Route::get('/dashboard', [BusinessPermitApplicationController::class, 'checkMinutePassed']);
 
