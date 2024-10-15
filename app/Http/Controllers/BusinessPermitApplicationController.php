@@ -556,7 +556,7 @@ public function showApproved()
 
             // Send SMS notification
             $phone_number = $permit->mobile_no;
-            $lastName = $permit->last_name;
+            $lastName = $permit->owner_last_name;
             // dd($phone_number);
             // Log::info('Sending SMS to: ' . $phone_number);
 
