@@ -551,6 +551,7 @@ foreach ($approved_permits as $permit) {
 if ($now->diffInMonths($permit->approved_on) >= 1) {
 // Update status to 'Renewal'
 $permit->status = 'Renewal';
+$permit->notified = '1';
 $permit->save();
 
 // Send SMS notification
