@@ -1,5 +1,6 @@
 @extends('includes.layouts.app2')
 @section('page-title', 'Dashboard')
+<link rel="stylesheet" href="{{ asset('dist/css/app.min.css') }}">
 <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
 @section('content')
     <!-- Page-header end -->
@@ -23,33 +24,43 @@
                                                     class="table table-bordered mt-4">
                                                     <tbody>
                                                         <tr>
+                                                            <!-- New Application Checkbox -->
                                                             <td>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" name="type"
-                                                                        type="checkbox" value="New" id="flexCheckNew"
-                                                                        onclick="toggleCheckbox('flexCheckRenew', this)">
+                                                                    <input class="form-check-input"
+                                                                        name="business_application" type="checkbox"
+                                                                        value="New" id="flexCheckNew"
+                                                                        onclick="toggleCheckbox('flexCheckRenew', this)"
+                                                                        {{ $businessPermit->business_application == 'New' ? 'checked' : '' }}
+                                                                        @disabled(true)>
                                                                     <label class="form-check-label" for="flexCheckNew">
                                                                         NEW
                                                                     </label>
                                                                 </div>
                                                             </td>
+
+                                                            <!-- Renew Application Checkbox -->
                                                             <td>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" name="type"
-                                                                        type="checkbox" value="Renew" id="flexCheckRenew"
-                                                                        onclick="toggleCheckbox('flexCheckNew', this)">
+                                                                    <input class="form-check-input"
+                                                                        name="business_application" type="checkbox"
+                                                                        value="Renew" id="flexCheckRenew"
+                                                                        onclick="toggleCheckbox('flexCheckNew', this)"
+                                                                        {{ $businessPermit->business_application == 'Renew' ? 'checked' : '' }}
+                                                                        @disabled(true) @readonly(true)>
                                                                     <label class="form-check-label" for="flexCheckRenew">
                                                                         RENEW
                                                                     </label>
                                                                 </div>
                                                             </td>
-                                                        </tr>
+
                                                         <tr>
                                                             <td>
                                                             </td>
                                                             <td>
                                                                 Mode of Payment
                                                             </td>
+
                                                         </tr>
 
                                                         <tr>
@@ -57,31 +68,38 @@
                                                                 <br> kind/item
                                                             </td>
                                                             <td style="padding-left: 30px;">
-                                                                <input class="form-check-input" name="frequency"
+                                                                <input class="form-check-input" name="mode_of_payment"
                                                                     type="checkbox" value="Anually" id="flexCheckAnually"
-                                                                    onclick="uncheckOthers(['flexCheckBiAnually', 'flexCheckQuarterly'], this)">
+                                                                    onclick="uncheckOthers(['flexCheckBiAnually', 'flexCheckQuarterly'], this)"
+                                                                    {{ $businessPermit->mode_of_payment == 'Anually' ? 'checked' : '' }}
+                                                                    @disabled(true)>
                                                                 Anually
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="padding-left: 30px;">
-                                                                <input class="form-check-input" name="frequency"
+                                                                <input class="form-check-input" name="mode_of_payment"
                                                                     type="checkbox" value="Bi-Anually"
                                                                     id="flexCheckBiAnually"
-                                                                    onclick="uncheckOthers(['flexCheckAnually', 'flexCheckQuarterly'], this)">
-                                                                Bi-annually
+                                                                    onclick="uncheckOthers(['flexCheckAnually', 'flexCheckQuarterly'], this)"
+                                                                    {{ $businessPermit->mode_of_payment == 'Bi-Anually' ? 'checked' : '' }}
+                                                                    @disabled(true)>
+                                                                Bi-Anually
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>CHANGE biz address</td>
                                                             <td style="padding-left: 30px;">
-                                                                <input class="form-check-input" name="frequency"
+                                                                <input class="form-check-input" name="mode_of_payment"
                                                                     type="checkbox" value="Quarterly"
                                                                     id="flexCheckQuarterly"
-                                                                    onclick="uncheckOthers(['flexCheckAnually', 'flexCheckBiAnually'], this)">
-                                                                Quarterly
+                                                                    onclick="uncheckOthers(['flexCheckAnually', 'flexCheckBiAnually'], this)"
+                                                                    {{ $businessPermit->mode_of_payment == 'Quarterly' ? 'checked' : '' }}
+                                                                    @disabled(true)>
+
                                                             </td>
                                                         </tr>
+
 
 
                                                     </tbody>
@@ -111,100 +129,156 @@
                                                                 <td>
                                                                     <span class="px-5">Please Choose one </span>
                                                                     <span>
-                                                                        <input type="checkbox" class="form-check-input"
+                                                                        <input type="checkbox" name="business_type"
+                                                                            value="Sole Proprietorship"
+                                                                            class="form-check-input"
                                                                             id="flexCheckSoleProprietorship1"
-                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCorporation', 'flexCheckCooperative'], this)">
-                                                                        <b> Sole Proprietorship</b>&nbsp;&nbsp;&nbsp;
+                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCorporation', 'flexCheckCooperative'], this)"
+                                                                            {{ $businessPermit->business_type == 'Sole Proprietorship' ? 'checked' : '' }}
+                                                                            @disabled(true)>
+                                                                        <b> Sole
+                                                                            Proprietorship&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                                                        <input type="checkbox" class="form-check-input"
+                                                                        <input type="checkbox" name="business_type"
+                                                                            value="One Person
+                                                                            Corporation"
+                                                                            class="form-check-input"
                                                                             id="flexCheckSoleProprietorship2"
-                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckPartnership', 'flexCheckCorporation', 'flexCheckCooperative'], this)">
-                                                                        <b> Sole Proprietorship</b>&nbsp;&nbsp;&nbsp;
+                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckPartnership', 'flexCheckCorporation', 'flexCheckCooperative'], this)"
+                                                                            {{ $businessPermit->business_type ==
+                                                                            'One Person
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Corporation'
+                                                                                ? 'checked'
+                                                                                : '' }}
+                                                                            @disabled(true)>
+                                                                        <b> One Person
+                                                                            Corporation&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                                                        <input type="checkbox" class="form-check-input"
+                                                                        <input type="checkbox" name="business_type"
+                                                                            value="Partnership" class="form-check-input"
                                                                             id="flexCheckPartnership"
-                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckCorporation', 'flexCheckCooperative'], this)">
-                                                                        <b> Partnership</b>&nbsp;&nbsp;&nbsp;
+                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckCorporation', 'flexCheckCooperative'], this)"
+                                                                            {{ $businessPermit->business_type == 'Partnership' ? 'checked' : '' }}
+                                                                            @disabled(true)>
+                                                                        <b>
+                                                                            Partnership&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                                                        <input type="checkbox" class="form-check-input"
+                                                                        <input type="checkbox" name="business_type"
+                                                                            value="Corporation" class="form-check-input"
                                                                             id="flexCheckCorporation"
-                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCooperative'], this)">
-                                                                        <b> Corporation</b>&nbsp;&nbsp;&nbsp;
+                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCooperative'], this)"
+                                                                            {{ $businessPermit->business_type == 'Corporation' ? 'checked' : '' }}
+                                                                            @disabled(true)>
+                                                                        <b>
+                                                                            Corporation&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                                                        <input type="checkbox" class="form-check-input"
+                                                                        <input type="checkbox" name="business_type"
+                                                                            value="Cooperative" class="form-check-input"
                                                                             id="flexCheckCooperative"
-                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCorporation'], this)">
+                                                                            onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCorporation'], this)"
+                                                                            {{ $businessPermit->business_type == 'Cooperative' ? 'checked' : '' }}
+                                                                            @disabled(true)>
                                                                         <b> Cooperative</b>
                                                                     </span>
+
                                                                 </td>
                                                             </tr>
                                                         </thead>
                                                     </table>
                                                     <table class="table table-bordered mt-4">
                                                         <tr>
-                                                            <td class="text-center">
-                                                                <b>DTI/SEC/CDA Registration Number:</b>
-                                                                <input type="text">
+                                                            <td class="text-center" style="text-align: center;">
+                                                                <b>DTI/SEC/CDA Registration Number:</b><br>
+                                                                <input type="text" name="DTI_SEC_CDA_registration_No"
+                                                                    value="{{ old('DTI_SEC_CDA_registration_No', $businessPermit->DTI_SEC_CDA_registration_No) }}"
+                                                                    style="text-align: center;" readonly>
                                                             </td>
-                                                            <td class="text-center">
-                                                                <b>Tax Identification Number (TIN):</b>
-                                                                <input type="text">
+                                                            <td class="text-center" style="text-align: center;">
+                                                                <b>Tax Identification Number (TIN):</b><br>
+                                                                <input type="text" name="TIN"
+                                                                    value="{{ old('TIN', $businessPermit->TIN) }}"
+                                                                    style="text-align: center;" readonly>
                                                             </td>
                                                         </tr>
-                                                    </table>
-                                                    <table class="table table-bordered mt-4">
-                                                        <tr>
-                                                            <td class="">
-                                                                <b>Business / Trade Name</b>: (For Sole proprietor) or <br>
-                                                                <b>Corporate Name:</b> (For Coop; Corp; Partnership)
 
-                                                                <input type="text">
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <b>Fanchise Name:</b> (If applicable)
-                                                                <input type="text">
-                                                            </td>
-                                                        </tr>
+
                                                     </table>
                                                     <table class="table table-bordered">
                                                         <tr>
-                                                            <td rowspan=2">
+                                                            <td rowspan="2">
                                                                 <b>Name Address/Main Office Address:</b>
                                                             </td>
                                                             <td>
-                                                                <span>Bldg. No. <input type="text"></span>
+                                                                <span>Bldg. No. <input type="text" name="building_no"
+                                                                        value="{{ $businessPermit->building_no }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td colspan="3">
-                                                                <span>Name of Bldg. <input type="text"></span>
+                                                                <span>Name of Bldg. <input type="text"
+                                                                        name="business_building_name"
+                                                                        value="{{ $businessPermit->business_building_name }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>Lot No. <input type="text"></span>
+                                                                <span>Lot No. <input type="text" name="lot_number"
+                                                                        value="{{ $businessPermit->lot_number }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>Block no. <input type="text"></span>
+                                                                <span>Block No. <input type="text" name="block_no"
+                                                                        value="{{ $businessPermit->block_no }}"
+                                                                        readonly></span>
                                                             </td>
-
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <span>Street <input type="text"></span>
+                                                                <span>Street
+                                                                    <select name="street" class="form-select"
+                                                                        @disabled(true)>
+                                                                        <option value="">Select St...</option>
+                                                                        @foreach ($streets as $street)
+                                                                            <option value="{{ $street->street }}"
+                                                                                {{ $street->street == $businessPermit->street ? 'selected' : '' }}>
+                                                                                {{ $street->street }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </span>
                                                             </td>
                                                             <td>
-                                                                <span>Barangay <input type="text"></span>
+                                                                <span>Barangay
+                                                                    <select name="barangay" class="form-select"
+                                                                        @disabled(true)>
+                                                                        <option value="">Select Brgy...</option>
+                                                                        @foreach ($barangays as $barangay)
+                                                                            <option value="{{ $barangay->barangay }}"
+                                                                                {{ $barangay->barangay == $businessPermit->barangay ? 'selected' : '' }}>
+                                                                                {{ $barangay->barangay }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </span>
                                                             </td>
                                                             <td>
-                                                                <span>Subdivision <input type="text"></span>
+                                                                <span>Subdivision <input type="text" name="subdivision"
+                                                                        value="{{ $businessPermit->subdivision }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>City/ Municipality <input type="text"></span>
+                                                                <span>City/ Municipality <input type="text"
+                                                                        name="city_municipality"
+                                                                        value="{{ $businessPermit->city_municipality }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>Province <input type="text"></span>
+                                                                <span>Province <input type="text" name="province"
+                                                                        value="{{ $businessPermit->province }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>Zip Code <input type="text"></span>
+                                                                <span>Zip Code <input type="text" name="zip_code"
+                                                                        value="{{ $businessPermit->zip_code }}"
+                                                                        readonly></span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -212,26 +286,31 @@
                                                         <tr>
                                                             <td>
                                                                 <b>Telephone No.:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="telephone_no"
+                                                                    value="{{ $businessPermit->telephone_no }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <b>Tel. No./Mobile </b><br> <input value="+63" disabled
-                                                                    class="text-dark"
-                                                                    style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
-                                                                    name="business_Tel_No_Mobile" pattern="[0-9]{10}"
+                                                                <b>Mobile no.</b><br>
+                                                                <input value="+63" disabled class="text-dark"
+                                                                    style="width:55px; margin-right:5px; border: none; border-bottom: 1px solid black;">
+                                                                <input name="mobile_no" pattern="[0-9]{10}"
                                                                     placeholder="Enter 10-digit number" type="number"
-                                                                    required"
-                                                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                                    type = "number" maxlength = "10"
-                                                                    style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
+                                                                    required
+                                                                    oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                                    maxlength="10"
+                                                                    value="{{ substr($businessPermit->mobile_no, 3) }}"
+                                                                    style="border: none; border-bottom: 1px solid black; width: 80% !important;"
+                                                                    readonly>
                                                             </td>
+
                                                             <td>
                                                                 <b>Email Address</b>
-                                                                <input type="text">
+                                                                <input type="text" name="email_address"
+                                                                    value="{{ $businessPermit->email_address }}" readonly>
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                    <table class="table table-bordered">
+                                                    <table class="table table-bordered mt-3">
                                                         <tr>
                                                             <td style="width: 18%;">
                                                                 <b>Name of Owner:</b><br>
@@ -239,19 +318,26 @@
                                                             </td>
                                                             <td>
                                                                 <b>Last Name:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="owner_last_name"
+                                                                    value="{{ $businessPermit->owner_last_name }}"
+                                                                    readonly>
                                                             </td>
                                                             <td>
                                                                 <b>First Name:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="owner_first_name"
+                                                                    value="{{ $businessPermit->owner_first_name }}"
+                                                                    readonly>
                                                             </td>
                                                             <td>
                                                                 <b>Middle Name:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="owner_middle_name"
+                                                                    value="{{ $businessPermit->owner_middle_name }}"
+                                                                    readonly>
                                                             </td>
                                                             <td>
                                                                 <b>Suffix:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="owner_suffix"
+                                                                    value="{{ $businessPermit->owner_suffix }}" readonly>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -261,60 +347,80 @@
                                                             </td>
                                                             <td>
                                                                 <b>Last Name:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="pres_last_name"
+                                                                    value="{{ $businessPermit->pres_last_name }}"
+                                                                    readonly>
                                                             </td>
                                                             <td>
                                                                 <b>First Name:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="pres_first_name"
+                                                                    value="{{ $businessPermit->pres_first_name }}"
+                                                                    readonly>
                                                             </td>
                                                             <td>
                                                                 <b>Middle Name:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="pres_middle_name"
+                                                                    value="{{ $businessPermit->pres_middle_name }}"
+                                                                    readonly>
                                                             </td>
                                                             <td>
                                                                 <b>Suffix:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="pres_suffix"
+                                                                    value="{{ $businessPermit->pres_suffix }}" readonly>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="5">
                                                                 <b>For Corporation:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                <input type="checkbox" class="form-check-input"><b>
+                                                                <input type="checkbox" name="corp_type" value="Filipino"
+                                                                    class="form-check-input"
+                                                                    {{ $businessPermit->corp_type == 'Filipino' ? 'checked' : '' }}
+                                                                    @disabled(true)><b>
                                                                     Filipino</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                <input type="checkbox" class="form-check-input"><b>
+                                                                <input type="checkbox" name="corp_type" value="Foreign"
+                                                                    class="form-check-input"
+                                                                    {{ $businessPermit->corp_type == 'Foreign' ? 'checked' : '' }}
+                                                                    @disabled(true)><b>
                                                                     Foreign</b>
                                                             </td>
                                                         </tr>
+
                                                         <tr>
                                                             <td>
                                                                 <b>In case of emergency,</b>
                                                             </td>
                                                             <td colspan="2">
                                                                 <b>Name of Contact Person:</b>
-                                                                <input type="text">
+                                                                <input type="text" name="emergency_contact_name"
+                                                                    value="{{ $businessPermit->emergency_contact_name }}"
+                                                                    readonly>
                                                             </td>
                                                             <td colspan="2">
-                                                                <b>Contact No.: </b><br> <input value="+63" disabled
-                                                                    class="text-dark"
-                                                                    style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
-                                                                    name="business_Tel_No_Mobile" pattern="[0-9]{10}"
+                                                                <b>Contact No.: </b><br>
+                                                                <input value="+63" disabled class="text-dark"
+                                                                    style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;">
+                                                                <input name="emergency_contact_no" pattern="[0-9]{10}"
                                                                     placeholder="Enter 10-digit number" type="number"
-                                                                    required"
-                                                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                                    type = "number" maxlength = "10"
-                                                                    style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
+                                                                    required
+                                                                    oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                                    maxlength="10"
+                                                                    value="{{ substr($businessPermit->emergency_contact_no, 3) }}"
+                                                                    style="border: none; border-bottom: 1px solid black; width: 80% !important;"
+                                                                    readonly>
                                                             </td>
                                                         </tr>
+
                                                         <tr>
                                                             <td colspan="5">
                                                                 <p><i>***Write OLD address if CHANGE of Business address/
-                                                                        Write old kind/
-                                                                        item if change of item/ kind:</i></p>
+                                                                        Write old kind/ item if change of item/ kind:</i>
+                                                                </p>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                 </div>
                                             </div>
+
                                             <div class="card-header bg-dark text-light">
                                                 <span>B. BUSINESS OPERATION</span>
                                             </div>
@@ -324,25 +430,36 @@
                                                         <tr>
                                                             <td colspan="2">
                                                                 <b>Business Area</b>(in sq.m);
-                                                                <input type="text">
+                                                                <input type="text" name="business_area"
+                                                                    value="{{ $businessPermit->business_area }}" readonly>
                                                             </td>
                                                             <td colspan="2">
                                                                 <b>Total No. of employees in establishment:</b><br>
                                                                 <span><input type="text"
-                                                                        style="width: 20% !important;">Male</span>
-                                                                <span><input type="text"
-                                                                        style="width: 20% !important;">Female</span>
+                                                                        value="{{ $businessPermit->total_employees_male }}"
+                                                                        name="total_employees_male"
+                                                                        style="width: 20% !important;" readonly>Male</span>
+                                                                <span><input type="text" name="total_employees_female"
+                                                                        value="{{ $businessPermit->total_employees_female }}"
+                                                                        style="width: 20% !important;"
+                                                                        readonly>Female</span>
                                                             </td>
                                                             <td>
                                                                 <b>No. of Employees residing within Estancia, Iloilo </b>
-                                                                <input type="text">
+                                                                <input type="text"
+                                                                    value="{{ $businessPermit->employees_residing_estancia }}"
+                                                                    name="employees_residing_estancia" readonly>
                                                             </td>
                                                             <td colspan="2">
                                                                 <b>No. of Delivery Vehicles </b>(if applicable) <br>
-                                                                <span><input type="text"
-                                                                        style="width: 20% !important;">Van/Truck</span>
-                                                                <span><input type="text"
-                                                                        style="width: 20% !important;">Motorcycle</span>
+                                                                <span><input type="text" style="width: 20% !important;"
+                                                                        value="{{ $businessPermit->delivery_vehicles_van_truck }}"
+                                                                        name="delivery_vehicles_van_truck"
+                                                                        readonly>Van/Truck</span>
+                                                                <span><input type="text" style="width: 20% !important;"
+                                                                        value="{{ $businessPermit->delivery_vehicles_motorcycle }}"
+                                                                        name="delivery_vehicles_motorcycle"
+                                                                        readonly>Motorcycle</span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -354,58 +471,212 @@
                                                                     Address, DO NOT FILL-UP bellow)</span>
                                                             </td>
                                                         </tr>
+                                                        {{-- <tr>
+                                                            <td rowspan="2" style="width: 15%;">
+                                                                <b>Business Location Address:</b>
+                                                            </td>
+                                                            <td>
+                                                                <span>Bldg. No. <input type="text"
+                                                                        name="building_no2"></span>
+                                                            </td>
+                                                            <td colspan="3">
+                                                                <span>Name of Bldg. <input type="text"
+                                                                        name="business_building_name2"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span>Lot No. <input type="text"
+                                                                        name="lot_number2"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span>Block no. <input type="text"
+                                                                        name="block_no2"></span>
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <td colspan="7">
+                                                                <span>
+                                                                    <b><input type="checkbox" class="form-check-input">
+                                                                        Same as Home Address/ Main Office Address.</b> (if
+                                                                    same as Home/ Main Office Address, DO NOT FILL-UP below)
+                                                                </span>
+                                                            </td>
+                                                        </tr> --}}
+                                                        {{-- <tr>
+                                                            <td rowspan="2" style="width: 15%;">
+                                                                <b>Business Location Address:</b>
+                                                            </td>
+                                                            <td>
+                                                                <span>Bldg. No. <input type="text"
+                                                                        name="building_no2"></span>
+                                                            </td>
+                                                            <td colspan="3">
+                                                                <span>Name of Bldg. <input type="text"
+                                                                        name="business_building_name2"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span>Lot No. <input type="text"
+                                                                        name="lot_number2"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span>Block No. <input type="text"
+                                                                        name="block_no2"></span>
+                                                            </td>
+                                                        </tr> --}}
+                                                        {{-- <tr>
+                                                            <td>
+                                                                <span>Street
+                                                                    <select name="street2" class="form-select">
+                                                                        <option value="">Select St...</option>
+                                                                        @foreach ($streets as $street)
+                                                                            <option value="{{ $street->street }}"
+                                                                                {{ $businessPermit->street2 == $street->street ? 'selected' : '' }}>
+                                                                                {{ $street->street }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span>Barangay <select name="barangay2"
+                                                                        class="form-select">
+                                                                        <option value="">Select Brgy...</option>
+                                                                        @foreach ($barangays as $barangay)
+                                                                            <option value="{{ $barangay->barangay }}"
+                                                                                {{ $businessPermit->barangay2 == $barangay->barangay ? 'selected' : '' }}>
+                                                                                {{ $barangay->barangay }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </span>
+                                                            </td> --}}
+                                                        {{-- <td>
+                                                            <span>Subdivision <input type="text" name="subdivision2"
+                                                                    value="{{ $businessPermit->subdivision2 }}"></span>
+                                                        </td>
+                                                        <td>
+                                                            <span>City/ Municipality <input type="text"
+                                                                    name="city_municipality2"
+                                                                    value="{{ $businessPermit->city_municipality2 }}"></span>
+                                                        </td>
+                                                        <td>
+                                                            <span>Province <input type="text" name="province2"
+                                                                    value="{{ $businessPermit->province2 }}"></span>
+                                                        </td>
+                                                        <td>
+                                                            <span>Zip Code <input type="text" name="zip_code2"
+                                                                    value="{{ $businessPermit->zip_code2 }}"></span>
+                                                        </td>
+                                                        </tr> --}}
+
+
                                                         <tr>
                                                             <td rowspan="2" style="width: 15%;">
                                                                 <b>Business Location Address:</b>
                                                             </td>
                                                             <td>
-                                                                <span>Bldg. No. <input type="text"></span>
+                                                                <span>Bldg. No. <input type="text" name="building_no2"
+                                                                        value="{{ $businessPermit->building_no2 }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td colspan="3">
-                                                                <span>Name of Bldg. <input type="text"></span>
+                                                                <span>Name of Bldg. <input type="text"
+                                                                        name="business_building_name2"
+                                                                        value="{{ $businessPermit->business_building_name2 }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>Lot No. <input type="text"></span>
+                                                                <span>Lot No. <input type="text" name="lot_number2"
+                                                                        value="{{ $businessPermit->lot_number2 }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>Block no. <input type="text"></span>
+                                                                <span>Block no. <input type="text" name="block_no2"
+                                                                        value="{{ $businessPermit->block_no2 }}"
+                                                                        readonly></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <span>Street <input type="text"></span>
+                                                                <span>Street
+                                                                    <select name="street2" class="form-select" disabled>
+                                                                        <option value="">Select St...</option>
+                                                                        @foreach ($streets as $street)
+                                                                            <option value="{{ $street->street }}"
+                                                                                {{ $businessPermit->street2 == $street->street ? 'selected' : '' }}>
+                                                                                {{ $street->street }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </span>
                                                             </td>
                                                             <td>
-                                                                <span>Barangay <input type="text"></span>
+                                                                <span>Barangay <select name="barangay2"
+                                                                        class="form-select" disabled>
+                                                                        <option value="">Select Brgy...</option>
+                                                                        @foreach ($barangays as $barangay)
+                                                                            <option value="{{ $barangay->barangay }}"
+                                                                                {{ $businessPermit->barangay2 == $barangay->barangay ? 'selected' : '' }}>
+                                                                                {{ $barangay->barangay }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </span>
                                                             </td>
                                                             <td>
-                                                                <span>Subdivision <input type="text"></span>
+                                                                <span>Subdivision <input type="text"
+                                                                        name="subdivision2"
+                                                                        value="{{ $businessPermit->subdivision2 }}"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
                                                                 <span>City/ Municipality <input type="text"
-                                                                        value="ESTANCIA"></span>
+                                                                        name="city_municipality2" value="ESTANCIA"
+                                                                        readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>Province <input type="text"
-                                                                        value="ILOILO"></span>
+                                                                <span>Province <input type="text" name="province2"
+                                                                        value="ILOILO" readonly></span>
                                                             </td>
                                                             <td>
-                                                                <span>Zip Code <input type="text"
-                                                                        value="5017"></span>
+                                                                <span>Zip Code <input type="text" name="zip_code2"
+                                                                        value="5017" readonly></span>
                                                             </td>
                                                         </tr>
+
+
                                                         <tr>
                                                             <td colspan="7">
-                                                                <!-- Yes section -->
-                                                                <span>Business Location, Owned?
-                                                                    <input type="checkbox" id="yesBusinessLocation"
-                                                                        onclick="toggleTextInputs(this, ['taxDeclarationInput', 'propertyIdInput'], 'noBusinessLocation')">
-                                                                    Yes, if Yes, Tax Declaration
-                                                                    <input type="text" id="taxDeclarationInput"
-                                                                        style="width: 27% !important;" disabled>
+                                                                <span>
+                                                                    Business Location, Owned?
+
+
+                                                                    @if (empty($businessPermit->tax_declaration))
+                                                                        no document
+                                                                    @else
+                                                                        <a href="#" id="viewDocumentLink"
+                                                                            style="margin-left: 10px;"
+                                                                            onclick="openModal(event, '{{ $businessPermit->tax_declaration }}')">View
+                                                                            Document</a>
+
+                                                                        or Property ID No.
+                                                                        <input type="text" id="propertyIdInput"
+                                                                            value="{{ $businessPermit->property_id }}"
+                                                                            name="property_id"
+                                                                            style="width: 27% !important;" disabled>
+                                                                    @endif
+
+                                                                    {{-- <input type="file" id="taxDeclarationInput"
+                                                                        name="tax_declaration"
+                                                                        style="width: 27% !important;"
+                                                                        onchange="displayFileName(this)">
                                                                     or Property ID No.
                                                                     <input type="text" id="propertyIdInput"
-                                                                        style="width: 27% !important;" disabled>
+                                                                        value="{{ $businessPermit->property_id }}"
+                                                                        name="property_id" style="width: 27% !important;"
+                                                                        disabled> --}}
+
                                                                 </span>
                                                                 <br>
 
@@ -414,27 +685,34 @@
                                                                     <input type="checkbox" class="form-check-input"
                                                                         id="noBusinessLocation"
                                                                         onclick="toggleNoOptions(this, 'yesBusinessLocation')">
-                                                                    No, If No
-                                                                    please present any of the following:
+                                                                    No, If No please present any of the following:
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    <input type="checkbox" class="form-check-input"
+                                                                    <input type="checkbox" name="requirement"
+                                                                        value="Contract of lease" class="form-check-input"
                                                                         id="leaseCheckbox" disabled> Contract of lease
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    <input type="checkbox" class="form-check-input"
+                                                                    <input type="checkbox" name="requirement"
+                                                                        value="MOA" class="form-check-input"
                                                                         id="moaCheckbox" disabled> MOA
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    <input type="checkbox" class="form-check-input"
-                                                                        id="consentCheckbox" disabled> Written consent of
-                                                                    owner
+                                                                    <input type="checkbox" name="requirement"
+                                                                        value="Written consent of owner"
+                                                                        class="form-check-input" id="consentCheckbox"
+                                                                        disabled> Written consent of owner
                                                                 </span>
                                                             </td>
                                                         </tr>
+
+
+
                                                         <tr>
                                                             <td colspan="7">
-                                                                <span>
+                                                                {{-- <span>
                                                                     <b>Do you have tax incentives from any Government
-                                                                        Entity?</b>
+                                                                        Entity?</b>&nbsp;&nbsp;&nbsp;&nbsp;
                                                                     <span>
+                                                                        {{ $businessPermit->gov_entity }}
+                                                                        &nbsp;&nbsp;&nbsp;&nbsp;
                                                                         <input type="checkbox" class="form-check-input"
                                                                             id="yesTaxIncentives"
                                                                             onclick="toggleFileInputAndUncheck('certificateFileInput', this, 'noTaxIncentives')">
@@ -448,99 +726,175 @@
                                                                             onclick="disableFileInputAndUncheck('certificateFileInput', 'yesTaxIncentives')">
                                                                         No
                                                                     </span>
+                                                                </span> --}}
+
+                                                                <span>
+                                                                    <b>Do you have tax incentives from any Government
+                                                                        Entity?</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <span>
+                                                                        @if (empty($businessPermit->gov_entity))
+                                                                            <input type="checkbox"
+                                                                                class="form-check-input"
+                                                                                id="yesTaxIncentives"
+                                                                                onclick="toggleFileInputAndUncheck('certificateFileInput', this, 'noTaxIncentives')">
+                                                                            Yes (please attach a softcopy of your
+                                                                            Certificate)
+
+                                                                            <input type="file"
+                                                                                id="certificateFileInput" disabled>
+
+                                                                            <input type="checkbox"
+                                                                                class="form-check-input"
+                                                                                id="noTaxIncentives"
+                                                                                onclick="disableFileInputAndUncheck('certificateFileInput', 'yesTaxIncentives')">
+                                                                            No
+                                                                        @else
+                                                                            <a href="#"
+                                                                                id="viewGovEntityDocumentLink"
+                                                                                style="margin-left: 10px;"
+                                                                                onclick="openModal(event, '{{ $businessPermit->gov_entity }}')">View
+                                                                                Government Entity Document</a>
+                                                                        @endif
+
+
+                                                                    </span>
                                                                 </span>
+
+
+
                                                             </td>
                                                         </tr>
+
                                                         <tr>
                                                             <td colspan="2">
-                                                                <b>Business Activity</b>(Please check one):
+                                                                <b>Business Activity</b> (Please check one):
                                                             </td>
                                                             <td>
-                                                                <input type="checkbox" class="form-check-input w-10"
-                                                                    id="mainBusinessCheckbox"
-                                                                    onclick="checkOnlyOne2(this)"> Main
-                                                                Business/ Office
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input"
+                                                                        name="business_activity" type="checkbox"
+                                                                        value="Main Business/ Office"
+                                                                        id="mainBusinessCheckbox"
+                                                                        onclick="checkOnlyOne(this)"
+                                                                        {{ $businessPermit->business_activity == 'Main Business/ Office' ? 'checked' : '' }}
+                                                                        @disabled(true)>
+                                                                    <label class="form-check-label"
+                                                                        for="mainBusinessCheckbox">
+                                                                        Main Business/ Office
+                                                                    </label>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="branchOfficeCheckbox"
-                                                                    onclick="checkOnlyOne2(this)"> Branch Office
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input"
+                                                                        name="business_activity" type="checkbox"
+                                                                        value="Branch Office" id="branchOfficeCheckbox"
+                                                                        onclick="checkOnlyOne(this)"
+                                                                        {{ $businessPermit->business_activity == 'Branch Office' ? 'checked' : '' }}
+                                                                        @disabled(true)>
+                                                                    <label class="form-check-label"
+                                                                        for="branchOfficeCheckbox">
+                                                                        Branch Office
+                                                                    </label>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="adminOfficeCheckbox"
-                                                                    onclick="checkOnlyOne2(this)"> Admin. Office Only
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input"
+                                                                        name="business_activity" type="checkbox"
+                                                                        value="Admin. Office" id="adminOfficeCheckbox"
+                                                                        onclick="checkOnlyOne(this)"
+                                                                        {{ $businessPermit->business_activity == 'Admin. Office' ? 'checked' : '' }}
+                                                                        @disabled(true)>
+                                                                    <label class="form-check-label"
+                                                                        for="adminOfficeCheckbox">
+                                                                        Admin. Office Only
+                                                                    </label>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="warehouseCheckbox" onclick="checkOnlyOne2(this)">
-                                                                Warehouse
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input"
+                                                                        name="business_activity" type="checkbox"
+                                                                        value="Warehouse" id="warehouseCheckbox"
+                                                                        onclick="checkOnlyOne(this)"
+                                                                        {{ $businessPermit->business_activity == 'Warehouse' ? 'checked' : '' }}
+                                                                        @disabled(true)>
+                                                                    <label class="form-check-label"
+                                                                        for="warehouseCheckbox">
+                                                                        Warehouse
+                                                                    </label>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <input type="checkbox" class="form-check-input"
-                                                                    id="othersCheckbox" onclick="checkOnlyOne2(this)">
-                                                                Others. Please specify:
-                                                                <br>
-                                                                <input type="text" id="othersText" disabled>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input"
+                                                                        name="business_activity" type="checkbox"
+                                                                        value="Others" id="othersCheckbox"
+                                                                        onclick="checkOnlyOne(this)"
+                                                                        {{ $businessPermit->business_activity == 'Others' ? 'checked' : '' }}>
+                                                                    <label class="form-check-label" for="othersCheckbox">
+                                                                        Others. Please specify:
+                                                                    </label>
+                                                                    <br>
+                                                                    <input type="text" id="othersText" name="others"
+                                                                        {{ $businessPermit->business_activity == 'Others' ? '' : 'disabled' }}
+                                                                        @disabled(true)>
+                                                                </div>
                                                             </td>
                                                         </tr>
+
+
+
                                                         <tr class="text-center">
-                                                            <th colspan="2">
-                                                                Line of Business
-                                                            </th>
-                                                            <td colspan="2">
-                                                                Philippines Standard Industrial Code <br>
-                                                                (PSIC), If available
-                                                            </td>
-                                                            <th colspan="2">
-                                                                Product/ Services
-                                                            </th>
-                                                            <th>
-                                                                No. of Units
-                                                            </th>
+                                                            <th colspan="2">Line of Business</th>
+                                                            <td colspan="2">Philippines Standard Industrial Code (PSIC),
+                                                                If available</td>
+                                                            <th colspan="2">Product/ Services</th>
+                                                            <th>No. of Units</th>
                                                         </tr>
+
+                                                        @for ($i = 0; $i < max(count($lineOfBusiness), count($psic), count($productServices), count($noOfUnits)); $i++)
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <input type="text" name="line_of_business[]"
+                                                                        value="{{ $lineOfBusiness[$i] ?? '' }}" readonly>
+                                                                </td>
+                                                                <td colspan="2">
+                                                                    <input type="text" name="PSIC[]"
+                                                                        value="{{ $psic[$i] ?? '' }}">
+                                                                </td>
+                                                                <td colspan="2">
+                                                                    <input type="text" name="product_services[]"
+                                                                        value="{{ $productServices[$i] ?? '' }}" readonly>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="no_of_units[]"
+                                                                        value="{{ $noOfUnits[$i] ?? '' }}" readonly>
+                                                                </td>
+                                                            </tr>
+                                                        @endfor
+
+                                                        <!-- Add an extra row for adding new entries -->
                                                         <tr>
                                                             <td colspan="2">
-                                                                <input type="text" value="test">
+                                                                <input type="text" name="line_of_business[]"
+                                                                    placeholder="New Line of Business" readonly>
                                                             </td>
                                                             <td colspan="2">
-                                                                <input type="text" value="test">
+                                                                <input type="text" name="PSIC[]"
+                                                                    placeholder="New PSIC" readonly>
                                                             </td>
                                                             <td colspan="2">
-                                                                <input type="text" value="test">
+                                                                <input type="text" name="product_services[]"
+                                                                    placeholder="New Product/Services" readonly>
                                                             </td>
                                                             <td>
-                                                                <input type="text" value="test">
+                                                                <input type="text" name="no_of_units[]"
+                                                                    placeholder="New No. of Units" readonly>
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <input type="text" value="test">
-                                                            </td>
-                                                            <td colspan="2">
-                                                                <input type="text" value="test">
-                                                            </td>
-                                                            <td colspan="2">
-                                                                <input type="text" value="test">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" value="test">
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <input type="text" value="test">
-                                                            </td>
-                                                            <td colspan="2">
-                                                                <input type="text" value="test">
-                                                            </td>
-                                                            <td colspan="2">
-                                                                <input type="text" value="test">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" value="test">
-                                                            </td>
-                                                        </tr>
+
                                                         <tr>
                                                             <td class="text-center">
                                                                 <span>
@@ -566,7 +920,25 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </form>
+                                <div class="modal-footer d-flex justify-content-end">
+                                    <a href="#"
+                                        onclick="openEditModal({{ isset($businessPermit) ? $businessPermit->id : 'null' }})"
+                                        class="btn btn-outline-primary btn-md btn-round m-1">
+                                        Edit
+                                    </a>
+
+                                    <form action="{{ route('approve.permit', $businessPermit->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" name="action" value="log_approve"
+                                            class="btn btn-outline-success btn-md btn-round m-1">Approve</button>
+                                    </form>
+
+                                    <button type="button" class="btn btn-secondary m-1"
+                                        data-dismiss="modal">Close</button>
+                                </div>
+
                             </div>
                         </section>
                     </div>
@@ -575,6 +947,43 @@
         </div>
     </div>
 @endsection
+
+<!-- Modal for Document Preview -->
+<div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="documentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable vh-100">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="documentModalLabel">Document Preview</h5>
+
+            </div>
+            <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                <iframe id="documentIframe" style="width: 100%; height: 100vh;" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for displaying the gov_entity document -->
+<div class="modal fade" id="govEntityDocumentModal" tabindex="-1" role="dialog"
+    aria-labelledby="govEntityDocumentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="govEntityDocumentModalLabel">Tax Incentives Document</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <embed id="govEntityDocumentEmbed" src="" width="100%" height="500px"
+                    type="application/pdf">
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <style>
     /* Style for disabled checkboxes */
     input[type="checkbox"][disabled] {
@@ -625,3 +1034,72 @@
         background-color: #3498db;
     }
 </style>
+<script>
+    function uncheckOthers(checkboxIds, currentCheckbox) {
+        checkboxIds.forEach(function(id) {
+            var checkbox = document.getElementById(id);
+            if (currentCheckbox.checked) {
+                checkbox.checked = false; // Uncheck the other checkboxes
+            }
+        });
+    }
+
+    function openModal(event, filePath) {
+        event.preventDefault(); // Prevent the default link behavior
+        const fullFilePath = `storage/${filePath}`; // Construct the full path
+        document.getElementById('documentIframe').src = fullFilePath; // Set the iframe source to the file URL
+        const modal = new bootstrap.Modal(document.getElementById('documentModal')); // Create modal instance
+        modal.show(); // Show the modal
+    }
+
+
+
+
+    function toggleFileInputAndUncheck(fileInputId, checkbox, otherCheckboxId) {
+        const fileInput = document.getElementById(fileInputId);
+        const otherCheckbox = document.getElementById(otherCheckboxId);
+
+        // Enable the file input if 'Yes' is checked, and uncheck 'No'
+        if (checkbox.checked) {
+            fileInput.disabled = false;
+            otherCheckbox.checked = false;
+        } else {
+            fileInput.disabled = true;
+        }
+    }
+
+    function disableFileInputAndUncheck(fileInputId, otherCheckboxId) {
+        const fileInput = document.getElementById(fileInputId);
+        const otherCheckbox = document.getElementById(otherCheckboxId);
+
+        // Uncheck the 'Yes' checkbox and disable the file input
+        otherCheckbox.checked = false;
+        fileInput.disabled = true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    function checkOnlyOne(selectedCheckbox) {
+        const checkboxes = document.querySelectorAll('input[name="business_activity"]');
+
+        checkboxes.forEach((checkbox) => {
+            if (checkbox !== selectedCheckbox) {
+                checkbox.checked = false; // Uncheck other checkboxes
+            }
+        });
+
+        // Enable or disable the "Others" text input based on the checkbox state
+        const othersCheckbox = document.getElementById('othersCheckbox');
+        const othersText = document.getElementById('othersText');
+        othersText.disabled = !othersCheckbox.checked; // Enable if 'Others' is checked
+    }
+</script>

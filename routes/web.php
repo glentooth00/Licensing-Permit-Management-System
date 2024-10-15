@@ -83,15 +83,25 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/permits/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
 
+    // Route::get('/permit/edit/{id}', [BusinessPermitApplicationController::class, 'edit'])->name('edit.permit');
+
+
+
+
 
     // Route for approving permit using BusinessPermitApplicationController
     Route::post('/approve-permit/{id}', [BusinessPermitApplicationController::class, 'approvePermit'])->name('approve.permit');
 
     // Route to edit a permit
-    Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+    // Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+
+    Route::get('admin/permit/{id}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+
+
+
 
     // Route to update a business registration
-    Route::put('/business_registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business-registration.update');
+    Route::put('/business_registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business_registration.update');
 
     // Route to generate a QR code for a permit
     Route::get('/permit/index', function (\Illuminate\Http\Request $request) {

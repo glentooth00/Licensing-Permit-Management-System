@@ -126,34 +126,34 @@
                                         <tr>
                                             <td>
                                                 <span class="px-5">Please Choose one </span>
-                                                <span>
+                                                <span class="w-5">
                                                     <input type="checkbox" name="business_type"
                                                         value="Sole Proprietorship" class="form-check-input"
                                                         id="flexCheckSoleProprietorship1"
                                                         onclick="uncheckOthers(['flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCorporation', 'flexCheckCooperative'], this)">
-                                                    <b> Sole Proprietorship</b>&nbsp;&nbsp;&nbsp;
+                                                    <b>Sole Proprietorship</b>&nbsp;&nbsp;&nbsp;
 
                                                     <input type="checkbox" name="business_type" class="form-check-input"
-                                                        id="flexCheckSoleProprietorship2" value="Sole Proprietorship"
+                                                        id="flexCheckSoleProprietorship2" value="One Person Corporation"
                                                         onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckPartnership', 'flexCheckCorporation', 'flexCheckCooperative'], this)">
-                                                    <b> Sole Proprietorship</b>&nbsp;&nbsp;&nbsp;
+                                                    <b>One Person Corporation</b>&nbsp;&nbsp;&nbsp;
 
                                                     <input type="checkbox" name="business_type" class="form-check-input"
                                                         id="flexCheckPartnership" value="Partnership"
                                                         onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckCorporation', 'flexCheckCooperative'], this)">
-                                                    <b> Partnership</b>&nbsp;&nbsp;&nbsp;
+                                                    <b>Partnership</b>&nbsp;&nbsp;&nbsp;
 
                                                     <input type="checkbox" name="business_type"
                                                         class="form-check-input" id="flexCheckCorporation"
                                                         value="Corporation"
                                                         onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCooperative'], this)">
-                                                    <b> Corporation</b>&nbsp;&nbsp;&nbsp;
+                                                    <b>Corporation</b>&nbsp;&nbsp;&nbsp;
 
                                                     <input type="checkbox" name="business_type"
                                                         class="form-check-input" id="flexCheckCooperative"
                                                         value= "Cooperative"
                                                         onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckSoleProprietorship2', 'flexCheckPartnership', 'flexCheckCorporation'], this)">
-                                                    <b> Cooperative</b>
+                                                    <b>Cooperative</b>
                                                 </span>
                                             </td>
                                         </tr>
@@ -211,7 +211,8 @@
                                         <td>
                                             <span>Street
                                                 <select type="text" name="street" class="form-select">
-                                                    <option value="">Select St...</option>
+                                                    <option value="" hidden>Select St...</option>
+                                                    <option value="no selected">NONE</option>
                                                     @foreach ($streets as $street)
                                                         <option value="{{ $street->street }}">{{ $street->street }}
                                                         </option>
@@ -222,7 +223,8 @@
                                         <td>
                                             <span>Barangay <select type="text" name="barangay"
                                                     class="form-select">
-                                                    <option value="">Select Brgy...</option>
+                                                    <option value="" hidden>Select Brgy...</option>
+                                                    <option value="no selected">NONE</option>
                                                     @foreach ($barangays as $barangay)
                                                         <option value="{{ $barangay->barangay }}">
                                                             {{ $barangay->barangay }}
@@ -340,6 +342,7 @@
                                                 style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td colspan="5">
                                             <p><i>***Write OLD address if CHANGE of Business address/ Write old kind/
@@ -349,6 +352,9 @@
                                 </table>
                             </div>
                         </div>
+
+
+
                         <div class="card-header bg-dark text-light">
                             <span>B. BUSINESS OPERATION</span>
                         </div>
@@ -369,7 +375,7 @@
                                         </td>
                                         <td>
                                             <b>No. of Employees residing within Estancia, Iloilo </b>
-                                            <input type="text" name="employees_residing_estancia	">
+                                            <input type="text" name="employees_residing_estancia">
                                         </td>
                                         <td colspan="2">
                                             <b>No. of Delivery Vehicles </b>(if applicable) <br>
@@ -381,8 +387,10 @@
                                     </tr>
                                     <tr>
                                         <td colspan="7">
-                                            <span><b><input type="checkbox" class="form-check-input"> Same as Home
-                                                    Address/ Main Office Address.</b>(if same as Home/ Main Office
+                                            <span><b><input type="checkbox" class="form-check-input"> Same
+                                                    as Home
+                                                    Address/ Main Office Address.</b>(if same as Home/ Main
+                                                Office
                                                 Address, DO NOT FILL-UP bellow)</span>
                                         </td>
                                     </tr>
@@ -404,13 +412,16 @@
                                             <span>Block no. <input type="text" name="block_no2"></span>
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td>
                                             <span>Street
                                                 <select type="text" name="street2" class="form-select">
-                                                    <option value="">Select St...</option>
+                                                    <option value="" hidden>Select St...</option>
+                                                    <option value="no selected">NONE</option>
                                                     @foreach ($streets as $street)
-                                                        <option value="{{ $street->street }}">{{ $street->street }}
+                                                        <option value="{{ $street->street }}">
+                                                            {{ $street->street }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -419,7 +430,8 @@
                                         <td>
                                             <span>Barangay <select type="text" name="barangay2"
                                                     class="form-select">
-                                                    <option value="">Select Brgy...</option>
+                                                    <option value="" hidden>Select Brgy...</option>
+                                                    <option value="no selected">NONE</option>
                                                     @foreach ($barangays as $barangay)
                                                         <option value="{{ $barangay->barangay }}">
                                                             {{ $barangay->barangay }}
@@ -443,15 +455,20 @@
                                                     value="5017"></span>
                                         </td>
                                     </tr>
+
+
                                     <tr>
                                         <td colspan="7">
                                             <!-- Yes section -->
-                                            <span>Business Location, Owned?
+                                            <span>
+                                                Business Location, Owned?
                                                 <input type="checkbox" id="yesBusinessLocation"
                                                     onclick="toggleTextInputs(this, ['taxDeclarationInput', 'propertyIdInput'], 'noBusinessLocation')">
                                                 Yes, if Yes, Tax Declaration
                                                 <input type="file" id="taxDeclarationInput" name="tax_declaration"
-                                                    style="width: 27% !important;" disabled>
+                                                    style="width: 27% !important;" value="tax_declaration.pdf"
+                                                    disabled>
+                                                <!-- Display file name -->
                                                 or Property ID No.
                                                 <input type="text" id="propertyIdInput" name="property_id"
                                                     style="width: 27% !important;" disabled>
@@ -462,8 +479,8 @@
                                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <input type="checkbox" class="form-check-input"
                                                     id="noBusinessLocation"
-                                                    onclick="toggleNoOptions(this, 'yesBusinessLocation')"> No, If No
-                                                please present any of the following:
+                                                    onclick="toggleNoOptions(this, 'yesBusinessLocation')">
+                                                No, If No please present any of the following:
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <input type="checkbox" name="requirement" value="Contract of lease"
                                                     class="form-check-input" id="leaseCheckbox" disabled> Contract of
@@ -478,11 +495,15 @@
                                             </span>
                                         </td>
                                     </tr>
+
+
                                     <tr>
                                         <td colspan="7">
                                             <span>
-                                                <b>Do you have tax incentives from any Government Entity?</b>
+                                                <b>Do you have tax incentives from any Government
+                                                    Entity?&nbsp;&nbsp;&nbsp;&nbsp; </b>
                                                 <span>
+
                                                     <input type="checkbox" class="form-check-input"
                                                         id="yesTaxIncentives"
                                                         onclick="toggleFileInputAndUncheck('certificateFileInput', this, 'noTaxIncentives')">
@@ -515,12 +536,14 @@
                                         <td>
                                             <input type="checkbox" name="business_activity" class="form-check-input"
                                                 id="branchOfficeCheckbox" onclick="checkOnlyOne2(this)"
-                                                value="Branch Office"> Branch Office
+                                                value="Branch Office">
+                                            Branch Office
                                         </td>
                                         <td>
                                             <input type="checkbox" name="business_activity" class="form-check-input"
                                                 id="adminOfficeCheckbox" onclick="checkOnlyOne2(this)"
-                                                value="Admin. Office"> Admin. Office
+                                                value="Admin. Office">
+                                            Admin. Office
                                             Only
                                         </td>
                                         <td>
@@ -538,7 +561,8 @@
                                     </tr>
                                     <tr class="text-center">
                                         <th colspan="2">Line of Business</th>
-                                        <td colspan="2">Philippines Standard Industrial Code (PSIC), If available
+                                        <td colspan="2">Philippines Standard Industrial Code (PSIC), If
+                                            available
                                         </td>
                                         <th colspan="2">Product/ Services</th>
                                         <th>No. of Units</th>
@@ -607,6 +631,8 @@
                                         </td>
                                     </tr>
                                 </table>
+
+
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-success btn-lg">Submit</button>
                                 </div>

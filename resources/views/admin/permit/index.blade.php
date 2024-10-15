@@ -83,10 +83,10 @@
                                                         &nbsp;
                                                         &nbsp;
                                                         {{-- More Details Button --}}
-                                                        <a href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
+                                                        {{-- <a href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"
                                                             class="btn btn-outline-success btn-sm btn-round m-1">
                                                             More Details
-                                                        </a>
+                                                        </a> --}}
 
                                                         {{-- Generate Permit Button --}}
                                                         <a href="#" data-user-id="{{ $approved_permit->id }}"
