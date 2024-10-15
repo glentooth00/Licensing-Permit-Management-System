@@ -556,7 +556,7 @@ $permit->save();
 
 // Send SMS notification
 $phone_number = $permit->mobile_no;
-$lastName = $permit->last_name;
+$lastName = $permit->owner_last_name;
 // dd($phone_number);
 // Log::info('Sending SMS to: ' . $phone_number);
 
@@ -773,7 +773,6 @@ public function generatePermit(Request $request)
 
                 $phone_number = $permit->mobile_no;
                 $client_name = $permit->owner_first_name . ' ' . $permit->owner_middle_name . ' ' . $permit->owner_last_name;
-                $message = "Your business permit is due for renewal. Please take action.";
                 $date_time_sent = Carbon::now('asia/manila');
     
                 $smsResult = self::sendSimpleSMS($phone_number, $message);

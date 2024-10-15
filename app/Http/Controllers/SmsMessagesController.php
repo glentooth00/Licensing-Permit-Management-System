@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sms_messages;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\DataTypes\SMS;
 
 class SmsMessagesController extends Controller
 {
@@ -12,7 +13,12 @@ class SmsMessagesController extends Controller
      */
     public function index()
     {
-        //
+        $smsNotifs = Sms_messages::orderBy('created_at', 'DESC')->get();
+
+
+        return view('admin.permit.sms',[
+            'smsNotifs' => $smsNotifs,
+        ]);
     }
 
     /**

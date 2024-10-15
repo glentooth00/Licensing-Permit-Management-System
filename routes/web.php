@@ -5,6 +5,7 @@ use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
+use App\Http\Controllers\SmsMessagesController;
 use App\Http\Controllers\StreetsController;
 use App\Http\Controllers\UserController;
 use App\Models\BusinessPermitApplication;
@@ -137,6 +138,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
     Route::patch('/business-permits/{id}/renew', [BusinessPermitApplicationController::class, 'renewPermit'])->name('business-permits.renew');
 
+    Route::get('/admin/permit/sms' , [SmsMessagesController::class, 'index'])->name('admin.permit.sms');
 
     Route::patch('/business-permits/{id}/approve-renewal', [BusinessPermitApplicationController::class, 'approveRenewal'])
     ->name('business-permits.approve-renewal');
