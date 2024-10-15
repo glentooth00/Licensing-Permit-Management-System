@@ -113,15 +113,16 @@
                                                             <span><b>Paid under the following:</b></span><br>
                                                             <div class="" style="display: flex;">
                                                                 <div class="col-md-4">
-                                                                    <span>O.R. No.</span><br>
+                                                                    <span>O.R. No.</span>
+                                                                    <input type="text"><br>
                                                                     {{-- <span><b>9403650</b></span> --}}
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <span>O.R. Dates</span><br>
+                                                                    <span>O.R. Dates</span> <input type="text"><br>
                                                                     {{-- <span><b>01-19-2024</b></span> --}}
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <span>O.R. Amount</span><br>
+                                                                    <span>O.R. Amount</span> <input type="text"><br>
                                                                     {{-- <span><b>15,700.00</b></span> --}}
                                                                 </div>
                                                             </div>
