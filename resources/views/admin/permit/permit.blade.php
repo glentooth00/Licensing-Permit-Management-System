@@ -111,24 +111,26 @@
                                                         style="border: 1px solid rgba(33, 33, 34, 0.589); padding: 10px;">
                                                         <div class="">
                                                             <span><b>Paid under the following:</b></span><br>
-                                                            <div class="" style="display: flex;">
-                                                                <div class="col-md-4">
-                                                                    <span>O.R. No.</span>
+                                                            <div class="p-2" style="display: flex;">
+                                                                <div class="col-md-3 p-2">
+                                                                    <span class="badge">O.R. No.</span>
                                                                     <input type="text"><br>
                                                                     {{-- <span><b>9403650</b></span> --}}
                                                                 </div>
-                                                                <div class="col-md-4">
-                                                                    <span>O.R. Dates</span> <input type="text"><br>
+                                                                <div class="col-md-3 p-2">
+                                                                    <span class="badge">O.R. Dates</span> <input
+                                                                        type="text"><br>
                                                                     {{-- <span><b>01-19-2024</b></span> --}}
                                                                 </div>
-                                                                <div class="col-md-4">
-                                                                    <span>O.R. Amount</span> <input type="text"><br>
+                                                                <div class="col-md-3 p-2">
+                                                                    <span class="badge">O.R. Amount</span> <input
+                                                                        type="text"><br>
                                                                     {{-- <span><b>15,700.00</b></span> --}}
                                                                 </div>
                                                             </div>
                                                             <br>
-                                                            <span><b>Mode of Payment:</b> <input type="checkbox"
-                                                                    name="">
+                                                            <span class="badge"><b>Mode of Payment:</b> <input
+                                                                    type="checkbox" name="">
                                                                 Quarterly &nbsp;&nbsp;&nbsp; <input type="checkbox"
                                                                     name="">
                                                                 Annual</span>
