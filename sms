@@ -79,3 +79,9 @@ Log::info('SMS API Response:', (array)$result); // Log the full response for deb
 // Return result for further debugging
 return $result;
 }
+
+
+SMS_GATEWAY_URL="https://smsgateway.iamjohn.dev/"
+SMS_GATEWAY_API="4215c45f9f1a9a8196fa931dad163fcc1f075be5"
+SMS_GATEWAY_DEVICE_ID="00000000-0000-0000-0a93-d774061afa2d"
+SMS_GATEWAY_DEVICE_PHONE_NUMBER=""
