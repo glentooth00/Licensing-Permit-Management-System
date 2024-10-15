@@ -359,7 +359,7 @@ public function showApproved()
             $permit->save();
 
             // Send SMS notification
-            $phone_number = $permit->business_Tel_No_Mobile;
+            $phone_number = $permit->mobile_no;
             $lastName = $permit->last_name;
             // dd($phone_number);
             // Log::info('Sending SMS to: ' . $phone_number);
@@ -370,7 +370,7 @@ public function showApproved()
 
             
             $smsResult = self::sendSimpleSMS($phone_number, $message);
-
+dd( $smsResult );
             // Check and log SMS result
             // Log::info('SMS sent result: ', (array)$smsResult);
             // dd($smsResult); // Use this for debugging
