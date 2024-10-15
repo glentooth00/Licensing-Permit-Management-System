@@ -37,7 +37,7 @@
                     <div class="bg-dark text-light pt-2 px-5 py-1">
                         <h6>1. APPLICANT SECTION-BASIC INFORMATION</h6>
                     </div>
-                    <form action="{{ route('business-registration.store') }}" method="POST">
+                    <form action="{{ route('business_registration.store') }}" method="POST">
                         @csrf
                         <div class="mt-3">
                             <div class="row">

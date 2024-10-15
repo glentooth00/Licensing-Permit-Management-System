@@ -539,84 +539,84 @@ public function show($id)
 
 public function showApproved()
 {
-    $now = Carbon::now('Asia/Manila');
+$now = Carbon::now('Asia/Manila');
 
-    // Retrieve all approved permits
-    $approved_permits = BusinessPermitApplication::where('status', 'Approved')
-        ->orderByDesc('created_at')
-        ->get();
+// Retrieve all approved permits
+$approved_permits = BusinessPermitApplication::where('status', 'Approved')
+->orderByDesc('created_at')
+->get();
 
-    foreach ($approved_permits as $permit) {
-        // Check if the approved_on time is older than 12 months
-        if ($now->diffInMonths($permit->approved_on) >= 1) {
-            // Update status to 'Renewal'
-            $permit->status = 'Renewal';
-            $permit->notified = '1';
-            $permit->save();
+foreach ($approved_permits as $permit) {
+// Check if the approved_on time is older than 12 months
+if ($now->diffInMonths($permit->approved_on) >= 1) {
+// Update status to 'Renewal'
+$permit->status = 'Renewal';
+$permit->save();
 
-            // Send SMS notification
-            $phone_number = $permit->mobile_no;
-            $lastName = $permit->owner_last_name;
-            // dd($phone_number);
-            // Log::info('Sending SMS to: ' . $phone_number);
+// Send SMS notification
+$phone_number = $permit->mobile_no;
+$lastName = $permit->last_name;
+// dd($phone_number);
+// Log::info('Sending SMS to: ' . $phone_number);
 
-            $currentYear = date('Y');
+$currentYear = date('Y');
 
-            $message = "Mr/Mrs " . $lastName . " Your business permit is due for renewal. Please proceed to the BPL office for the renewal of your business permit not later than December 31, " . $currentYear;
+$message = "Mr/Mrs " . $lastName . " Your business permit is due for renewal. Please proceed to the BPL office for the
+renewal of your business permit not later than December 31, " . $currentYear;
 
-            
-            $smsResult = self::sendSimpleSMS($phone_number, $message);
+
+$smsResult = self::sendSimpleSMS($phone_number, $message);
 dd( $smsResult );
-            // Check and log SMS result
-            // Log::info('SMS sent result: ', (array)$smsResult);
-            // dd($smsResult); // Use this for debugging
-        }
-    }
-
-       //Return to your view
-    return view('admin.permit.index', [
-        'approved_permits' => $approved_permits,
-    ]);
+// Check and log SMS result
+// Log::info('SMS sent result: ', (array)$smsResult);
+// dd($smsResult); // Use this for debugging
+}
 }
 
-       
+//Return to your view
+return view('admin.permit.index', [
+'approved_permits' => $approved_permits,
+]);
+}
+
+
 
 
 public static function sendSimpleSMS($phone_number, $message) {
-    $SMSMessage = [
-        "secret" => env('SMS_GATEWAY_API'),
-        "mode" => "device",
-        "device" => env('SMS_GATEWAY_DEVICE_ID'),
-        "sim" => 1,
-        "priority" => 1,
-        "phone" => $phone_number,
-        "message" => $message
-    ];
-    
-    // Log the SMS message being sent
-    Log::info('Sending SMS:', $SMSMessage);
+$SMSMessage = [
+"secret" => env('SMS_GATEWAY_API'),
+"mode" => "devices",
+"device" => env('SMS_GATEWAY_DEVICE_ID'),
+"sim" => 1,
+"priority" => 1,
+"phone" => $phone_number,
+"message" => $message
+];
 
-    // Send SMS via the gateway
-    $cURL = curl_init(env('SMS_GATEWAY_URL') . "api/send/sms");
-    curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($cURL, CURLOPT_POSTFIELDS, $SMSMessage);
-    $response = curl_exec($cURL);
+// Log the SMS message being sent
+Log::info('Sending SMS:', $SMSMessage);
 
-    if(curl_errno($cURL)){
-        // Log curl error
-        $error_msg = curl_error($cURL);
-        Log::error("SMS Gateway cURL Error: " . $error_msg);
-        return null; // Stop if there's an error
-    }
+// Send SMS via the gateway
+$cURL = curl_init(env('SMS_GATEWAY_URL') . "api/send/sms");
+curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($cURL, CURLOPT_POSTFIELDS, $SMSMessage);
+$response = curl_exec($cURL);
 
-    curl_close($cURL);
+if(curl_errno($cURL)){
+// Log curl error
+$error_msg = curl_error($cURL);
+Log::error("SMS Gateway cURL Error: " . $error_msg);
+return null; // Stop if there's an error
+}
 
-    // Decode the response
-    $result = json_decode($response, true);
-    Log::info('SMS API Response:', (array)$result); // Log the full response for debugging
+curl_close($cURL);
 
-    // Return result for further debugging
-    return $result;
+// Decode the response
+$result = json_decode($response, true);
+Log::info('SMS API Response:', (array)$result); // Log the full response for debugging
+
+// Return result for further debugging
+return $result;
 }
 
 

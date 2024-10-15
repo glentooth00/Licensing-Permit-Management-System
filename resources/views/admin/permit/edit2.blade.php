@@ -58,7 +58,7 @@
 
                                                     </div>
                                                     <form
-                                                        action="{{ route('business-registration.update', ['businessPermit' => $businessPermit->id]) }}"
+                                                        action="{{ route('business_registration.update', ['businessPermit' => $businessPermit->id]) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')

@@ -44,7 +44,6 @@ Route::get('/admin-permit-show', function () {
 
 Route::post('/custom-login', [UserController::class, 'authenticate'])->name('custom.login');
 Route::get('/business_registration', [StreetsController::class, 'regDisplay'])->name('business.registration.street');
-// Route::get('/business-registration', [BarangayController::class, 'regDisplayBrgy'])->name('business.registration.barangay');
 
 
 
