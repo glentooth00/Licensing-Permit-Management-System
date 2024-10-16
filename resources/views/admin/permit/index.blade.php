@@ -146,41 +146,44 @@
                 <div class="modal-body" id="generatePermitModalBody">
                     <!-- Content will be dynamically loaded here -->
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="button" class="btn btn-md btn-primary" onclick="printDiv('printableArea')">
+                        <i class="fas fa-printer"></i> Print
+                    </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
+
             </div>
         </div>
-    </div>
 
 
-    <script>
-        $(document).ready(function() {
-            $(".generatePermitBtn").click(function(e) {
-                e.preventDefault();
-                var userId = $(this).data('user-id');
-                var url = "{{ route('generate.qrcode') }}?user_id=" + userId;
-                $.ajax({
-                    url: url,
-                    method: "GET",
-                    success: function(response) {
-                        $("#generatePermitModalBody").html(response);
-                        $("#generatePermitModal").modal('show');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
+        <script>
+            $(document).ready(function() {
+                $(".generatePermitBtn").click(function(e) {
+                    e.preventDefault();
+                    var userId = $(this).data('user-id');
+                    var url = "{{ route('generate.qrcode') }}?user_id=" + userId;
+                    $.ajax({
+                        url: url,
+                        method: "GET",
+                        success: function(response) {
+                            $("#generatePermitModalBody").html(response);
+                            $("#generatePermitModal").modal('show');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
                 });
             });
-        });
 
-        //AUTO CHECK 
-        setInterval(function() {
-            fetch('/check-permits')
-                .then(response => response.text())
-                .then(data => console.log(data)) // Logs response message to the console
-                .catch(error => console.error('Error:', error)); // Logs errors
-        }, 60000); // Calls the route every 60,000 milliseconds (1 minute)
-    </script>
+            //AUTO CHECK 
+            setInterval(function() {
+                fetch('/check-permits')
+                    .then(response => response.text())
+                    .then(data => console.log(data)) // Logs response message to the console
+                    .catch(error => console.error('Error:', error)); // Logs errors
+            }, 60000); // Calls the route every 60,000 milliseconds (1 minute)
+        </script>
 
-@endsection
+    @endsection
