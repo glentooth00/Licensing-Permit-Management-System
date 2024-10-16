@@ -53,7 +53,7 @@
 
                         <p class="text-center my-4 text-muted">-------- PERMIT REGISTRATION ---------</p>
                         <div>
-                            <a href="/business-registration" class="form-control btn btn-success btn-lg">Apply for
+                            <a href="/business_registration" class="form-control btn btn-success btn-lg">Apply for
                                 Business Permit</a>
                         </div>
                     </div>

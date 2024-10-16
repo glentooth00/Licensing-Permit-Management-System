@@ -39,7 +39,7 @@
                         <div class="small-box bg-warning">
                             <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
                                 <div class="inner">
-                                    <h3>{{ $pendingCount }}</h3>
+                                    <h3>{{ $renewalCount }}</h3>
                                     <h4>Renewal for Business Permits</h4>
                                 </div>
                             </a>
@@ -55,7 +55,7 @@
                             <a href="{{ route('business-permits.archived') }}" class="nav-link">
                                 <div class="inner">
                                     <h3>{{ $archivedCount }}</h3>
-                                    <h4>Number of Archive Members</h4>
+                                    <h4>Number of Archived Members</h4>
                                 </div>
                             </a>
                             <div class="icon">
@@ -81,6 +81,12 @@
                 <br><br>
 
                 <div class="card">
+
+                    @if (session('successupdate'))
+                        <div class="alert alert-success">
+                            {{ session('successupdate') }}
+                        </div>
+                    @endif
                     <!-- /.card-header -->
                     <div class="card-header">
                         <h3>Pending Permits</h3>
@@ -96,16 +102,18 @@
                                     <th>CONTACT No.</th>
                                     <th>APPLIED ON</th>
                                     <th>STATUS</th>
-                                    <th>ACTIONS</th>
+                                    <th>
+                                        <center>ACTIONS</center>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($businessPermits as $businessPermit)
                                     <tr>
                                         <td>
-                                            {{ $businessPermit->first_name }}
-                                            {{ $businessPermit->middle_name }}
-                                            {{ $businessPermit->last_name }}
+                                            {{ $businessPermit->owner_first_name }}
+                                            {{ $businessPermit->owner_middle_name }}
+                                            {{ $businessPermit->owner_last_name }}
                                         </td>
                                         <td>
                                             {{ $businessPermit->business_name }}
@@ -114,7 +122,7 @@
                                             {{ $businessPermit->business_type }}
                                         </td>
                                         <td>
-                                            {{ $businessPermit->owners_Tel_No_Mobile }}
+                                            {{ $businessPermit->telephone_no }} / {{ $businessPermit->mobile_no }}
                                         </td>
                                         <td>
                                             {{ $businessPermit->created_at->format('F j, Y') }}
@@ -128,30 +136,35 @@
                                         </td>
 
                                         <!-- Add more table cells for other fields -->
-                                        <td>
+                                        <td class="d-flex justify-content-center">
                                             <div class="btn-group">
                                                 {{-- Approve Button --}}
-                                                @if ($businessPermit->status == 'Approved')
+                                                {{--  @if ($businessPermit->status == 'Approved')
                                                 @else
                                                     <form action="{{ route('approve.permit', $businessPermit->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         <button type="submit" name="action" value="log_approve"
                                                             class="btn btn-outline-success btn-sm btn-round m-1">Approve</button>
-                                                        {{-- <button type="submit"
+                                                        <button type="submit"
                                                             class="btn btn-outline-success btn-sm btn-round m-1"
                                                             name="action" value="log_approve">Approve</button> --}}
-                                                        {{-- Show more details --}}
-                                                        {{-- <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}"
+                                                {{-- Show more details --}}
+                                                {{-- <a href="{{ route('permit.show', ['id' => $businessPermit->id]) }}"
                                                             class="btn waves-effect waves-light btn-info btn-sm btn-round m-1">View
-                                                            More!</a> --}}
+                                                            More!</a> 
 
-                                                        <a href="#" data-user-id="{{ $businessPermit->id }}"
-                                                            class="btn btn-outline-info btn-sm btn-round m-1 viewMoreBtn">View
-                                                            More</a>
+
 
                                                     </form>
-                                                @endif
+                                                @endif --}}
+
+                                                <button
+                                                    class="btn btn-outline-primary btn-sm btn-rounded m-1 view-permit-details"
+                                                    data-id="{{ $businessPermit->id }}">
+                                                    View Permit
+                                                </button>
+
                                                 {{-- Generate Permit Button --}}
                                                 {{-- {{ route('permit.generate', ['id' => $businessPermit->id]) }} --}}
 
@@ -182,51 +195,55 @@
     <!-- /.content-wrapper -->
 
     <!-- Modal -->
-    <div class="modal fade" id="viewMoreModal">
-        <div class="modal-dialog modal-xl">
+    <div class="modal fade" id="yourModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <!-- Modal Header -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Application Details</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title" id="modalTitle">Business Permit Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <!-- Modal Body -->
-                <div class="modal-body" id="viewMoreModalBody">
-                    <!-- Content loaded via AJAX will appear here -->
+                <div class="modal-body" id="yourModalBody">
+                    <!-- AJAX content will be injected here -->
                 </div>
-                <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
                 </div>
             </div>
         </div>
     </div>
 
 
-    <!-- Modal for Editing -->
-    <div class="modal fade" id="editModal">
-        <div class="modal-dialog modal-xl col-md-8">
+
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <!-- Modal Header -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Application</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title" id="editModalLabel">Edit Permit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <!-- Modal Body -->
                 <div class="modal-body">
-                    <!-- This div will be populated with the content of edit.blade.php -->
-                    <div id="editModalContent"></div>
+                    <!-- This will be populated by the AJAX request -->
                 </div>
-                <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
     <!--approved modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
+    {{-- <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
         aria-hidden="true">
         <div class="modal-dialog col-md-8">
             <div class="modal-content">
@@ -244,12 +261,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog"
-        aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -318,46 +335,62 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $(".viewMoreBtn").click(function(e) {
-                e.preventDefault();
-                console.log("Button clicked"); // Debug statement
-                var userId = $(this).data('user-id');
-                console.log("User ID:", userId); // Debug statement
-                var url = "{{ route('permit.show', ['id' => ':id']) }}";
-                url = url.replace(':id', userId);
-                console.log("Request URL:", url); // Debug statement
-                $.ajax({
-                    url: url,
-                    method: "GET",
-                    success: function(response) {
-                        console.log("AJAX Success"); // Debug statement
-                        $("#viewMoreModalBody").html(response);
-                        $("#viewMoreModal").modal('show');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
+        $(document).on('click', '.view-permit-details', function() {
+            var permitId = $(this).data('id'); // Assuming you pass the permit ID using a data attribute
+
+            $.ajax({
+                url: "{{ route('permit.show', ':id') }}".replace(':id',
+                    permitId), // Use Laravel route helper to dynamically insert ID
+                type: "GET",
+                success: function(response) {
+                    if (response.html) {
+                        // Display the fetched content inside the modal
+                        $('#yourModalBody').html(response.html);
+                        $('#yourModal').modal('show'); // Show the modal
                     }
-                });
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred while fetching permit details.');
+                }
             });
         });
+
+
 
         function openEditModal(userId) {
             $('#editModal').modal('show'); // Open the modal
 
+            // Build the correct URL
+            var ajaxUrl = "{{ url('admin/admin/permit') }}/" + userId + "/edit";
+
+            // Debugging: log the URL to ensure it's correct
+            console.log("AJAX URL:", ajaxUrl);
+
             // AJAX request to fetch the HTML content of the edit view
             $.ajax({
-                url: "{{ route('permit.edit', ['businessPermit' => ':id']) }}".replace(':id', userId),
+                url: ajaxUrl,
                 method: "GET",
                 success: function(response) {
                     // Inject the HTML content into the modal body
                     $('#editModal .modal-body').html(response);
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
+                    console.error("Error loading form:", xhr.responseText);
+                    // Handle error - optional, show a user-friendly error message
+                    $('#editModal .modal-body').html(
+                        '<p>An error occurred while loading the form. Please try again later.</p>');
                 }
             });
         }
+
+
+
+
+
+
+
+
+
 
         $(document).ready(function() {
             @if (session('success'))
@@ -391,6 +424,35 @@
                 });
             });
         });
+
+
+
+        //edit
+        // $(document).ready(function() {
+        //     // Event listener for the edit button click
+        //     $('.open-edit-modal').on('click', function(e) {
+        //         e.preventDefault(); // Prevent the default link behavior
+
+        //         // Get the permit ID from the data attribute
+        //         var permitId = $(this).data('id');
+        //         console.log(permitId);
+        //         // Send an Ajax request to load the edit form
+        //         $.ajax({
+        //             url: '/permit/edit/' + permitId, // Update this URL if needed
+        //             method: 'GET',
+        //             success: function(response) {
+        //                 // Populate the modal content with the response (edit.blade.php)
+        //                 $('#editModalContent').html(response);
+
+        //                 // Show the modal
+        //                 $('#editModal').modal('show');
+        //             },
+        //             error: function(xhr) {
+        //                 alert('An error occurred while loading the form.'); // Handle error
+        //             }
+        //         });
+        //     });
+        // });
     </script>
 
 @endsection

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\activity_log;
+use App\Models\Barangay;
 use App\Models\BusinessPermitApplication;
+use App\Models\Sms_messages;
+use App\Models\Streets;
 use DB;
 use Illuminate\Http\Request;
 use Endroid\QrCode\QrCode;
@@ -23,30 +26,37 @@ class BusinessPermitApplicationController extends Controller
      */
     public function index()
     {
-
         $now  = now()->setTimezone('Asia/Manila')->toDateTimeString();
-
-        $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
-
-        $allPermits = BusinessPermitApplication::all()->count();
-
-         // Count pending applications
-         $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
-
-         // Count approved applications
-         $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
-
-         $archivedCount = BusinessPermitApplication::where('status', 'Approved')->count();
-
     
+        // Get all business permits that are pending, or return an empty collection if none exist
+        $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
+    
+        // Get total permit count (default to 0 if no permits exist)
+        $allPermits = BusinessPermitApplication::count();
+    
+        // Count pending applications (default to 0 if no pending applications)
+        $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
+    
+        // Count approved applications (default to 0 if no approved applications)
+        $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
+    
+        // Count archived applications (default to 0 if no archived applications)
+        $archivedCount = BusinessPermitApplication::where('status', 'Archived')->count();
+    
+        // Count renewal applications (default to 0 if no renewal applications)
+        $renewalCount = BusinessPermitApplication::where('status', 'Renewal')->count();
+    
+        // Pass the data to the view
         return view('admin.dashboard', [
             'businessPermits' => $businessPermits,
             'pendingCount' => $pendingCount,
             'approvedCount' => $approvedCount,
             'allPermits' => $allPermits,
             'archivedCount' => $archivedCount,
+            'renewalCount' => $renewalCount,
         ]);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -61,58 +71,116 @@ class BusinessPermitApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming data
+        // Validate the request data including arrays for line_of_business, PSIC, product_services, and no_of_units
         $validatedData = $request->validate([
-            'business_application' => 'nullable|string|max:255',
-            'classification_cottage' => 'nullable|string|max:255',
-            'amendment' => 'nullable|string|max:255',
-            'date_of_application' => 'nullable|date',
-            'DTI_SEC_CDA_registration_No' => 'nullable|string|max:255',
-            'date_business_started' => 'nullable|date',
-            'DTI_SEC_CDA_date_of_Registration' => 'nullable|date',
-            'type_of_org' => 'nullable|string|max:255',
-            'ctc_no' => 'nullable|string|max:255',
-            'TIN' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'first_name' => 'nullable|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'business_name' => 'nullable|string|max:255',
-            'trade_name_franchise' => 'nullable|string|max:255',
-            'business_building_name' => 'nullable|string|max:255',
-            'owners_building_name' => 'nullable|string|max:255',
-            'business_street' => 'nullable|string|max:255',
-            'owners_street' => 'nullable|string|max:255',
-            'business_barangay' => 'nullable|string|max:255',
-            'owners_barangay' => 'nullable|string|max:255',
-            'business_city_municipality' => 'nullable|string|max:255',
-            'owners_city_municipality' => 'nullable|string|max:255',
-            'business_province' => 'nullable|string|max:255',
-            'owners_province' => 'nullable|string|max:255',
-            'business_Tel_No_Mobile' => 'nullable|string|max:255',
-            'owners_Tel_No_Mobile' => 'nullable|string|max:255',
-            'mode_of_payment' => 'nullable|string|max:255',
-            'transfer' => 'nullable|string|max:255',
+            'business_application' => 'required|string|max:255',
             'business_type' => 'nullable|string|max:255',
-            'approved_on' => 'nullable|string|max:255',
+            'mode_of_payment' => 'nullable|string|max:255',
+            'DTI_SEC_CDA_registration_No' => 'nullable|string|max:255',
+            'TIN' => 'nullable|string|max:255',
+            'business_name' => 'nullable|string|max:255',
+            'franchise' => 'nullable|string|max:255',
+            'corp_type' => 'nullable|string|max:255',
+            'requirement' => 'nullable|string|max:255',
+            'tax_declaration' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'building_no2' => 'nullable|string|max:255',
+            'building_no' => 'nullable|string|max:255',
+            'business_building_name' => 'nullable|string|max:255',
+            'business_building_name2' => 'nullable|string|max:255',
+            'lot_number' => 'nullable|string|max:255',
+            'lot_number2' => 'nullable|string|max:255',
+            'block_no2' => 'nullable|string|max:255',
+            'street' => 'nullable|string|max:255',
+            'street2' => 'nullable|string|max:255',
+            'gov_entity' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'business_activity' => 'nullable|string|max:255',
+            'others' => 'nullable|string|max:255',
+            'barangay' => 'nullable|string|max:255',
+            'barangay2' => 'nullable|string|max:255',
+            'subdivision' => 'nullable|string|max:255',
+            'subdivision2' => 'nullable|string|max:255',
+            'city_municipality' => 'nullable|string|max:255',
+            'city_municipality2' => 'nullable|string|max:255',
+            'province' => 'nullable|string|max:255',
+            'province2' => 'nullable|string|max:255',
+            'zip_code' => 'nullable|string|max:10',
+            'zip_code2' => 'nullable|string|max:10',
+            'telephone_no' => 'nullable|string|max:255',
+            'mobile_no' => 'nullable|string|max:255',
+            'email_address' => 'nullable|email|max:255',
+            'owner_last_name' => 'nullable|string|max:255',
+            'owner_first_name' => 'nullable|string|max:255',
+            'owner_middle_name' => 'nullable|string|max:255',
+            'owner_suffix' => 'nullable|string|max:255',
+            'pres_last_name' => 'nullable|string|max:255',
+            'pres_first_name' => 'nullable|string|max:255',
+            'pres_middle_name' => 'nullable|string|max:255',
+            'pres_suffix' => 'nullable|string|max:255',
+            'emergency_contact_name' => 'nullable|string|max:255',
+            'emergency_contact_no' => 'nullable|string|max:255',
+            'business_area' => 'nullable|string|max:255',
+            'total_employees_male' => 'nullable|string|max:255',
+            'total_employees_female' => 'nullable|string|max:255',
+            'employees_residing_estancia' => 'nullable|string|max:255',
+            'delivery_vehicles_van_truck' => 'nullable|string|max:255',
+            'delivery_vehicles_motorcycle' => 'nullable|string|max:255',
+            'building_name' => 'nullable|string|max:255',
+            'lot_no' => 'nullable|string|max:255',
+            'block_no' => 'nullable|string|max:255',
+            'line_of_business' => 'nullable|array',
+            'line_of_business.*' => 'nullable|string|max:255',
+            'PSIC' => 'nullable|array',
+            'PSIC.*' => 'nullable|string|max:255',
+            'product_services' => 'nullable|array',
+            'product_services.*' => 'nullable|string|max:255',
+            'no_of_units' => 'nullable|array',
+            'no_of_units.*' => 'nullable|string|max:255',
         ]);
-        
-        // Prepend the country code to the mobile number
-        if (!empty($validatedData['business_Tel_No_Mobile'])) {
-            $validatedData['business_Tel_No_Mobile'] = '+639' . $validatedData['business_Tel_No_Mobile'];
-            $validatedData['owners_Tel_No_Mobile'] = '+639' . $validatedData['owners_Tel_No_Mobile'];
-        }
     
-        $validatedData['status'] = 'Pending';
+    // Handle file upload for 'tax_declaration'
+    if ($request->hasFile('tax_declaration')) {
+        $taxDeclarationFile = $request->file('tax_declaration');
+        // Store the file and save the path
+        $taxDeclarationPath = $taxDeclarationFile->store('files', 'public');
+        $validatedData['tax_declaration'] = $taxDeclarationPath;
+    }
+
+    // Handle file upload for 'gov_entity'
+    if ($request->hasFile('gov_entity')) {
+        $govEntityFile = $request->file('gov_entity');
+        // Store the file and save the path
+        $govEntityPath = $govEntityFile->store('files', 'public');
+        $validatedData['gov_entity'] = $govEntityPath;
+    }
+
+    // Prepend the country code to the mobile number
+    if (!empty($validatedData['mobile_no'])) {
+        $validatedData['mobile_no'] = '+63' . ltrim($validatedData['mobile_no'], '0');
+    }
+
+    // Convert array fields to JSON if present
+    $validatedData['line_of_business'] = isset($validatedData['line_of_business']) ? json_encode($validatedData['line_of_business']) : null;
+    $validatedData['PSIC'] = isset($validatedData['PSIC']) ? json_encode($validatedData['PSIC']) : null;
+    $validatedData['product_services'] = isset($validatedData['product_services']) ? json_encode($validatedData['product_services']) : null;
+    $validatedData['no_of_units'] = isset($validatedData['no_of_units']) ? json_encode($validatedData['no_of_units']) : null;
+
+    // Set default status and notification
+    $validatedData['status'] = 'Pending';
+    $validatedData['notified'] = '0';
+
+    // Debugging purposes, remove or replace after testing
+    // dd($validatedData);
     
         // Create the record in the database
         $product = BusinessPermitApplication::create($validatedData);
     
-        // Set a flash message for successful registration
-        session()->flash('registration_success', true);
-    
-        // Redirect to the login page
-        return redirect()->route('login');
+        // Redirect or return response after saving
+        return redirect()->back()->with('success', 'Business data saved successfully!');
     }
+    
+    
+    
+
 
     /**
      * Display the specified resource.
@@ -122,13 +190,41 @@ class BusinessPermitApplicationController extends Controller
     //     $businessPermit = BusinessPermitApplication::findOrFail($id);
     //     return view('admin.permit.show', compact('businessPermit'));
     // }
+// public function show($id)
+// {
+//     $businessPermit = BusinessPermitApplication::findOrFail($id);
+
+//     // Assuming you have a view named 'permit.show' to display user details
+//     return view('admin.permit.show', compact('businessPermit'));
+// }
+
 public function show($id)
 {
     $businessPermit = BusinessPermitApplication::findOrFail($id);
+    $streets = Streets::orderBy('street', 'asc')->get();
+    $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
 
-    // Assuming you have a view named 'permit.show' to display user details
-    return view('admin.permit.show', compact('businessPermit'));
+    // Decode the JSON fields
+    $lineOfBusiness = json_decode($businessPermit->line_of_business, true) ?? [];
+    $psic = json_decode($businessPermit->PSIC, true) ?? [];
+    $productServices = json_decode($businessPermit->product_services, true) ?? [];
+    $noOfUnits = json_decode($businessPermit->no_of_units, true) ?? [];
+
+    // Render the view as a string and return it as a response for AJAX
+    $view = view('admin.permit.show', [
+        'businessPermit' => $businessPermit,
+        'streets' => $streets,
+        'barangays' => $barangays,
+        'lineOfBusiness' => $lineOfBusiness,
+        'psic' => $psic,
+        'productServices' => $productServices,
+        'noOfUnits' => $noOfUnits,
+    ])->render();
+
+    return response()->json(['html' => $view]);
 }
+
+
 
     
 
@@ -140,15 +236,57 @@ public function show($id)
     //     $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
     //     return view('admin.permit.edit', compact('businessPermit'));
     // }
-    public function edit($businessPermit)
-    {
-        // Fetch the data needed for editing
-        $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
+    // public function edit($businessPermit)
+    // {
+    //     // Fetch the data needed for editing
+    //     $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
     
-        // Render the edit view and pass data to it
-        return view('admin.permit.edit', compact('businessPermit'));
+    //     // Render the edit view and pass data to it
+    //     return view('admin.permit.edit', compact('businessPermit'));
+    // }
+    
+
+
+    public function edit($id)
+    {
+        // Find the business permit by its ID
+        $businessPermit = BusinessPermitApplication::find($id);
+
+        $streets = Streets::orderBy('street', 'asc')->get();
+        $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
+         // Decode the JSON fields
+         $lineOfBusiness = json_decode(optional($businessPermit)->line_of_business, true) ?? [];
+         $psic = json_decode(optional($businessPermit)->PSIC, true) ?? [];
+         $productServices = json_decode(optional($businessPermit)->product_services, true) ?? [];
+         $noOfUnits = json_decode(optional($businessPermit)->no_of_units, true) ?? [];
+         
+    
+        // If the business permit is not found, return a 404 error
+        if (!$businessPermit) {
+            return abort(404, 'Business Permit not found');
+        }
+    
+        // Return the view with the business permit data
+        return view('admin.permit.edit', [
+            'businessPermit' => $businessPermit,
+            'streets' => $streets,
+            'barangays' => $barangays,
+            'lineOfBusiness' => $lineOfBusiness,
+        'psic' => $psic,
+        'productServices' => $productServices,
+        'noOfUnits' => $noOfUnits,
+        ]);
     }
     
+
+
+//     public function edit($id)
+// {
+//     $businessPermit = BusinessPermitApplication::findOrFail($id);  // Fetch the permit by ID
+//     dd($businessPermit);
+//     // return view('permit.edit', compact('businessPermit'));  // Return the view
+// }
+
     
     
     
@@ -160,51 +298,108 @@ public function show($id)
 
      public function update(Request $request, $businessPermit)
      {
-         // Validate the incoming request data
-         $validatedData = $request->validate([
-            'business_application' => 'nullable|string|max:255',
-            'classification_cottage' => 'nullable|string|max:255', // Ensure it's a string
-            'amendment' => 'nullable|string|max:255', // Ensure it's a string
-            'date_of_application' => 'nullable|date',
-            'DTI_SEC_CDA_registration_No' => 'nullable|string|max:255',
-            'date_business_started' => 'nullable|date',
-            'DTI_SEC_CDA_date_of_Registration' => 'nullable|date',
-            'type_of_org' => 'nullable|string|max:255', // Ensure it's a string
-            'ctc_no' => 'nullable|string|max:255',
-            'TIN' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'first_name' => 'nullable|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'business_name' => 'nullable|string|max:255',
-            'trade_name_franchise' => 'nullable|string|max:255',
-            'business_building_name' => 'nullable|string|max:255',
-            'owners_building_name' => 'nullable|string|max:255',
-            'business_street' => 'nullable|string|max:255',
-            'owners_street' => 'nullable|string|max:255',
-            'business_barangay' => 'nullable|string|max:255',
-            'owners_barangay' => 'nullable|string|max:255',
-            'business_city_municipality' => 'nullable|string|max:255',
-            'owners_city_municipality' => 'nullable|string|max:255',
-            'business_province' => 'nullable|string|max:255',
-            'owners_province' => 'nullable|string|max:255',
-            'business_Tel_No_Mobile' => 'nullable|string|max:255',
-            'owners_Tel_No_Mobile' => 'nullable|string|max:255',
-            'mode_of_payment' => 'nullable|string|max:255', // Ensure it's a string
-            'transfer' => 'nullable|string|max:255', // Ensure it's a string
-            'business_type' => 'nullable|string|max:255',
+    // Find the existing record
+    $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
 
-        ]);
+    // Validate the request data
+    $validatedData = $request->validate([
+        'business_application' => 'required|string|max:255',
+        'business_type' => 'nullable|string|max:255',
+        'mode_of_payment' => 'nullable|string|max:255',
+        'DTI_SEC_CDA_registration_No' => 'nullable|string|max:255',
+        'TIN' => 'nullable|string|max:255',
+        'business_name' => 'nullable|string|max:255',
+        'franchise' => 'nullable|string|max:255',
+        'corp_type' => 'nullable|string|max:255',
+        'requirement' => 'nullable|string|max:255',
+        'tax_declaration' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+        'building_no2' => 'nullable|string|max:255',
+        'building_no' => 'nullable|string|max:255',
+        'business_building_name' => 'nullable|string|max:255',
+        'business_building_name2' => 'nullable|string|max:255',
+        'lot_number' => 'nullable|string|max:255',
+        'lot_number2' => 'nullable|string|max:255',
+        'block_no2' => 'nullable|string|max:255',
+        'street' => 'nullable|string|max:255',
+        'street2' => 'nullable|string|max:255',
+        'gov_entity' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+        'business_activity' => 'nullable|string|max:255',
+        'others' => 'nullable|string|max:255',
+        'barangay' => 'nullable|string|max:255',
+        'barangay2' => 'nullable|string|max:255',
+        'subdivision' => 'nullable|string|max:255',
+        'subdivision2' => 'nullable|string|max:255',
+        'city_municipality' => 'nullable|string|max:255',
+        'city_municipality2' => 'nullable|string|max:255',
+        'province' => 'nullable|string|max:255',
+        'province2' => 'nullable|string|max:255',
+        'zip_code' => 'nullable|string|max:10',
+        'zip_code2' => 'nullable|string|max:10',
+        'telephone_no' => 'nullable|string|max:255',
+        'mobile_no' => 'nullable|string|max:255',
+        'email_address' => 'nullable|email|max:255',
+        'owner_last_name' => 'nullable|string|max:255',
+        'owner_first_name' => 'nullable|string|max:255',
+        'owner_middle_name' => 'nullable|string|max:255',
+        'owner_suffix' => 'nullable|string|max:255',
+        'pres_last_name' => 'nullable|string|max:255',
+        'pres_first_name' => 'nullable|string|max:255',
+        'pres_middle_name' => 'nullable|string|max:255',
+        'pres_suffix' => 'nullable|string|max:255',
+        'emergency_contact_name' => 'nullable|string|max:255',
+        'emergency_contact_no' => 'nullable|string|max:255',
+        'business_area' => 'nullable|string|max:255',
+        'total_employees_male' => 'nullable|string|max:255',
+        'total_employees_female' => 'nullable|string|max:255',
+        'employees_residing_estancia' => 'nullable|string|max:255',
+        'delivery_vehicles_van_truck' => 'nullable|string|max:255',
+        'delivery_vehicles_motorcycle' => 'nullable|string|max:255',
+        'building_name' => 'nullable|string|max:255',
+        'lot_no' => 'nullable|string|max:255',
+        'block_no' => 'nullable|string|max:255',
+        'line_of_business' => 'nullable|array',
+        'line_of_business.*' => 'nullable|string|max:255',
+        'PSIC' => 'nullable|array',
+        'PSIC.*' => 'nullable|string|max:255',
+        'product_services' => 'nullable|array',
+        'product_services.*' => 'nullable|string|max:255',
+        'no_of_units' => 'nullable|array',
+        'no_of_units.*' => 'nullable|string|max:255',
+    ]);
+
         
-         $validatedData['status'] = 'Pending';
-     
-         // Find the BusinessPermitApplication instance by ID
-         $businessPermit = BusinessPermitApplication::findOrFail($businessPermit);
-     
-         // Update the BusinessPermitApplication instance with the validated data
-         $businessPermit->update($validatedData);
-     
-         // Optionally, you can redirect back with a success message
-         return redirect()->back()->with('update', 'Business permit updated successfully');
+        // Handle file upload for 'tax_declaration' (only if a new file is uploaded)
+    if ($request->hasFile('tax_declaration')) {
+        $taxDeclarationFile = $request->file('tax_declaration');
+        // Store the file and save the path
+        $taxDeclarationPath = $taxDeclarationFile->store('files', 'public');
+        $validatedData['tax_declaration'] = $taxDeclarationPath;
+    }
+
+    // Handle file upload for 'gov_entity' (only if a new file is uploaded)
+    if ($request->hasFile('gov_entity')) {
+        $govEntityFile = $request->file('gov_entity');
+        // Store the file and save the path
+        $govEntityPath = $govEntityFile->store('files', 'public');
+        $validatedData['gov_entity'] = $govEntityPath;
+    }
+
+    // Prepend the country code to the mobile number
+    if (!empty($validatedData['mobile_no'])) {
+        $validatedData['mobile_no'] = '+63' . ltrim($validatedData['mobile_no'], '0');
+    }
+
+    // Convert array fields to JSON if present
+    $validatedData['line_of_business'] = isset($validatedData['line_of_business']) ? json_encode($validatedData['line_of_business']) : null;
+    $validatedData['PSIC'] = isset($validatedData['PSIC']) ? json_encode($validatedData['PSIC']) : null;
+    $validatedData['product_services'] = isset($validatedData['product_services']) ? json_encode($validatedData['product_services']) : null;
+    $validatedData['no_of_units'] = isset($validatedData['no_of_units']) ? json_encode($validatedData['no_of_units']) : null;
+
+    // Update the existing record
+    $businessPermit->update($validatedData);
+
+    // Redirect or return response after updating
+    return redirect()->back()->with('successupdate', 'Business data updated successfully!');
      }
      
    
@@ -224,43 +419,47 @@ public function show($id)
 
     public function approvePermit($id, Request $request)
     {
-        // Find the business permit by ID
-        // $businessPermit = BusinessPermitApplication::findOrFail($id);
-    
-        // // Update the status to 'Approved'
-        // $businessPermit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
-        // $businessPermit->status = 'Approved';
-        // $businessPermit->save();
-    
         // Check if the 'Approve' button was clicked
         if ($request->input('action') == 'log_approve') {
-
             $businessPermit = BusinessPermitApplication::findOrFail($id);
-
-                    // Update the status to 'Approved'
+    
+            // Update the status to 'Approved'
             $businessPermit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $businessPermit->status = 'Approved';
-            $businessPermit->notified = '1';
+            $businessPermit->notified = '0';
+    
+            // Generate a random 5-digit number (00000)
+            $randomNumber = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
+    
+            // Get the current date formatted as MMDDYYYY
+            $currentDate = \Carbon\Carbon::now()->format('mdY');
+    
+            // Combine to create Mayor's Permit No.
+            $mayorsPermitNo = "BS-{$randomNumber}-{$currentDate}";
+    
+            // Save the Mayor's Permit No. to the plate_number column
+            $businessPermit->plate_number = $mayorsPermitNo;
+    
+            // Save the changes to the permit
             $businessPermit->save();
     
-
-            $client_firstname = $businessPermit->first_name;
-            $client_middlename = $businessPermit->middle_name;
-            $client_lastname = $businessPermit->last_name;
-
-
+            // Prepare log data
+            $client_firstname = $businessPermit->owner_first_name;
+            $client_middlename = $businessPermit->owner_middle_name;
+            $client_lastname = $businessPermit->owner_last_name;
+    
             $ApproveLog['firstname'] = Auth::user()->firstname; 
             $ApproveLog['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $ApproveLog['user_activity'] = 'has <span class="badge badge-success p-2">APPROVED</span> the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' .  $client_lastname . '</b>';
-        
+            
+            // Log the approval activity
             $approvedLog = activity_log::create($ApproveLog);
-
-           }    
-        
+        }    
     
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Permit approved successfully.');
     }
+    
     
 //     public function showApproved()
 // {
@@ -340,90 +539,93 @@ public function show($id)
 
 public function showApproved()
 {
-    $now = Carbon::now('Asia/Manila');
+$now = Carbon::now('Asia/Manila');
 
-    // Retrieve all approved permits
-    $approved_permits = BusinessPermitApplication::where('status', 'Approved')
-        ->orderByDesc('created_at')
-        ->get();
+// Retrieve all approved permits
+$approved_permits = BusinessPermitApplication::where('status', 'Approved')
+->orderByDesc('created_at')
+->get();
 
-    foreach ($approved_permits as $permit) {
-        // Check if the approved_on time is older than 12 months
-        if ($now->diffInMonths($permit->approved_on) >= 1) {
-            // Update status to 'Renewal' if more than 12 months have passed
-            $permit->status = 'Renewal';
-            $permit->save();
-        }
-    }
+foreach ($approved_permits as $permit) {
+// Check if the approved_on time is older than 12 months
+if ($now->diffInMonths($permit->approved_on) >= 1) {
+// Update status to 'Renewal'
+$permit->status = 'Renewal';
+$permit->notified = '1';
+$permit->save();
 
-    // Retrieve all permits with 'Renewal' status
-    $renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->get();
+// Send SMS notification
+$phone_number = $permit->mobile_no;
+$lastName = $permit->owner_last_name;
+// dd($phone_number);
+// Log::info('Sending SMS to: ' . $phone_number);
 
-    foreach ($renewal_permits as $permit) {
-        $number = $permit->business_Tel_No_Mobile; // Assuming this is the field for the phone number
+$currentYear = date('Y');
 
-        // Convert the number if it starts with '+63'
-        if (substr($number, 0, 3) === '+63') {
-            $number = '0' . substr($number, 3); // Convert to '09998887777' format
-        } elseif (substr($number, 0, 1) === '0') {
-            // If it starts with '0', keep it as is
-        } elseif (substr($number, 0, 2) === '63') {
-            $number = '0' . substr($number, 2); // Convert to '09998887777' format
-        }
+$message = "Mr/Mrs " . $lastName . " Your business permit is due for renewal. Please proceed to the BPL office for the
+renewal of your business permit not later than December 31, " . $currentYear;
 
-        // Check if the SMS has already been sent
-        if ($permit->notified == 0) {
-            // Send SMS notification
-            $response = $this->sendSms($number, "Your permit has expired. Please renew it.");
-            $permit->notified = 1;
-            $permit->save();
-            // Check the response to see if the SMS was sent successfully
-            if (isset($response['status']) && $response['status'] === 'Sent') {
-                // Update notified status to 1
-                $permit->notified = 1;
-                $permit->save();
-            } else {
-                // Log or handle the case where SMS was not sent successfully
-                Log::warning('Failed to send SMS to ' . $number . '. Response: ' . json_encode($response));
-            }
-        }
-    }
 
-    return view('admin.permit.index', [
-        'approved_permits' => $approved_permits,
-    ]);
+$smsResult = self::sendSimpleSMS($phone_number, $message);
+// dd( $smsResult );
+// Check and log SMS result
+// Log::info('SMS sent result: ', (array)$smsResult);
+// dd($smsResult); // Use this for debugging
+}
 }
 
-// Example function to send SMS using Semaphore
-public function sendSms($number, $message)
-{
-    $ch = curl_init();
-    $parameters = array(
-        'apikey' => 'fa26af247b91bffadd1d1c07c7a9e124', // Your API KEY
-        'number' => $number,
-        'message' => $message,
-        'sendername' => 'SEMAPHORE'
-    );
-
-    curl_setopt($ch, CURLOPT_URL, 'https://semaphore.co/api/v4/messages');
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $output = curl_exec($ch);
-    
-    // Check for cURL errors and log if any
-    if (curl_errno($ch)) {
-        Log::error('SMS Error: ' . curl_error($ch));
-    } else {
-        // Log the output for debugging
-        Log::info('SMS Response: ' . $output);
-    }
-    
-    curl_close($ch);
-
-    return json_decode($output, true); // Return the response as an array
+//Return to your view
+return view('admin.permit.index', [
+'approved_permits' => $approved_permits,
+]);
 }
+
+
+
+
+public static function sendSimpleSMS($phone_number, $message) {
+$SMSMessage = [
+"secret" => env('SMS_GATEWAY_API'),
+"mode" => "devices",
+"device" => env('SMS_GATEWAY_DEVICE_ID'),
+"sim" => 1,
+"priority" => 1,
+"phone" => $phone_number,
+"message" => $message
+];
+
+// Log the SMS message being sent
+Log::info('Sending SMS:', $SMSMessage);
+
+// Send SMS via the gateway
+$cURL = curl_init(env('SMS_GATEWAY_URL') . "api/send/sms");
+curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($cURL, CURLOPT_POSTFIELDS, $SMSMessage);
+$response = curl_exec($cURL);
+
+if(curl_errno($cURL)){
+// Log curl error
+$error_msg = curl_error($cURL);
+Log::error("SMS Gateway cURL Error: " . $error_msg);
+return null; // Stop if there's an error
+}
+
+curl_close($cURL);
+
+// Decode the response
+$result = json_decode($response, true);
+Log::info('SMS API Response:', (array)$result); // Log the full response for debugging
+
+// Return result for further debugging
+return $result;
+}
+
+
+
+
+
+
+
 
 
 
@@ -431,31 +633,41 @@ public function sendSms($number, $message)
 //TEST ENDS HERE
 
     
-    public function generatePermit(Request $request)
-    {
-        $userId = $request->input('user_id');
-        $status = $request->input('status');
+public function generatePermit(Request $request)
+{
+    $userId = $request->input('user_id');
+    $status = $request->input('status');
+
+    // Fetch user data based on $userId
+    $permit = BusinessPermitApplication::findOrFail($userId);
     
-        // Fetch user data based on $userId
-        $permit = BusinessPermitApplication::findOrFail($userId);
-    
-        // Construct the QR code data string with the necessary information
-        $qrCodeData = "Permit ID: {$permit->id}\n";
-        $qrCodeData .= "Status: {$status}\n";
-        $qrCodeData .= "Business Name: {$permit->business_name}\n";
-        $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
-        // Add more details as needed
-    
-        // Generate QR code based on the constructed data
-        $qrCode = new QrCode($qrCodeData);
-        $qrCode->setSize(200); // Set QR code size
-    
-        // Generate base64-encoded QR code image
-        $base64QRCode = base64_encode($qrCode->writeString());
-    
-        // Return the base64-encoded QR code image along with the status as a response
-        return response()->json(['qr_code' => $base64QRCode, 'status' => $status]);
-    }
+    // Get the approved_on date
+    $approvedOn = $permit->approved_on; // Ensure this field exists in your model
+
+    // Calculate the expiration date (1 year from the approved_on date)
+    $expirationDate = \Carbon\Carbon::parse($approvedOn)->addYear()->format('F j, Y');
+
+    // Construct the QR code data string with the necessary information
+    $qrCodeData = "Permit ID: {$permit->id}\n";
+    $qrCodeData .= "Status: {$status}\n";
+    $qrCodeData .= "Business Name: {$permit->business_name}\n";
+    $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
+    // Add business type and expiration date to the QR code data
+    $qrCodeData .= "Business Type: {$permit->business_type}\n"; // Fetch business type
+    $qrCodeData .= "Expiration Date: {$expirationDate}\n";
+
+    // Generate QR code based on the constructed data
+    $qrCode = new QrCode($qrCodeData);
+    $qrCode->setSize(200); // Set QR code size
+
+    // Generate base64-encoded QR code image
+    $base64QRCode = base64_encode($qrCode->writeString());
+
+    // Return the base64-encoded QR code image along with the status and expiration date as a response
+    return response()->json(['qr_code' => $base64QRCode, 'status' => $status, 'expiration_date' => $expirationDate, 'business_type' => $permit->business_type]);
+}
+
+
     
 
 
@@ -535,14 +747,68 @@ public function sendSms($number, $message)
        
     }
 
-    public function showForRenewal()
-    {
-        // Fetch permits with status 'For Renewal'
-        $for_renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->orderByDesc('created_at')->get();
+    // public function showForRenewal()
+    // {
+    //     // Fetch permits with status 'For Renewal'
+    //     $for_renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->orderByDesc('created_at')->get();
 
-        // Return the view with the 'For Renewal' permits
+    //     foreach($for_renewal_permits as $permits){
+    //         // dd($permits->notified);
+    //         if($permits->notified == 0){
+    //             dd('send sms');
+    //         }
+    //     }   
+
+    //     // Return the view with the 'For Renewal' permits
+    //     // return view('admin.permit.renew', compact('for_renewal_permits'));
+    // }
+
+
+    public function showForRenewal($message)
+    {
+        $for_renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->orderByDesc('created_at')->get();
+    
+        foreach ($for_renewal_permits as $permit) {
+            if ($permit->notified == 0) {
+
+                $phone_number = $permit->mobile_no;
+                $client_name = $permit->owner_first_name . ' ' . $permit->owner_middle_name . ' ' . $permit->owner_last_name;
+                $date_time_sent = Carbon::now('asia/manila');
+    
+                $smsResult = self::sendSimpleSMS($phone_number, $message);
+
+                // dd($phone_number,  $message, $client_name, $date_time_sent);
+
+                Sms_messages::create([
+                    'phone_number' => $phone_number,
+                    'message' => $message,
+                    'client_name' => $client_name,
+                    'date_time_sent' => $date_time_sent
+                ]);
+    
+                if ($smsResult) {
+                    // Check for errors in the result
+                    if ($smsResult['status'] == 200) {
+                        $permit->notified = 1;
+                        $permit->save();
+                    } else {
+                        // Log the failure response
+                        Log::error('SMS failed: ', (array)$smsResult);
+                    }
+                } else {
+                    // Log the null response
+                    Log::error('SMS result returned null');
+                }
+    
+                // dd($smsResult); // Check what result was returned
+            }
+        }
+
+          //     // Return the view with the 'For Renewal' permits
         return view('admin.permit.renew', compact('for_renewal_permits'));
     }
+    
+
 
     public function approveRenewal(Request $request, $id)
     {
@@ -609,6 +875,17 @@ public function sendSms($number, $message)
             'DateNow' => $DateNow,
         ]);
 
+    }
+
+    public function editDisplay()
+    {
+        $streets = Streets::orderBy('street', 'asc')->get();
+        $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
+    
+        return view('admin.permit.show2', [
+            'streets' => $streets,
+            'barangays' => $barangays,
+        ]);
     }
 
 

@@ -58,6 +58,12 @@
                       Management</a>
                   <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.logs') }}">Activity
                       Logs</a>
+                  <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.street') }}">Add
+                      Streets</a>
+                  <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.barangay') }}">Add
+                      Barangay</a>
+                  <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.sms') }}">SMS
+                      notifications</a>
 
               </div>
 

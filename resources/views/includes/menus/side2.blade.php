@@ -37,7 +37,8 @@
                 <!-- Dropdown for Registered Permits -->
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="fa-solid fa-file-lines nav-icon mr-3 ml-1" aria-hidden="true"></i>
+                        <i class="fa-solid fa-folder nav-icon mr-3" aria-hidden="true"></i>
+
                         <p>
                             Registered Permits
                             <i class="right fa fa-angle-left"></i>
