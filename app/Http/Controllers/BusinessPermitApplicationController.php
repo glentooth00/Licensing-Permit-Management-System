@@ -764,7 +764,7 @@ public function generatePermit(Request $request)
     // }
 
 
-    public function showForRenewal()
+    public function showForRenewal($message)
     {
         $for_renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->orderByDesc('created_at')->get();
     

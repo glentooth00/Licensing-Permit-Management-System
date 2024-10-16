@@ -57,14 +57,14 @@
                                             <span><b>{{ $permit->plate_number }}</b></span>
                                         </div>
                                         <div class="mt-4" style="width: 100%;">
-                                            <span><b>{{ $permit->business_type }}</b></span>
+                                            <span><b>{{ $permit->business_application }}</b></span>
                                         </div>
 
                                     </div>
                                     <div class="text-center" style="display: flex;">
                                         <div class="" style="border-top: 1px solid gray; width: 100%;">
                                             <span>PERMIT Expires
-                                               
+
                                             </span>
                                         </div>
 
@@ -88,7 +88,9 @@
                                             </h5>
                                         </div>
                                         <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
-                                            <h5 class="fw-bold">Nature of Business: <span><b>TEST</b></span></h5>
+                                            <h5 class="fw-bold">Nature of Business:
+                                                <span><b>{{ $permit->business_name }}</b></span>
+                                            </h5>
                                         </div>
                                         <div class="col-lg-12 mt-3" style="border-bottom: 2px solid gray;">
                                             <h5 class="fw-bold">Business Address: <span><b>{{ $permit->_street }}
@@ -142,29 +144,35 @@
                                                         style="border: 1px solid rgba(33, 33, 34, 0.589); padding: 10px;">
                                                         <div class="">
                                                             <span><b>Paid under the following:</b></span><br>
-                                                            <div class="p-2" style="display: flex;">
-                                                                <div class="col-md-3 p-2">
-                                                                    <span class="badge">O.R. No.</span>
-                                                                    <input type="text"><br>
-                                                                    {{-- <span><b>9403650</b></span> --}}
-                                                                </div>
-                                                                <div class="col-md-3 p-2">
-                                                                    <span class="badge">O.R. Dates</span> <input
-                                                                        type="text"><br>
-                                                                    {{-- <span><b>01-19-2024</b></span> --}}
-                                                                </div>
-                                                                <div class="col-md-3 p-2">
-                                                                    <span class="badge">O.R. Amount</span> <input
-                                                                        type="text"><br>
-                                                                    {{-- <span><b>15,700.00</b></span> --}}
+                                                            <div class="p-2" style="display: flex; align-items: center;">
+                                                                <div class="col-md-3" style="display: flex; gap: 15px;">
+                                                                    <div>
+                                                                        <span>O.R. No.</span><br>
+                                                                        <input type="text"
+                                                                            style="border: none; outline: none; width: 100px;"><br>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span>O.R. Dates</span><br>
+                                                                        <input type="text"
+                                                                            style="border: none; outline: none; width: 100px;"><br>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span>O.R. Amount</span><br>
+                                                                        <input type="text"
+                                                                            style="border: none; outline: none; width: 100px;"><br>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+
                                                             <br>
-                                                            <span class="badge"><b>Mode of Payment:</b> <input
-                                                                    type="checkbox" name="">
-                                                                Quarterly &nbsp;&nbsp;&nbsp; <input type="checkbox"
-                                                                    name="">
-                                                                Annual</span>
+                                                            <span class="badge">
+                                                                <b>Mode of Payment:</b>
+                                                                <input type="checkbox" id="quarterly" name="mode_of_payment"
+                                                                    onclick="uncheckOther('quarterly', 'annual')"> Quarterly
+                                                                &nbsp;&nbsp;&nbsp;
+                                                                <input type="checkbox" id="annual" name="mode_of_payment"
+                                                                    onclick="uncheckOther('annual', 'quarterly')"> Annual
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,11 +225,41 @@
             var printContents = document.getElementById(divName).innerHTML;
             var originalContents = document.body.innerHTML;
 
+            // Get all the input fields and checkboxes within the div
+            var inputElements = document.getElementById(divName).getElementsByTagName('input');
+
+            // Loop through each input element and replace them with the corresponding value or checked status
+            for (var i = 0; i < inputElements.length; i++) {
+                var input = inputElements[i];
+
+                // Check if it's a checkbox
+                if (input.type === 'checkbox') {
+                    // If the checkbox is checked, show the text '✔', otherwise show empty space
+                    var checkedText = input.checked ? '✔' : '';
+                    printContents = printContents.replace(input.outerHTML, checkedText);
+                } else {
+                    // For text inputs, replace with the input value
+                    printContents = printContents.replace(input.outerHTML, '<span>' + input.value + '</span>');
+                }
+            }
+
+            // Set the document body content to the updated print contents
             document.body.innerHTML = printContents;
 
             window.print();
 
+            // Restore the original page contents after printing
             document.body.innerHTML = originalContents;
+        }
+
+        function uncheckOther(checkedId, uncheckedId) {
+            var checkedBox = document.getElementById(checkedId);
+            var uncheckedBox = document.getElementById(uncheckedId);
+
+            // Only uncheck the other box if the current box is being checked (not unchecking it)
+            if (checkedBox.checked) {
+                uncheckedBox.checked = false;
+            }
         }
     </script>
 @endsection
