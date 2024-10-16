@@ -37,7 +37,7 @@
                     <div class="bg-dark text-light pt-2 px-5 py-1">
                         <h6>1. APPLICANT SECTION-BASIC INFORMATION</h6>
                     </div>
-                    <form action="{{ route('business_registration.store') }}" method="POST">
+                    <form action="{{ route('business-registration.store') }}" method="POST">
                         @csrf
                         <div class="mt-3">
                             <div class="row">
@@ -402,7 +402,8 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="p-2"><b>Tel. No./Mobile: </b> <input value="+63"
+                                                    <td class="p-2">
+                                                        <b>Tel. No./Mobile: </b> <input value="+63"
                                                             disabled class="text-dark"
                                                             style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
                                                             name="business_Tel_No_Mobile" pattern="[0-9]{10}"

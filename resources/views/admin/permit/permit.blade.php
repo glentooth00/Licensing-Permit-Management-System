@@ -17,31 +17,62 @@
                                     style="background-image: url('/dist/images/print.png'); height: 340px;">
                                 </div>
                                 <div>
+                                    {{-- Top --}}
                                     <div class="text-center" style="display: flex;">
-                                        <div class="mt-5" style="border-top: 1px solid gray; width: 100%;">
-                                            <span>DATE Issued: <B>{{ date('F j, Y') }}</B></span>
+                                        <div class="mt-5" style="width: 100%;">
+                                            <span><B>{{ date('F j, Y') }}</B></span>
                                         </div>
 
-                                        <div class="mt-5" style="border-top: 1px solid gray; width: 100%;">
-                                            <span>Mayor's Permit No.: <b>{{ $permit->plate_number }}</b></span>
+                                        <div class="mt-5" style="width: 100%;">
+                                            <span><b>{{ $permit->plate_number }}</b></span>
                                         </div>
-                                        <div class="mt-5" style="border-top: 1px solid gray; width: 100%;">
-                                            <span>PERMIT Year: <B>{{ date('Y') }}</B></span>
+                                        <div class="mt-5" style="width: 100%;">
+                                            <span><B>{{ date('Y') }}</B></span>
                                         </div>
 
                                     </div>
+                                    {{-- Bottom --}}
                                     <div class="text-center" style="display: flex;">
-                                        <div class="mt-5" style="border-top: 1px solid gray; width: 100%;">
-                                            <span>PERMIT Expires:
+                                        <div class="" style="border-top: 1px solid gray; width: 100%;">
+                                            <span>DATE Issued</span>
+                                        </div>
+
+                                        <div class="" style="border-top: 1px solid gray; width: 100%;">
+                                            <span>Mayor's Permit No.</span>
+                                        </div>
+                                        <div class="" style="border-top: 1px solid gray; width: 100%;">
+                                            <span>PERMIT Year</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="text-center" style="display: flex;">
+                                        <div class="mt-4" style="width: 100%;">
+                                            <span>
                                                 <b>{{ \Carbon\Carbon::parse($permit->approved_on)->addYear()->format('F j, Y') }}</b>
                                             </span>
                                         </div>
 
-                                        <div class="mt-5" style="border-top: 1px solid gray; width: 100%;">
-                                            <span>Plate Number : <b>{{ $permit->plate_number }}</b></span>
+                                        <div class="mt-4" style="width: 100%;">
+                                            <span><b>{{ $permit->plate_number }}</b></span>
                                         </div>
-                                        <div class="mt-5" style="border-top: 1px solid gray; width: 100%;">
-                                            <span>CLASSIFICATION: <b>{{ $permit->business_type }}</b></span>
+                                        <div class="mt-4" style="width: 100%;">
+                                            <span><b>{{ $permit->business_type }}</b></span>
+                                        </div>
+
+                                    </div>
+                                    <div class="text-center" style="display: flex;">
+                                        <div class="" style="border-top: 1px solid gray; width: 100%;">
+                                            <span>PERMIT Expires
+                                               
+                                            </span>
+                                        </div>
+
+                                        <div class="" style="border-top: 1px solid gray; width: 100%;">
+                                            <span>Plate Number</span>
+                                        </div>
+                                        <div class="" style="border-top: 1px solid gray; width: 100%;">
+                                            <span>CLASSIFICATION</span>
                                         </div>
 
                                     </div>
