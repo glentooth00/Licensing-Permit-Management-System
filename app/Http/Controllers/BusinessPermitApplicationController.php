@@ -447,16 +447,24 @@ public function show($id)
             $client_firstname = $businessPermit->owner_first_name;
             $client_middlename = $businessPermit->owner_middle_name;
             $client_lastname = $businessPermit->owner_last_name;
+
+            $lastName = $businessPermit->owner_last_name;
+            $phone_number = $businessPermit->mobile_no;
+            $businessName = $businessPermit->business_name;
+
+            $message = "Mr/Mrs " . $lastName . " Your business permit for " . $businessName . "  has been approved. Please bring your required documents to our BPL office for finalization. Thank you! ";
     
+            $smsResult = self::sendSimpleSMS($phone_number, $message);
+
             $ApproveLog['firstname'] = Auth::user()->firstname; 
             $ApproveLog['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $ApproveLog['user_activity'] = 'has <span class="badge badge-success p-2">APPROVED</span> the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' .  $client_lastname . '</b>';
             
-            // Log the approval activity
+        //     // Log the approval activity
             $approvedLog = activity_log::create($ApproveLog);
         }    
     
-        // Redirect back with a success message
+        // // Redirect back with a success message
         return redirect()->back()->with('success', 'Permit approved successfully.');
     }
     
@@ -563,7 +571,7 @@ $lastName = $permit->owner_last_name;
 $currentYear = date('Y');
 
 $message = "Mr/Mrs " . $lastName . " Your business permit is due for renewal. Please proceed to the BPL office for the
-renewal of your business permit not later than December 31, " . $currentYear;
+renewal of your business permit not later than December 31, " . $currentYear . "Thank you!";
 
 
 $smsResult = self::sendSimpleSMS($phone_number, $message);
@@ -635,26 +643,28 @@ return $result;
     
 public function generatePermit(Request $request)
 {
-    $userId = $request->input('user_id');
+    $userId = $request->input('id');
     $status = $request->input('status');
 
     // Fetch user data based on $userId
     $permit = BusinessPermitApplication::findOrFail($userId);
     
+    $id = $permit->id;
+
     // Get the approved_on date
     $approvedOn = $permit->approved_on; // Ensure this field exists in your model
 
     // Calculate the expiration date (1 year from the approved_on date)
-    $expirationDate = \Carbon\Carbon::parse($approvedOn)->addYear()->format('F j, Y');
+    $expirationDate = Carbon::parse($approvedOn)->addYear()->format('F j, Y');
 
     // Construct the QR code data string with the necessary information
-    $qrCodeData = "Permit ID: {$permit->id}\n";
+    $qrCodeData = "Permit ID: {$userId}\n";
     $qrCodeData .= "Status: {$status}\n";
     $qrCodeData .= "Business Name: {$permit->business_name}\n";
     $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
-    // Add business type and expiration date to the QR code data
-    $qrCodeData .= "Business Type: {$permit->business_type}\n"; // Fetch business type
+    $qrCodeData .= "Business Type: {$permit->business_type}\n";
     $qrCodeData .= "Expiration Date: {$expirationDate}\n";
+    $qrCodeData .= "Plate Number: {$permit->plate_number}\n"; // Include the plate number
 
     // Generate QR code based on the constructed data
     $qrCode = new QrCode($qrCodeData);
@@ -663,9 +673,16 @@ public function generatePermit(Request $request)
     // Generate base64-encoded QR code image
     $base64QRCode = base64_encode($qrCode->writeString());
 
-    // Return the base64-encoded QR code image along with the status and expiration date as a response
-    return response()->json(['qr_code' => $base64QRCode, 'status' => $status, 'expiration_date' => $expirationDate, 'business_type' => $permit->business_type]);
+    // Return the base64-encoded QR code image along with the status, expiration date, and plate number as a response
+    return response()->json([
+        'qr_code' => $base64QRCode, 
+        'status' => $status, 
+        'expiration_date' => $expirationDate, 
+        'business_name' => $permit->business_name,
+        'plate_number' => $permit->plate_number // Return the plate number in the response
+    ]);
 }
+
 
 
     

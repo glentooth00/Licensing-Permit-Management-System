@@ -9,6 +9,7 @@ use App\Http\Controllers\SmsMessagesController;
 use App\Http\Controllers\StreetsController;
 use App\Http\Controllers\UserController;
 use App\Models\BusinessPermitApplication;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -104,29 +105,39 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/business_registration/{businessPermit}', [BusinessPermitApplicationController::class, 'update'])->name('business_registration.update');
 
     // Route to generate a QR code for a permit
-    Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
-        $permitId = $request->query('user_id');
-        $status = $request->query('status');
-        $permit = BusinessPermitApplication::findOrFail($permitId);
+// Route to generate a QR code for a permit
+Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
+    $permitId = $request->query('user_id');
+    $status = $request->query('status');
+    $permit = BusinessPermitApplication::findOrFail($permitId);
 
-        // $qrCodeData = "Permit ID: $permitId\n";
-        // $qrCodeData .= "Status: $status\n";
-        // $qrCodeData .= "Business Name: {$permit->business_name}\n";
-        // $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
-        // Add more details as needed
+    // Get the 'approved_on' date
+    $approvedOn = $permit->approved_on;
 
-          $qrCodeData = "Permit ID: {$permit->permitId}\n";
-        $qrCodeData .= "Status: {$permit->status}\n";
-        $qrCodeData .= "Business Name: {$permit->business_name}\n";
-        $qrCodeData .= "Owner: {$permit->first_name} {$permit->middle_name} {$permit->last_name}\n";
+    // Calculate the expiration date (1 year from the approved_on date)
+    $expirationDate = Carbon::parse($approvedOn)->addYear()->format('F j, Y');
 
-        $qrCode = QrCode::size(300)->generate($qrCodeData);
+    $today =  Carbon::now();
 
-        return view('admin.permit.permit')->with([
-            'qrCode' => $qrCode,
-            'permit' => $permit,
-        ]);
-    })->name('generate.qrcode');
+    $todayFormatted = $today->format('F j, Y');
+
+    // Construct the QR code data string
+    $qrCodeData = "Permit ID: {$permit->plate_number}\n";
+    $qrCodeData .= "Status: {$permit->status}\n";
+    $qrCodeData .= "Business Name: {$permit->business_name}\n";
+    $qrCodeData .= "Owner: {$permit->owner_first_name} {$permit->owner_middle_name} {$permit->owner_last_name}\n";
+    $qrCodeData .= "Valid until: {$expirationDate}\n"; // Append expiration date correctly
+    $qrCodeData .= "Date issued: {$todayFormatted}\n";
+    // Generate the QR code based on the constructed data
+    $qrCode = QrCode::size(300)->generate($qrCodeData);
+
+    // Pass the generated QR code and permit data to the view
+    return view('admin.permit.permit')->with([
+        'qrCode' => $qrCode,
+        'permit' => $permit,
+    ]);
+})->name('generate.qrcode');
+
 
     Route::patch('/business-permits/{id}/archive', [BusinessPermitApplicationController::class, 'archivePermit'])->name('business-permits.archive');
 

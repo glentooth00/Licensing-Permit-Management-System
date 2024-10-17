@@ -22,11 +22,13 @@
         <div class="row d-flex">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <div class="card p-5" style="margin-top: 150px;">
+                <div class="card p-5" style="margin-top: 140px;">
                     <div class="card-body">
                         <div class="text-center pb-5">
                             <img src="{{ asset('dist/images/logo.png') }}" width="100" alt="logo">
+                            <h1>Admin Login</h1>
                         </div>
+
                         <form method="POST" action="{{ route('custom.login') }}">
                             @csrf
                             <!-- Username -->
@@ -51,16 +53,16 @@
                             </x-primary-button>
                         </form>
 
-                        <p class="text-center my-4 text-muted">-------- PERMIT REGISTRATION ---------</p>
-                        <div>
+                        <p class="text-center my-4 pb-4 text-muted">-------- PERMIT REGISTRATION ---------</p>
+                        <di class="mt-3">
                             <a href="/business_registration" class="form-control btn btn-success btn-lg">Apply for
                                 Business Permit</a>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4"></div>
         </div>
+        <div class="col-md-4"></div>
+    </div>
     </div>
     <div class="modal fade" id="registrationModal">
         <div class="modal-dialog">
