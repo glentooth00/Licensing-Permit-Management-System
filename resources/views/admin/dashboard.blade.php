@@ -339,7 +339,7 @@
             var permitId = $(this).data('id'); // Assuming you pass the permit ID using a data attribute
 
             $.ajax({
-                url: "{{ route('permit.show', ':id') }}".replace(':id',
+                url: "{{ route('permit.view', ':id') }}".replace(':id',
                     permitId), // Use Laravel route helper to dynamically insert ID
                 type: "GET",
                 success: function(response) {

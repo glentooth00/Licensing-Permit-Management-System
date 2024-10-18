@@ -82,7 +82,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Route for showing permit details
     // Route::get('/permit/show/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
 
-    Route::get('/permits/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.show');
+    Route::get('/permits/{id}', [BusinessPermitApplicationController::class, 'show'])->name('permit.view');
 
     // Route::get('/permit/edit/{id}', [BusinessPermitApplicationController::class, 'edit'])->name('edit.permit');
 
@@ -181,6 +181,7 @@ Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
 
     Route::get('/registration', [BusinessPermitApplicationController::class, 'dateNow']);
 
+    Route::get('/admin/permit/{id}/show', [BusinessPermitApplicationController::class, 'showPermit'])->name('permit.show');
 
 
 });
