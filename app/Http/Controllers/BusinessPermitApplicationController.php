@@ -906,7 +906,21 @@ public function generatePermit(Request $request)
     }
 
 
+    public function showPermit($id)
+    {
+        $businessPermit = BusinessPermitApplication::findOrFail($id);
+        $streets = Streets::orderBy('street', 'asc')->get();
+        $barangays = Barangay::orderBy('barangay', 'asc')->get();
     
+        // Decode JSON fields as necessary
+        $lineOfBusiness = json_decode($businessPermit->line_of_business, true) ?? [];
+        $psic = json_decode($businessPermit->PSIC, true) ?? [];
+        $productServices = json_decode($businessPermit->product_services, true) ?? [];
+        $noOfUnits = json_decode($businessPermit->no_of_units, true) ?? [];
+    
+        // Return the permit details partial view
+        return view('admin.permit.view', compact('businessPermit', 'streets', 'barangays', 'lineOfBusiness', 'psic', 'productServices', 'noOfUnits'));
+    }
     
         
     
