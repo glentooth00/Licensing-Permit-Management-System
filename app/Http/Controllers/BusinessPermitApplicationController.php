@@ -26,16 +26,24 @@ class BusinessPermitApplicationController extends Controller
      */
     public function index()
     {
-        $now = now()->setTimezone('Asia/Manila')->toDateTimeString();
+        $now  = now()->setTimezone('Asia/Manila')->toDateTimeString();
     
-        // Fetch business permits ordered by 'created_at' in descending order (latest first)
-        $businessPermits = BusinessPermitApplication::orderBy('created_at', 'desc')->get();
+        // Get all business permits that are pending, or return an empty collection if none exist
+        $businessPermits = BusinessPermitApplication::where('status', 'Pending')->orderBy('created_at')->get();
     
-        // Counts for other statuses
+        // Get total permit count (default to 0 if no permits exist)
         $allPermits = BusinessPermitApplication::count();
+    
+        // Count pending applications (default to 0 if no pending applications)
         $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
+    
+        // Count approved applications (default to 0 if no approved applications)
         $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
+    
+        // Count archived applications (default to 0 if no archived applications)
         $archivedCount = BusinessPermitApplication::where('status', 'Archived')->count();
+    
+        // Count renewal applications (default to 0 if no renewal applications)
         $renewalCount = BusinessPermitApplication::where('status', 'Renewal')->count();
     
         // Pass the data to the view
@@ -48,7 +56,6 @@ class BusinessPermitApplicationController extends Controller
             'renewalCount' => $renewalCount,
         ]);
     }
-    
     
     
 
