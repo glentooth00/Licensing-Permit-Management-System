@@ -255,6 +255,7 @@
                                                                     <option value="">None</option>
                                                                     <!-- None option -->
                                                                 </select>
+                                                            </span>
                                                         </td>
 
                                                         {{-- <tr>
