@@ -227,23 +227,26 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
+
+
+
                                                             <td>
                                                                 <span>Street
-                                                                    <select name="street" class="form-select"
-                                                                        @disabled(true)>
-                                                                        <option value="">Select St...</option>
-                                                                        @foreach ($streets as $street)
-                                                                            <option value="{{ $street->street }}"
-                                                                                {{ $street->street == $businessPermit->street ? 'selected' : '' }}>
-                                                                                {{ $street->street }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                    @if (@empty($businessPermit->street))
+                                                                        <input type="text" name="street"
+                                                                            value="No selected" readonly>
+                                                                    @else
+                                                                        <input type="text" name="street"
+                                                                            value="{{ $businessPermit->street }}"
+                                                                            readonly>
+                                                                    @endif
                                                                 </span>
                                                             </td>
                                                             <td>
                                                                 <span>Barangay
-                                                                    <select name="barangay" class="form-select"
+                                                                    <input type="text" name="barangay"
+                                                                        value="{{ $businessPermit->barangay }}" readonly>
+                                                                    {{-- <select name="barangay" class="form-select"
                                                                         @disabled(true)>
                                                                         <option value="">Select Brgy...</option>
                                                                         @foreach ($barangays as $barangay)
@@ -252,7 +255,7 @@
                                                                                 {{ $barangay->barangay }}
                                                                             </option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </span>
                                                             </td>
                                                             <td>
@@ -461,7 +464,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td colspan="7">
-                                                                <span><b><input type="checkbox" class="form-check-input">
+                                                                <span>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"
+                                                                        class=" mr-3 form-check-input"><b>
                                                                         Same as Home
                                                                         Address/ Main Office Address.</b>(if same as Home/
                                                                     Main Office
@@ -569,7 +573,7 @@
 
 
                                                         <tr>
-                                                            <td rowspan="2" style="width: 15%;">
+                                                            <td rowspan="2" style="width: 10%;">
                                                                 <b>Business Location Address:</b>
                                                             </td>
                                                             <td>
@@ -597,7 +601,10 @@
                                                         <tr>
                                                             <td>
                                                                 <span>Street
-                                                                    <select name="street2" class="form-select" disabled>
+                                                                    <input type="text" name="street2"
+                                                                        value="{{ $businessPermit->street2 }}" readonly
+                                                                        style="width: 100px;">
+                                                                    {{-- <select name="street2" class="form-select" disabled>
                                                                         <option value="">Select St...</option>
                                                                         @foreach ($streets as $street)
                                                                             <option value="{{ $street->street }}"
@@ -605,11 +612,14 @@
                                                                                 {{ $street->street }}
                                                                             </option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </span>
                                                             </td>
                                                             <td>
-                                                                <span>Barangay <select name="barangay2"
+                                                                <span>Barangay
+                                                                    <input type="text" name="streeto2"
+                                                                        value="{{ $businessPermit->barangay2 }}" readonly>
+                                                                    {{-- <select name="barangay2"
                                                                         class="form-select" disabled>
                                                                         <option value="">Select Brgy...</option>
                                                                         @foreach ($barangays as $barangay)
@@ -618,7 +628,7 @@
                                                                                 {{ $barangay->barangay }}
                                                                             </option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </span>
                                                             </td>
                                                             <td>

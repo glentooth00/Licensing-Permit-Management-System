@@ -216,7 +216,48 @@
                                                                         value="{{ $businessPermit->block_no }}"></span>
                                                             </td>
                                                         </tr>
-                                                        <tr>
+
+
+                                                        <td>
+                                                            <span>
+                                                                <label for="street">City/Municipality</label>
+                                                                <select class="form-select" name="city_municipality"
+                                                                    id="municipality">
+                                                                    <option value="" hidden>Select Municipality
+                                                                    </option>
+                                                                    @foreach ($municipalities as $municipality)
+                                                                        <option value="{{ $municipality->municipality }}">
+                                                                            {{ $municipality->municipality }}</option>
+                                                                    @endforeach
+                                                                </select>
+
+                                                            </span>
+                                                        </td>
+
+
+                                                        <td>
+                                                            <span>
+                                                                <label for="street">Select Street</label>
+                                                                <select class="form-select" name="street"
+                                                                    id="street">
+                                                                    <option value="" hidden>Select Street</option>
+                                                                    <option value="">None</option>
+                                                                    <!-- None option -->
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span>
+                                                                <label for="barangay">Select Barangay</label>
+                                                                <select class="form-select" name="barangay"
+                                                                    id="barangay">
+                                                                    <option value="" hidden>Select Barangay</option>
+                                                                    <option value="">None</option>
+                                                                    <!-- None option -->
+                                                                </select>
+                                                        </td>
+
+                                                        {{-- <tr>
                                                             <td>
                                                                 <span>Street
                                                                     <select name="street" class="form-select">
@@ -242,24 +283,26 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </span>
-                                                            </td>
-                                                            <td>
-                                                                <span>Subdivision <input type="text" name="subdivision"
-                                                                        value="{{ $businessPermit->subdivision }}"></span>
-                                                            </td>
-                                                            <td>
+                                                            </td> --}}
+
+
+                                                        <td>
+                                                            <span>Subdivision <input type="text" name="subdivision"
+                                                                    value="{{ $businessPermit->subdivision }}"></span>
+                                                        </td>
+                                                        {{-- <td>
                                                                 <span>City/ Municipality <input type="text"
                                                                         name="city_municipality"
                                                                         value="{{ $businessPermit->city_municipality }}"></span>
-                                                            </td>
-                                                            <td>
-                                                                <span>Province <input type="text" name="province"
-                                                                        value="{{ $businessPermit->province }}"></span>
-                                                            </td>
-                                                            <td>
-                                                                <span>Zip Code <input type="text" name="zip_code"
-                                                                        value="{{ $businessPermit->zip_code }}"></span>
-                                                            </td>
+                                                            </td> --}}
+                                                        <td>
+                                                            <span>Province <input type="text" name="province"
+                                                                    value="{{ $businessPermit->province }}"></span>
+                                                        </td>
+                                                        <td>
+                                                            <span>Zip Code <input type="text" name="zip_code"
+                                                                    value="{{ $businessPermit->zip_code }}"></span>
+                                                        </td>
                                                         </tr>
                                                     </table>
                                                     <table class="table table-bordered mt-3">
@@ -560,41 +603,34 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
+                                                            <!-- Street Dropdown -->
                                                             <td>
                                                                 <span>Street
-                                                                    <select name="street2" class="form-select">
+                                                                    <select name="street2" id="streetSelect"
+                                                                        class="form-select">
                                                                         <option value="">Select St...</option>
-                                                                        @foreach ($streets as $street)
-                                                                            <option value="{{ $street->street }}"
-                                                                                {{ $businessPermit->street2 == $street->street ? 'selected' : '' }}>
-                                                                                {{ $street->street }}
-                                                                            </option>
-                                                                        @endforeach
                                                                     </select>
                                                                 </span>
                                                             </td>
                                                             <td>
-                                                                <span>Barangay <select name="barangay2"
+                                                                <span>Barangay
+                                                                    <select name="barangay2" id="barangaySelect"
                                                                         class="form-select">
                                                                         <option value="">Select Brgy...</option>
-                                                                        @foreach ($barangays as $barangay)
-                                                                            <option value="{{ $barangay->barangay }}"
-                                                                                {{ $businessPermit->barangay2 == $barangay->barangay ? 'selected' : '' }}>
-                                                                                {{ $barangay->barangay }}
-                                                                            </option>
-                                                                        @endforeach
                                                                     </select>
                                                                 </span>
                                                             </td>
+
                                                             <td>
                                                                 <span>Subdivision <input type="text"
                                                                         name="subdivision2"
                                                                         value="{{ $businessPermit->subdivision2 }}"></span>
                                                             </td>
                                                             <td>
-                                                                <span>City/ Municipality <input type="text"
-                                                                        name="city_municipality2" value="ESTANCIA"
-                                                                        readonly></span>
+                                                                <span>City/ Municipality
+                                                                    <input type="text" name="city_municipality2"
+                                                                        value="ESTANCIA" readonly>
+                                                                </span>
                                                             </td>
                                                             <td>
                                                                 <span>Province <input type="text" name="province2"
@@ -960,25 +996,20 @@
 </style>
 <script>
     function toggleCheckbox(otherCheckboxId, currentCheckbox) {
-        var otherCheckbox = document.getElementById(otherCheckboxId);
-
-        // Uncheck the other checkbox if the current one is checked
+        const otherCheckbox = document.getElementById(otherCheckboxId);
         if (currentCheckbox.checked) {
             otherCheckbox.checked = false;
         }
     }
 
     function uncheckOthers(otherCheckboxIds, currentCheckbox) {
-        otherCheckboxIds.forEach(function(checkboxId) {
+        otherCheckboxIds.forEach((checkboxId) => {
             document.getElementById(checkboxId).checked = false;
         });
     }
 
-
     function toggleNoOptions(noCheckbox, yesCheckboxId) {
-        var yesCheckbox = document.getElementById(yesCheckboxId);
-
-        // If "No" is checked, uncheck "Yes" and enable the related options
+        const yesCheckbox = document.getElementById(yesCheckboxId);
         if (noCheckbox.checked) {
             yesCheckbox.checked = false;
             disableTextInputs(['taxDeclarationInput', 'propertyIdInput']);
@@ -989,71 +1020,111 @@
     }
 
     function toggleOthersText(checkbox) {
-        // Get the text input field
-        var othersTextInput = document.getElementById('othersText');
-
-        // Enable the text input when checkbox is checked, disable it when unchecked
+        const othersTextInput = document.getElementById('othersText');
         othersTextInput.disabled = !checkbox.checked;
     }
 
-
-
     function openModal(event, filePath) {
-        event.preventDefault(); // Prevent the default link behavior
-        const fullFilePath = `storage/${filePath}`; // Construct the full path
-        document.getElementById('documentIframe').src = fullFilePath; // Set the iframe source to the file URL
-        const modal = new bootstrap.Modal(document.getElementById('documentModal')); // Create modal instance
-        modal.show(); // Show the modal
+        event.preventDefault();
+        const fullFilePath = `storage/${filePath}`;
+        document.getElementById('documentIframe').src = fullFilePath;
+        const modal = new bootstrap.Modal(document.getElementById('documentModal'));
+        modal.show();
     }
-
-
-
 
     function toggleFileInputAndUncheck(fileInputId, checkbox, otherCheckboxId) {
         const fileInput = document.getElementById(fileInputId);
         const otherCheckbox = document.getElementById(otherCheckboxId);
-
-        // Enable the file input if 'Yes' is checked, and uncheck 'No'
+        fileInput.disabled = !checkbox.checked;
         if (checkbox.checked) {
-            fileInput.disabled = false;
             otherCheckbox.checked = false;
-        } else {
-            fileInput.disabled = true;
         }
     }
 
-    function disableFileInputAndUncheck(fileInputId, otherCheckboxId) {
-        const fileInput = document.getElementById(fileInputId);
-        const otherCheckbox = document.getElementById(otherCheckboxId);
-
-        // Uncheck the 'Yes' checkbox and disable the file input
-        otherCheckbox.checked = false;
-        fileInput.disabled = true;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
     function checkOnlyOne(selectedCheckbox) {
         const checkboxes = document.querySelectorAll('input[name="business_activity"]');
-
         checkboxes.forEach((checkbox) => {
             if (checkbox !== selectedCheckbox) {
-                checkbox.checked = false; // Uncheck other checkboxes
+                checkbox.checked = false;
             }
         });
-
-        // Enable or disable the "Others" text input based on the checkbox state
         const othersCheckbox = document.getElementById('othersCheckbox');
         const othersText = document.getElementById('othersText');
-        othersText.disabled = !othersCheckbox.checked; // Enable if 'Others' is checked
+        othersText.disabled = !othersCheckbox.checked;
     }
+
+
+
+    document.getElementById('municipality').addEventListener('change', function() {
+        const selectedMunicipality = this.value;
+        if (selectedMunicipality) {
+            fetch('{{ route('getDataByMunicipality') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        municipality: selectedMunicipality
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const streetSelect = document.getElementById('street');
+                    streetSelect.innerHTML = '<option value="" hidden>Select Street</option>';
+                    streetSelect.innerHTML += '<option value="">None</option>';
+                    data.streets.forEach(street => {
+                        streetSelect.innerHTML +=
+                            `<option value="${street.street}">${street.street}</option>`;
+                    });
+
+                    const barangaySelect = document.getElementById('barangay');
+                    barangaySelect.innerHTML = '<option value="" hidden>Select Barangay</option>';
+                    barangaySelect.innerHTML += '<option value="">None</option>';
+                    data.barangays.forEach(barangay => {
+                        barangaySelect.innerHTML +=
+                            `<option value="${barangay.barangay}">${barangay.barangay}</option>`;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    });
+
+
+
+
+    //estancia default
+    fetch("{{ route('getStreetsAndBarangays') }}")
+        .then(response => {
+            if (!response.ok) {
+                alert('Network response was not ok: ' + response.statusText);
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate streets dropdown
+            const streetSelect = document.getElementById('streetSelect');
+            data.streets.forEach(street => {
+                const option = document.createElement('option');
+                option.value = street.street;
+                option.textContent = street.street;
+                streetSelect.appendChild(option);
+            });
+
+            // Populate barangays dropdown
+            const barangaySelect = document.getElementById('barangaySelect');
+            data.barangays.forEach(barangay => {
+                const option = document.createElement('option');
+                option.value = barangay.barangay;
+                option.textContent = barangay.barangay;
+                barangaySelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            alert('Error fetching data: ' + error.message);
+            console.error('Error fetching data:', error);
+        });
 </script>

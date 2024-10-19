@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barangay;
+use App\Models\Municipalities;
 use Illuminate\Http\Request;
 
 class BarangayController extends Controller
@@ -12,9 +13,12 @@ class BarangayController extends Controller
      */
     public function index()
     {
+        $municipalities = Municipalities::get();
+
         $barangays = Barangay::orderBy('barangay', 'asc')->get();
         return view('admin.barangay.index', [
             'barangays' => $barangays,
+            'municipalities' => $municipalities,
         ]);
     }
 
@@ -42,8 +46,10 @@ class BarangayController extends Controller
     public function store(Request $request)
     {
        $validateData = $request->validate([
-        'barangay' => 'required|string|max:255',
+        'municipality' => 'required|string|max:255',
        ]);
+
+     $validateData['barangay'] =  'Brgy ' . $request->barangay;
      
        Barangay::create($validateData);
 

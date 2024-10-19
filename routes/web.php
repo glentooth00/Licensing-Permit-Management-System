@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\BarangayController;
+use App\Http\Controllers\MunicipalitiesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
 use App\Http\Controllers\SmsMessagesController;
@@ -46,6 +47,10 @@ Route::get('/admin-permit-show', function () {
 
 Route::post('/custom-login', [UserController::class, 'authenticate'])->name('custom.login');
 Route::get('/business_registration', [StreetsController::class, 'regDisplay'])->name('business.registration.street');
+
+// routes/web.php
+Route::post('/get-data-by-municipality', [App\Http\Controllers\StreetsController::class, 'getDataByMunicipality'])->name('getDataByMunicipality');
+Route::get('/ajax/get-streets-and-barangays', [StreetsController::class, 'getStreetsAndBarangays'])->name('getStreetsAndBarangays');
 
 
 
@@ -97,6 +102,9 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     // Route::get('/permit/{businessPermit}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
 
     Route::get('admin/permit/{id}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
+
+    Route::get('admin/ajax/get-streets-and-barangays', [BusinessPermitApplicationController::class, 'getStreetsAndBarangays'])->name('getStreetsAndBarangays');
+
 
 
 
@@ -181,6 +189,13 @@ Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
     Route::get('/dashboard', [BusinessPermitApplicationController::class, 'checkMinutePassed']);
 
     Route::get('/registration', [BusinessPermitApplicationController::class, 'dateNow']);
+
+    Route::get('/admin/municipality', [MunicipalitiesController::class, 'index'])->name('admin.permit.municipality');
+    Route::post('/admin/store/municipality', [MunicipalitiesController::class, 'store'])->name('store.municipality');
+    // web.php
+
+
+
 
     Route::get('/admin/permit/{id}/show', [BusinessPermitApplicationController::class, 'showPermit'])->name('permit.show');
 

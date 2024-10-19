@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\activity_log;
 use App\Models\Barangay;
 use App\Models\BusinessPermitApplication;
+use App\Models\Municipalities;
 use App\Models\Sms_messages;
 use App\Models\Streets;
 use DB;
@@ -199,6 +200,7 @@ public function show($id)
     $businessPermit = BusinessPermitApplication::findOrFail($id);
     $streets = Streets::orderBy('street', 'asc')->get();
     $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
+    $municipalities = Municipalities::get();
 
     // Decode the JSON fields
     $lineOfBusiness = json_decode($businessPermit->line_of_business, true) ?? [];
@@ -215,6 +217,7 @@ public function show($id)
         'psic' => $psic,
         'productServices' => $productServices,
         'noOfUnits' => $noOfUnits,
+        'municipalities' => $municipalities,
     ])->render();
 
     return response()->json(['html' => $view]);
@@ -250,6 +253,7 @@ public function show($id)
 
         $streets = Streets::orderBy('street', 'asc')->get();
         $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
+        $municipalities = Municipalities::get();
          // Decode the JSON fields
          $lineOfBusiness = json_decode(optional($businessPermit)->line_of_business, true) ?? [];
          $psic = json_decode(optional($businessPermit)->PSIC, true) ?? [];
@@ -271,8 +275,10 @@ public function show($id)
         'psic' => $psic,
         'productServices' => $productServices,
         'noOfUnits' => $noOfUnits,
+        'municipalities' => $municipalities,
         ]);
     }
+
     
 
 
@@ -923,7 +929,26 @@ public function generatePermit(Request $request)
         return view('admin.permit.view', compact('businessPermit', 'streets', 'barangays', 'lineOfBusiness', 'psic', 'productServices', 'noOfUnits'));
     }
     
-        
+
+    public function getStreetsAndBarangays(Request $request)
+    {
+        $municipality = 'Estancia'; // Default municipality
+    
+        // Fetch streets and barangays for the specified municipality
+        $streets = Streets::where('municipality', $municipality)->get();
+        $barangays = Barangay::where('municipality', $municipality)->get();
+    
+        \Log::info('Streets:', $streets->toArray()); // Log streets
+        \Log::info('Barangays:', $barangays->toArray()); // Log barangays
+    
+        return response()->json([
+            'streets' => $streets,
+            'barangays' => $barangays,
+        ]);
+    }
+    
+
+    
     
     
 }

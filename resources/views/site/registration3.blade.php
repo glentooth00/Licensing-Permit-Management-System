@@ -208,37 +208,48 @@
 
                                     </tr>
                                     <tr>
+
+
                                         <td>
-                                            <span>Street
-                                                <select type="text" name="street" class="form-select">
-                                                    <option value="" hidden>Select St...</option>
-                                                    <option value="no selected">NONE</option>
-                                                    @foreach ($streets as $street)
-                                                        <option value="{{ $street->street }}">{{ $street->street }}
-                                                        </option>
+                                            <span>
+                                                <label for="street">City/Municipality</label>
+                                                <select class="form-select" name="city_municipality"
+                                                    id="municipality">
+                                                    <option value="" hidden>Select Municipality</option>
+                                                    @foreach ($municipalities as $municipality)
+                                                        <option value="{{ $municipality->municipality }}">
+                                                            {{ $municipality->municipality }}</option>
                                                     @endforeach
+                                                </select>
+
+                                            </span>
+                                        </td>
+
+
+                                        <td>
+                                            <span>
+                                                <label for="street">Select Street</label>
+                                                <select class="form-select" name="street" id="street">
+                                                    <option value="" hidden>Select Street</option>
+                                                    <option value="">None</option> <!-- None option -->
                                                 </select>
                                             </span>
                                         </td>
                                         <td>
-                                            <span>Barangay <select type="text" name="barangay"
-                                                    class="form-select">
-                                                    <option value="" hidden>Select Brgy...</option>
-                                                    <option value="no selected">NONE</option>
-                                                    @foreach ($barangays as $barangay)
-                                                        <option value="{{ $barangay->barangay }}">
-                                                            {{ $barangay->barangay }}
-                                                        </option>
-                                                    @endforeach
-                                                </select></span>
+                                            <span>
+                                                <label for="barangay">Select Barangay</label>
+                                                <select class="form-select" name="barangay" id="barangay">
+                                                    <option value="" hidden>Select Barangay</option>
+                                                    <option value="">None</option> <!-- None option -->
+                                                </select>
                                         </td>
+
+
+
                                         <td>
                                             <span>Subdivision <input type="text" name="subdivision"></span>
                                         </td>
-                                        <td>
-                                            <span>City/ Municipality <input type="text"
-                                                    name="city_municipality"></span>
-                                        </td>
+
                                         <td>
                                             <span>Province <input type="text" name="province"></span>
                                         </td>
@@ -416,35 +427,30 @@
                                     <tr>
                                         <td>
                                             <span>Street
-                                                <select type="text" name="street2" class="form-select">
-                                                    <option value="" hidden>Select St...</option>
-                                                    <option value="no selected">NONE</option>
-                                                    @foreach ($streets as $street)
-                                                        <option value="{{ $street->street }}">
-                                                            {{ $street->street }}
-                                                        </option>
-                                                    @endforeach
+                                                <select name="street2" id="streetSelect" class="form-select">
+                                                    <option value="" hidden>Select Street</option>
+                                                    <option value="">None</option> <!-- Added None option -->
+                                                    <!-- Options will be populated via AJAX -->
                                                 </select>
                                             </span>
                                         </td>
                                         <td>
-                                            <span>Barangay <select type="text" name="barangay2"
-                                                    class="form-select">
-                                                    <option value="" hidden>Select Brgy...</option>
-                                                    <option value="no selected">NONE</option>
-                                                    @foreach ($barangays as $barangay)
-                                                        <option value="{{ $barangay->barangay }}">
-                                                            {{ $barangay->barangay }}
-                                                        </option>
-                                                    @endforeach
-                                                </select></span>
+                                            <span>Barangay
+                                                <select name="barangay2" id="barangaySelect" class="form-select">
+                                                    <option value="" hidden>Select Barangay</option>
+                                                    <option value="">None</option> <!-- Added None option -->
+                                                    <!-- Options will be populated via AJAX -->
+                                                </select>
+                                            </span>
                                         </td>
                                         <td>
                                             <span>Subdivision <input type="text" name="subdivision2"></span>
                                         </td>
                                         <td>
-                                            <span>City/ Municipality <input type="text" name="city_municipality2"
-                                                    value="ESTANCIA"></span>
+                                            <span>City/ Municipality
+                                                <input type="text" name="city_municipality2" value="ESTANCIA"
+                                                    readonly>
+                                            </span>
                                         </td>
                                         <td>
                                             <span>Province <input type="text" name="province2"
@@ -807,4 +813,78 @@
             othersText.value = '';
         }
     }
+
+
+
+
+
+    document.getElementById('municipality').addEventListener('change', function() {
+        var selectedMunicipality = this.value;
+
+        if (selectedMunicipality) {
+            // Send AJAX request
+            fetch('{{ route('getDataByMunicipality') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        municipality: selectedMunicipality
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Populate streets dropdown
+                    var streetSelect = document.getElementById('street');
+                    streetSelect.innerHTML = '<option value="" hidden>Select Street</option>';
+                    streetSelect.innerHTML += '<option value="">None</option>'; // Add None option
+                    data.streets.forEach(function(street) {
+                        streetSelect.innerHTML += '<option value="' + street.street + '">' + street
+                            .street + '</option>';
+                    });
+
+                    // Populate barangays dropdown
+                    var barangaySelect = document.getElementById('barangay');
+                    barangaySelect.innerHTML = '<option value="" hidden>Select Barangay</option>';
+                    barangaySelect.innerHTML += '<option value="">None</option>'; // Add None option
+                    data.barangays.forEach(function(barangay) {
+                        barangaySelect.innerHTML += '<option value="' + barangay.barangay + '">' +
+                            barangay.barangay + '</option>';
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    });
+
+
+    //estancia default
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // AJAX request to get streets and barangays for the municipality "Estancia"
+        fetch("{{ route('getStreetsAndBarangays') }}")
+            .then(response => response.json())
+            .then(data => {
+                // Populate streets dropdown
+                const streetSelect = document.getElementById('streetSelect');
+                data.streets.forEach(street => {
+                    const option = document.createElement('option');
+                    option.value = street.street; // Adjust according to your street property
+                    option.textContent = street.street;
+                    streetSelect.appendChild(option);
+                });
+
+                // Populate barangays dropdown
+                const barangaySelect = document.getElementById('barangaySelect');
+                data.barangays.forEach(barangay => {
+                    const option = document.createElement('option');
+                    option.value = barangay.barangay; // Adjust according to your barangay property
+                    option.textContent = barangay.barangay;
+                    barangaySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barangay;
+use App\Models\Municipalities;
 use App\Models\Streets;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,11 @@ class StreetsController extends Controller
     public function index()
     {
 
+        $municipalities = Municipalities::get();
         $streets = Streets::orderBy('street', 'asc')->get();
         return view('admin.street.index', [
             'streets' => $streets,
+            'municipalities' => $municipalities,
         ]);
     }
 
@@ -35,7 +38,8 @@ class StreetsController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'street' => 'required|string|max:255', // Adjust validation as needed
+            'street' => 'required|string|max:255',
+            'municipality' => 'required|string|max:255',  // Adjust validation as needed
         ]);
     
         // Create the street record using the validated data
@@ -58,25 +62,68 @@ class StreetsController extends Controller
     //     ]);
     // }
 
-    public function regDisplay()
+    public function regDisplay(Request $request)
     {
+    
+
         $streets = Streets::orderBy('street', 'asc')->get();
         $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
-    
+        $municipalities = Municipalities::get();
+
         return view('site.registration3', [
+            'streets' => $streets,
+            'barangays' => $barangays,
+            'municipalities' => $municipalities,
+        ]);
+
+    }
+
+
+    public function getStreetsAndBarangays(Request $request)
+    {
+        $municipality = 'Estancia'; // Default municipality
+    
+        // Fetch streets and barangays for the specified municipality
+        $streets = Streets::where('municipality', $municipality)->get();
+        $barangays = Barangay::where('municipality', $municipality)->get();
+    
+        return response()->json([
             'streets' => $streets,
             'barangays' => $barangays,
         ]);
     }
 
+
+
+    public function getDataByMunicipality(Request $request)
+    {
+        $selectedMunicipality = $request->input('municipality');
+
+        // Fetch the relevant streets and barangays for the selected municipality
+        $streets = Streets::where('municipality', $selectedMunicipality)->get();
+        $barangays = Barangay::where('municipality', $selectedMunicipality)->get();
+
+        // Return the data as JSON
+        return response()->json([
+            'streets' => $streets,
+            'barangays' => $barangays,
+        ]);
+    }
+    
+    
+    
+
+
     public function editDisplay()
     {
         $streets = Streets::orderBy('street', 'asc')->get();
         $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
+        $municipalities = Municipalities::get();
     
         return view('admin.permit.show', [
             'streets' => $streets,
             'barangays' => $barangays,
+            'municipalities' => $municipalities,
         ]);
     }
     
