@@ -122,12 +122,13 @@ Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
     $todayFormatted = $today->format('F j, Y');
 
     // Construct the QR code data string
-    $qrCodeData = "Permit ID: {$permit->plate_number}\n";
-    $qrCodeData .= "Status: {$permit->status}\n";
+    $qrCodeData = "Owner: {$permit->owner_first_name} {$permit->owner_middle_name} {$permit->owner_last_name}\n";
     $qrCodeData .= "Business Name: {$permit->business_name}\n";
-    $qrCodeData .= "Owner: {$permit->owner_first_name} {$permit->owner_middle_name} {$permit->owner_last_name}\n";
-    $qrCodeData .= "Valid until: {$expirationDate}\n"; // Append expiration date correctly
+    $qrCodeData .= "Permit ID: {$permit->plate_number}\n";
+    $qrCodeData .= "Status: {$permit->status}\n";
     $qrCodeData .= "Date issued: {$todayFormatted}\n";
+    $qrCodeData .= "Valid until: {$expirationDate}\n"; // Append expiration date correctly
+    
     // Generate the QR code based on the constructed data
     $qrCode = QrCode::size(300)->generate($qrCodeData);
 
