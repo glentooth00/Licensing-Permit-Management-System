@@ -140,17 +140,13 @@
                                                                             Proprietorship&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                                                         <input type="checkbox" name="business_type"
-                                                                            value="One Person
-                                                                            Corporation"
+                                                                            value="One Person Corporation"
                                                                             class="form-check-input"
                                                                             id="flexCheckSoleProprietorship2"
                                                                             onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckPartnership', 'flexCheckCorporation', 'flexCheckCooperative'], this)"
-                                                                            {{ $businessPermit->business_type ==
-                                                                            'One Person
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Corporation'
-                                                                                ? 'checked'
-                                                                                : '' }}
+                                                                            {{ $businessPermit->business_type == 'One Person Corporation' ? 'checked' : '' }}
                                                                             @disabled(true)>
+
                                                                         <b> One Person
                                                                             Corporation&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -299,7 +295,7 @@
                                                                     oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                                     maxlength="10"
                                                                     value="{{ substr($businessPermit->mobile_no, 3) }}"
-                                                                    style="border: none; border-bottom: 1px solid black; width: 80% !important;"
+                                                                    style="border: none; border-bottom: 1px solid black; width: 70% !important;"
                                                                     readonly>
                                                             </td>
 
@@ -404,9 +400,10 @@
                                                                     required
                                                                     oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                                     maxlength="10"
-                                                                    value="{{ substr($businessPermit->emergency_contact_no, 3) }}"
+                                                                    value="{{ $businessPermit->emergency_contact_no ? (substr($businessPermit->emergency_contact_no, 0, 3) === '+63' ? substr($businessPermit->emergency_contact_no, 3) : $businessPermit->emergency_contact_no) : '' }}"
                                                                     style="border: none; border-bottom: 1px solid black; width: 80% !important;"
                                                                     readonly>
+
                                                             </td>
                                                         </tr>
 

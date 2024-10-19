@@ -26,24 +26,16 @@ class BusinessPermitApplicationController extends Controller
      */
     public function index()
     {
-        $now  = now()->setTimezone('Asia/Manila')->toDateTimeString();
+        $now = now()->setTimezone('Asia/Manila')->toDateTimeString();
     
-        // Get all business permits that are pending, or return an empty collection if none exist
-        $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
+        // Fetch business permits ordered by 'created_at' in descending order (latest first)
+        $businessPermits = BusinessPermitApplication::orderBy('created_at', 'desc')->get();
     
-        // Get total permit count (default to 0 if no permits exist)
+        // Counts for other statuses
         $allPermits = BusinessPermitApplication::count();
-    
-        // Count pending applications (default to 0 if no pending applications)
         $pendingCount = BusinessPermitApplication::where('status', 'Pending')->count();
-    
-        // Count approved applications (default to 0 if no approved applications)
         $approvedCount = BusinessPermitApplication::where('status', 'Approved')->count();
-    
-        // Count archived applications (default to 0 if no archived applications)
         $archivedCount = BusinessPermitApplication::where('status', 'Archived')->count();
-    
-        // Count renewal applications (default to 0 if no renewal applications)
         $renewalCount = BusinessPermitApplication::where('status', 'Renewal')->count();
     
         // Pass the data to the view
@@ -56,6 +48,8 @@ class BusinessPermitApplicationController extends Controller
             'renewalCount' => $renewalCount,
         ]);
     }
+    
+    
     
 
     /**
@@ -93,6 +87,7 @@ class BusinessPermitApplicationController extends Controller
             'street' => 'nullable|string|max:255',
             'street2' => 'nullable|string|max:255',
             'gov_entity' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'gov_entity' => 'nullable|string|max:255',
             'business_activity' => 'nullable|string|max:255',
             'others' => 'nullable|string|max:255',
             'barangay' => 'nullable|string|max:255',
@@ -137,39 +132,32 @@ class BusinessPermitApplicationController extends Controller
             'no_of_units.*' => 'nullable|string|max:255',
         ]);
     
-    // Handle file upload for 'tax_declaration'
-    if ($request->hasFile('tax_declaration')) {
-        $taxDeclarationFile = $request->file('tax_declaration');
-        // Store the file and save the path
-        $taxDeclarationPath = $taxDeclarationFile->store('files', 'public');
-        $validatedData['tax_declaration'] = $taxDeclarationPath;
-    }
-
-    // Handle file upload for 'gov_entity'
-    if ($request->hasFile('gov_entity')) {
-        $govEntityFile = $request->file('gov_entity');
-        // Store the file and save the path
-        $govEntityPath = $govEntityFile->store('files', 'public');
-        $validatedData['gov_entity'] = $govEntityPath;
-    }
-
-    // Prepend the country code to the mobile number
-    if (!empty($validatedData['mobile_no'])) {
-        $validatedData['mobile_no'] = '+63' . ltrim($validatedData['mobile_no'], '0');
-    }
-
-    // Convert array fields to JSON if present
-    $validatedData['line_of_business'] = isset($validatedData['line_of_business']) ? json_encode($validatedData['line_of_business']) : null;
-    $validatedData['PSIC'] = isset($validatedData['PSIC']) ? json_encode($validatedData['PSIC']) : null;
-    $validatedData['product_services'] = isset($validatedData['product_services']) ? json_encode($validatedData['product_services']) : null;
-    $validatedData['no_of_units'] = isset($validatedData['no_of_units']) ? json_encode($validatedData['no_of_units']) : null;
-
-    // Set default status and notification
-    $validatedData['status'] = 'Pending';
-    $validatedData['notified'] = '0';
-
-    // Debugging purposes, remove or replace after testing
-    // dd($validatedData);
+        // Handle file upload for 'tax_declaration'
+        if ($request->hasFile('tax_declaration')) {
+            $taxDeclarationFile = $request->file('tax_declaration');
+            $validatedData['tax_declaration'] = $taxDeclarationFile->store('files', 'public');
+        }
+    
+        // Handle file upload for 'gov_entity'
+        if ($request->hasFile('gov_entity')) {
+            $govEntityFile = $request->file('gov_entity');
+            $validatedData['gov_entity'] = $govEntityFile->store('files', 'public');
+        }
+    
+        // Prepend the country code to the mobile number
+        if (!empty($validatedData['mobile_no'])) {
+            $validatedData['mobile_no'] = '+63' . ltrim($validatedData['mobile_no'], '0');
+        }
+    
+        // Convert array fields to JSON
+        $validatedData['line_of_business'] = $validatedData['line_of_business'] ? json_encode($validatedData['line_of_business']) : null;
+        $validatedData['PSIC'] = $validatedData['PSIC'] ? json_encode($validatedData['PSIC']) : null;
+        $validatedData['product_services'] = $validatedData['product_services'] ? json_encode($validatedData['product_services']) : null;
+        $validatedData['no_of_units'] = $validatedData['no_of_units'] ? json_encode($validatedData['no_of_units']) : null;
+    
+        // Set default status and notification
+        $validatedData['status'] = 'Pending';
+        $validatedData['notified'] = '0';
     
         // Create the record in the database
         $product = BusinessPermitApplication::create($validatedData);
@@ -177,6 +165,7 @@ class BusinessPermitApplicationController extends Controller
         // Redirect or return response after saving
         return redirect()->back()->with('success', 'Business data saved successfully!');
     }
+    
     
     
     

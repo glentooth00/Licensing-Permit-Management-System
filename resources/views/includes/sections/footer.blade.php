@@ -40,24 +40,39 @@
 
 <!-- for ajax model view -->
 <script>
-    $(function() {
-        $("#example1").DataTable({
+    $(document).ready(function() {
+        // Initialize DataTable for #example1 with buttons
+        var table1 = $("#example1").DataTable({
             "responsive": true,
             "lengthChange": false,
+            "ordering": false, // Disable sorting
             "autoWidth": false,
+            "paging": true, // If pagination is needed
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
         });
+
+        // Append buttons container for #example1 to the correct DOM position
+        table1.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+        // Initialize DataTable for #example2 with buttons
+        var table2 = $("#example2").DataTable({
+            "paging": true, // Enable paging for #example2
+            "lengthChange": false, // Disable length change dropdown
+            "searching": false, // Disable search filter
+            "ordering": false, // Disable sorting
+            "info": true, // Show table info
+            "autoWidth": false, // Disable auto width adjustments
+            "responsive": true, // Responsive table
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        });
+
+        // Append buttons container for #example2 to the correct DOM position
+        table2.buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+
+
     });
 </script>
+
 </body>
 
 </html>
