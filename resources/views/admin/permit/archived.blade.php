@@ -39,15 +39,15 @@
                                 @foreach ($archived_permits as $archived_permit)
                                     <tr>
                                         <td>
-                                            {{ $archived_permit->first_name }}
-                                            {{ $archived_permit->middle_name }}
-                                            {{ $archived_permit->last_name }}
+                                            {{ $archived_permit->owner_first_name }}
+                                            {{ $archived_permit->owner_middle_name }}
+                                            {{ $archived_permit->owner_last_name }}
                                         </td>
                                         <td>
                                             {{ $archived_permit->business_name }}
                                         </td>
                                         <td>
-                                            {{ $archived_permit->owners_Tel_No_Mobile }}
+                                            {{ $archived_permit->mobile_no }}
                                         </td>
                                         <td>
                                             {{ $archived_permit->created_at->format('F j, Y') }}

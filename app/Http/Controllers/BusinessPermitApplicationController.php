@@ -785,8 +785,13 @@ public function generatePermit(Request $request)
             if ($permit->notified == 0) {
 
                 $phone_number = $permit->mobile_no;
+                $lastName = $permit->lastname;
                 $client_name = $permit->owner_first_name . ' ' . $permit->owner_middle_name . ' ' . $permit->owner_last_name;
                 $date_time_sent = Carbon::now('asia/manila');
+                $currentYear = date('Y');
+
+                $message = "Mr/Mrs " . $lastName . " Your business permit is due for renewal. Please proceed to the BPL office for the
+                        renewal of your business permit not later than December 31, " . $currentYear . "Thank you!";
     
                 $smsResult = self::sendSimpleSMS($phone_number, $message);
 
