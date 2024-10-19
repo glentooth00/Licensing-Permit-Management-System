@@ -42,15 +42,15 @@
                                 @foreach ($approved_permits as $approved_permit)
                                     <tr>
                                         <td>
-                                            {{ $approved_permit->first_name }}
-                                            {{ $approved_permit->middle_name }}
-                                            {{ $approved_permit->last_name }}
+                                            {{ $approved_permit->owner_first_name }}
+                                            {{ $approved_permit->owner_middle_name }}
+                                            {{ $approved_permit->owner_last_name }}
                                         </td>
                                         <td class="text-center">
                                             {{ $approved_permit->business_name }}
                                         </td>
                                         <td class="text-center">
-                                            {{ $approved_permit->owners_Tel_No_Mobile }}
+                                            {{ $approved_permit->mobile_no }}
                                         </td>
                                         <td class="text-center">
                                             {{ $approved_permit->created_at->format('F j, Y') }}
