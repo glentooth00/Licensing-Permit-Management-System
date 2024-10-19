@@ -185,7 +185,7 @@
                     <button type="button" class="btn btn-md btn-primary" onclick="printDiv('printableArea')">
                         <i class="fas fa-printer"></i> Print
                     </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
                 </div>
 
             </div>

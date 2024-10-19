@@ -448,7 +448,7 @@ public function show($id)
             $phone_number = $businessPermit->mobile_no;
             $businessName = $businessPermit->business_name;
 
-            $message = "Mr/Mrs " . $lastName . " Your business permit for " . $businessName . "  has been approved. Please bring your required documents to our BPL office for finalization. Thank you! ";
+            $message = "Mr/Mrs " . $lastName . " Your business permit for " . $businessName . "  has been APPROVED. Please bring your required documents to our BPL office for finalization. Thank you! ";
     
             $smsResult = self::sendSimpleSMS($phone_number, $message);
 
