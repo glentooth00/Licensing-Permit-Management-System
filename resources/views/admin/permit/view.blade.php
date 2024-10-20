@@ -937,11 +937,11 @@
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('approve.permit', $businessPermit->id) }}" method="POST">
+                                    {{-- <form action="{{ route('approve.permit', $businessPermit->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" name="action" value="log_approve"
                                             class="btn btn-outline-success btn-md btn-round m-1">Approve</button>
-                                    </form>
+                                    </form> --}}
 
                                     <button type="button" class="btn btn-secondary m-1"
                                         data-dismiss="modal">Close</button>
@@ -975,7 +975,7 @@
 <!-- Modal for displaying the gov_entity document -->
 <div class="modal fade" id="govEntityDocumentModal" tabindex="-1" role="dialog"
     aria-labelledby="govEntityDocumentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" style="width: 100%;height:500px;" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="govEntityDocumentModalLabel">Tax Incentives Document</h5>
@@ -991,6 +991,27 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Permit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- This will be populated by the AJAX request -->
+            </div>
+            <div class="modal-footer">
+
+                {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
     /* Style for disabled checkboxes */
@@ -1054,11 +1075,12 @@
 
     function openModal(event, filePath) {
         event.preventDefault(); // Prevent the default link behavior
-        const fullFilePath = `storage/${filePath}`; // Construct the full path
+        const fullFilePath = `{{ asset('storage') }}/${filePath}`; // Use asset helper for correct file path
         document.getElementById('govEntityDocumentEmbed').src = fullFilePath; // Set the embed source to the file URL
         const modal = new bootstrap.Modal(document.getElementById('govEntityDocumentModal')); // Create modal instance
         modal.show(); // Show the modal
     }
+
 
 
 
@@ -1110,5 +1132,34 @@
         const othersCheckbox = document.getElementById('othersCheckbox');
         const othersText = document.getElementById('othersText');
         othersText.disabled = !othersCheckbox.checked; // Enable if 'Others' is checked
+    }
+
+
+
+
+    function openEditModal(userId) {
+        $('#editModal').modal('show'); // Open the modal
+
+        // Build the correct URL
+        var ajaxUrl = "{{ url('admin/admin/permit') }}/" + userId + "/edit";
+
+        // Debugging: log the URL to ensure it's correct
+        console.log("AJAX URL:", ajaxUrl);
+
+        // AJAX request to fetch the HTML content of the edit view
+        $.ajax({
+            url: ajaxUrl,
+            method: "GET",
+            success: function(response) {
+                // Inject the HTML content into the modal body
+                $('#editModal .modal-body').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading form:", xhr.responseText);
+                // Handle error - optional, show a user-friendly error message
+                $('#editModal .modal-body').html(
+                    '<p>An error occurred while loading the form. Please try again later.</p>');
+            }
+        });
     }
 </script>

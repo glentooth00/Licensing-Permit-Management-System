@@ -973,9 +973,9 @@
 
 
 <!-- Modal for displaying the gov_entity document -->
-<div class="modal fade" id="govEntityDocumentModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="govEntityDocumentModal" style="height: 100%;" tabindex="-1" role="dialog"
     aria-labelledby="govEntityDocumentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="govEntityDocumentModalLabel">Tax Incentives Document</h5>
