@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Licensing Permit </title>
     <link rel="stylesheet" href="{{ asset('dist/css/app.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
+
 </head>
 
 <body style="background-color: #B9D9EB;">
@@ -429,17 +431,16 @@
                                             <span>Street
                                                 <select name="street2" id="streetSelect" class="form-select">
                                                     <option value="" hidden>Select Street</option>
-                                                    <option value="">None</option> <!-- Added None option -->
-                                                    <!-- Options will be populated via AJAX -->
+                                                    <option value="">None</option>
                                                 </select>
                                             </span>
                                         </td>
+
                                         <td>
                                             <span>Barangay
                                                 <select name="barangay2" id="barangaySelect" class="form-select">
                                                     <option value="" hidden>Select Barangay</option>
-                                                    <option value="">None</option> <!-- Added None option -->
-                                                    <!-- Options will be populated via AJAX -->
+                                                    <option value="">None</option>
                                                 </select>
                                             </span>
                                         </td>
@@ -449,7 +450,7 @@
                                         <td>
                                             <span>City/ Municipality
                                                 <input type="text" name="city_municipality2" value="ESTANCIA"
-                                                    readonly>
+                                                    id="cityMunicipality" readonly>
                                             </span>
                                         </td>
                                         <td>
@@ -684,6 +685,7 @@
 </body>
 
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to toggle submit button based on checkbox status
     function toggleSubmitButton() {
@@ -862,29 +864,40 @@
 
     //estancia default
 
-    document.addEventListener("DOMContentLoaded", function() {
-        // AJAX request to get streets and barangays for the municipality "Estancia"
-        fetch("{{ route('getStreetsAndBarangays') }}")
-            .then(response => response.json())
-            .then(data => {
-                // Populate streets dropdown
-                const streetSelect = document.getElementById('streetSelect');
-                data.streets.forEach(street => {
-                    const option = document.createElement('option');
-                    option.value = street.street; // Adjust according to your street property
-                    option.textContent = street.street;
-                    streetSelect.appendChild(option);
+    $(document).ready(function() {
+        // AJAX call to get streets and barangays
+        var municipality = $('#cityMunicipality').val();
+        $.ajax({
+            url: '/get-location-data', // Your route URL
+            method: 'GET',
+            data: {
+                city_municipality: municipality
+            },
+            success: function(response) {
+                var streets = response.streets;
+                var barangays = response.barangays;
+
+                // Populate street select options
+                $('#streetSelect').empty().append(
+                    '<option value="" hidden>Select Street</option><option value="">None</option>'
+                );
+                $.each(streets, function(key, street) {
+                    $('#streetSelect').append('<option value="' + street + '">' + street +
+                        '</option>');
                 });
 
-                // Populate barangays dropdown
-                const barangaySelect = document.getElementById('barangaySelect');
-                data.barangays.forEach(barangay => {
-                    const option = document.createElement('option');
-                    option.value = barangay.barangay; // Adjust according to your barangay property
-                    option.textContent = barangay.barangay;
-                    barangaySelect.appendChild(option);
+                // Populate barangay select options
+                $('#barangaySelect').empty().append(
+                    '<option value="" hidden>Select Barangay</option><option value="">None</option>'
+                );
+                $.each(barangays, function(key, barangay) {
+                    $('#barangaySelect').append('<option value="' + barangay + '">' +
+                        barangay + '</option>');
                 });
-            })
-            .catch(error => console.error('Error fetching data:', error));
+            },
+            error: function() {
+                alert('Unable to fetch location data');
+            }
+        });
     });
 </script>

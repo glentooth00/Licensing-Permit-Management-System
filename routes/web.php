@@ -50,7 +50,8 @@ Route::get('/business_registration', [StreetsController::class, 'regDisplay'])->
 
 // routes/web.php
 Route::post('/get-data-by-municipality', [App\Http\Controllers\StreetsController::class, 'getDataByMunicipality'])->name('getDataByMunicipality');
-Route::get('/ajax/get-streets-and-barangays', [StreetsController::class, 'getStreetsAndBarangays'])->name('getStreetsAndBarangays');
+Route::get('/get-location-data', [StreetsController::class, 'getLocationData']);
+
 
 
 
