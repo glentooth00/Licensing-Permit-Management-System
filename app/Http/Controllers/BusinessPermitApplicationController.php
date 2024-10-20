@@ -938,8 +938,8 @@ public function generatePermit(Request $request)
         $streets = Streets::where('municipality', $municipality)->get();
         $barangays = Barangay::where('municipality', $municipality)->get();
     
-        \Log::info('Streets:', $streets->toArray()); // Log streets
-        \Log::info('Barangays:', $barangays->toArray()); // Log barangays
+        // \Log::info('Streets:', $streets->toArray()); // Log streets
+        // \Log::info('Barangays:', $barangays->toArray()); // Log barangays
     
         return response()->json([
             'streets' => $streets,
