@@ -244,8 +244,16 @@
                                                             </td>
                                                             <td>
                                                                 <span>Barangay
-                                                                    <input type="text" name="barangay"
-                                                                        value="{{ $businessPermit->barangay }}" readonly>
+                                                                    @if (@empty($businessPermit->barangay))
+                                                                        <input type="text" name="barangay"
+                                                                            value="No selected" readonly>
+                                                                    @else
+                                                                        <input type="text" name="barangay"
+                                                                            value="{{ $businessPermit->barangay }}"
+                                                                            readonly>
+                                                                    @endif
+                                                                    {{-- <input type="text" name="barangay"
+                                                                        value="{{ $businessPermit->barangay }}" readonly> --}}
                                                                     {{-- <select name="barangay" class="form-select"
                                                                         @disabled(true)>
                                                                         <option value="">Select Brgy...</option>
@@ -601,9 +609,16 @@
                                                         <tr>
                                                             <td>
                                                                 <span>Street
-                                                                    <input type="text" name="street2"
-                                                                        value="{{ $businessPermit->street2 }}" readonly
-                                                                        style="width: 100px;">
+                                                                    <span>Street
+                                                                        @if (@empty($businessPermit->street2))
+                                                                            <input type="text" name="street2"
+                                                                                value="No selected" readonly>
+                                                                        @else
+                                                                            <input type="text" name="street"
+                                                                                value="{{ $businessPermit->street2 }}"
+                                                                                readonly>
+                                                                        @endif
+                                                                    </span>
                                                                     {{-- <select name="street2" class="form-select" disabled>
                                                                         <option value="">Select St...</option>
                                                                         @foreach ($streets as $street)
@@ -617,8 +632,14 @@
                                                             </td>
                                                             <td>
                                                                 <span>Barangay
-                                                                    <input type="text" name="streeto2"
-                                                                        value="{{ $businessPermit->barangay2 }}" readonly>
+                                                                    @if (@empty($businessPermit->barangay2))
+                                                                        <input type="text" name="barangay2"
+                                                                            value="No selected" readonly>
+                                                                    @else
+                                                                        <input type="text" name="barangay2"
+                                                                            value="{{ $businessPermit->barangay2 }}"
+                                                                            readonly>
+                                                                    @endif
                                                                     {{-- <select name="barangay2"
                                                                         class="form-select" disabled>
                                                                         <option value="">Select Brgy...</option>
