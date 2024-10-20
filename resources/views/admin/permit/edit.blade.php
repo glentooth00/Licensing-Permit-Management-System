@@ -746,9 +746,8 @@
                                                                             Yes (please attach a softcopy of your
                                                                             Certificate)
 
-                                                                            <input type="file"
-                                                                                id="certificateFileInput"
-                                                                                value="$businessPermit->gov_entity"
+                                                                            <input type="file" name="gov_entity_file"
+                                                                                id="certificateFileInput" value=""
                                                                                 disabled>
 
                                                                             <input type="checkbox"

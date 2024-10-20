@@ -343,13 +343,13 @@
                                         </td>
                                         <td colspan="2">
                                             <b>Name of Contact Person:</b>
-                                            <input type="text" name=emergency_contact_name">
+                                            <input type="text" name="emergency_contact_name">
                                         </td>
                                         <td colspan="2">
                                             <b>Contact No.: </b><br> <input value="+63" disabled class="text-dark"
                                                 style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
                                                 name="emergency_contact_no" pattern="[0-9]{10}"
-                                                placeholder="Enter 10-digit number" type="number" required"
+                                                placeholder="Enter 10-digit number" type="number"
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                 type = "number" maxlength = "10"
                                                 style=" border: none; border-bottom: 1px solid black; width: 80% !important;">

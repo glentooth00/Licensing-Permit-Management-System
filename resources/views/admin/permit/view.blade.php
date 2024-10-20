@@ -140,17 +140,13 @@
                                                                             Proprietorship&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                                                         <input type="checkbox" name="business_type"
-                                                                            value="One Person
-                                                                            Corporation"
+                                                                            value="One Person Corporation"
                                                                             class="form-check-input"
                                                                             id="flexCheckSoleProprietorship2"
                                                                             onclick="uncheckOthers(['flexCheckSoleProprietorship1', 'flexCheckPartnership', 'flexCheckCorporation', 'flexCheckCooperative'], this)"
-                                                                            {{ $businessPermit->business_type ==
-                                                                            'One Person
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Corporation'
-                                                                                ? 'checked'
-                                                                                : '' }}
+                                                                            {{ $businessPermit->business_type == 'One Person Corporation' ? 'checked' : '' }}
                                                                             @disabled(true)>
+
                                                                         <b> One Person
                                                                             Corporation&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -231,23 +227,26 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
+
+
+
                                                             <td>
                                                                 <span>Street
-                                                                    <select name="street" class="form-select"
-                                                                        @disabled(true)>
-                                                                        <option value="">Select St...</option>
-                                                                        @foreach ($streets as $street)
-                                                                            <option value="{{ $street->street }}"
-                                                                                {{ $street->street == $businessPermit->street ? 'selected' : '' }}>
-                                                                                {{ $street->street }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                    @if (@empty($businessPermit->street))
+                                                                        <input type="text" name="street"
+                                                                            value="No selected" readonly>
+                                                                    @else
+                                                                        <input type="text" name="street"
+                                                                            value="{{ $businessPermit->street }}"
+                                                                            readonly>
+                                                                    @endif
                                                                 </span>
                                                             </td>
                                                             <td>
                                                                 <span>Barangay
-                                                                    <select name="barangay" class="form-select"
+                                                                    <input type="text" name="barangay"
+                                                                        value="{{ $businessPermit->barangay }}" readonly>
+                                                                    {{-- <select name="barangay" class="form-select"
                                                                         @disabled(true)>
                                                                         <option value="">Select Brgy...</option>
                                                                         @foreach ($barangays as $barangay)
@@ -256,7 +255,7 @@
                                                                                 {{ $barangay->barangay }}
                                                                             </option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </span>
                                                             </td>
                                                             <td>
@@ -299,7 +298,7 @@
                                                                     oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                                     maxlength="10"
                                                                     value="{{ substr($businessPermit->mobile_no, 3) }}"
-                                                                    style="border: none; border-bottom: 1px solid black; width: 80% !important;"
+                                                                    style="border: none; border-bottom: 1px solid black; width: 70% !important;"
                                                                     readonly>
                                                             </td>
 
@@ -404,9 +403,10 @@
                                                                     required
                                                                     oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                                     maxlength="10"
-                                                                    value="{{ substr($businessPermit->emergency_contact_no, 3) }}"
+                                                                    value="{{ $businessPermit->emergency_contact_no ? (substr($businessPermit->emergency_contact_no, 0, 3) === '+63' ? substr($businessPermit->emergency_contact_no, 3) : $businessPermit->emergency_contact_no) : '' }}"
                                                                     style="border: none; border-bottom: 1px solid black; width: 80% !important;"
                                                                     readonly>
+
                                                             </td>
                                                         </tr>
 
@@ -464,7 +464,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td colspan="7">
-                                                                <span><b><input type="checkbox" class="form-check-input">
+                                                                <span>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"
+                                                                        class=" mr-3 form-check-input"><b>
                                                                         Same as Home
                                                                         Address/ Main Office Address.</b>(if same as Home/
                                                                     Main Office
@@ -572,7 +573,7 @@
 
 
                                                         <tr>
-                                                            <td rowspan="2" style="width: 15%;">
+                                                            <td rowspan="2" style="width: 10%;">
                                                                 <b>Business Location Address:</b>
                                                             </td>
                                                             <td>
@@ -600,7 +601,10 @@
                                                         <tr>
                                                             <td>
                                                                 <span>Street
-                                                                    <select name="street2" class="form-select" disabled>
+                                                                    <input type="text" name="street2"
+                                                                        value="{{ $businessPermit->street2 }}" readonly
+                                                                        style="width: 100px;">
+                                                                    {{-- <select name="street2" class="form-select" disabled>
                                                                         <option value="">Select St...</option>
                                                                         @foreach ($streets as $street)
                                                                             <option value="{{ $street->street }}"
@@ -608,11 +612,14 @@
                                                                                 {{ $street->street }}
                                                                             </option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </span>
                                                             </td>
                                                             <td>
-                                                                <span>Barangay <select name="barangay2"
+                                                                <span>Barangay
+                                                                    <input type="text" name="streeto2"
+                                                                        value="{{ $businessPermit->barangay2 }}" readonly>
+                                                                    {{-- <select name="barangay2"
                                                                         class="form-select" disabled>
                                                                         <option value="">Select Brgy...</option>
                                                                         @foreach ($barangays as $barangay)
@@ -621,7 +628,7 @@
                                                                                 {{ $barangay->barangay }}
                                                                             </option>
                                                                         @endforeach
-                                                                    </select>
+                                                                    </select> --}}
                                                                 </span>
                                                             </td>
                                                             <td>
@@ -650,12 +657,14 @@
                                                             <td colspan="7">
                                                                 <span>
                                                                     Business Location, Owned?
+
+
                                                                     @if (empty($businessPermit->tax_declaration))
                                                                         no document
                                                                     @else
                                                                         <a href="#" id="viewDocumentLink"
                                                                             style="margin-left: 10px;"
-                                                                            onclick="openModal(event, '{{ asset('storage/' . $businessPermit->tax_declaration) }}')">View
+                                                                            onclick="openModal(event, '{{ $businessPermit->tax_declaration }}')">View
                                                                             Document</a>
 
                                                                         or Property ID No.
@@ -730,7 +739,7 @@
                                                                     <b>Do you have tax incentives from any Government
                                                                         Entity?</b>&nbsp;&nbsp;&nbsp;&nbsp;
                                                                     <span>
-                                                                        @if (empty($businessPermit->gov_entity))
+                                                                        @if (empty($businessPermit->gov_entity_file))
                                                                             <input type="checkbox"
                                                                                 class="form-check-input"
                                                                                 id="yesTaxIncentives"
@@ -750,9 +759,8 @@
                                                                             <a href="#"
                                                                                 id="viewGovEntityDocumentLink"
                                                                                 style="margin-left: 10px;"
-                                                                                onclick="openGovEntityDocumentModal(event, '{{ $businessPermit->gov_entity }}')">
-                                                                                View Government Entity Document
-                                                                            </a>
+                                                                                onclick="openModal(event, '{{ $businessPermit->gov_entity_file }}')">View
+                                                                                Government Entity Document</a>
                                                                         @endif
 
 
@@ -837,7 +845,8 @@
                                                                     </label>
                                                                     <br>
                                                                     <input type="text" id="othersText" name="others"
-                                                                        {{ $businessPermit->business_activity == 'Others' ? '' : 'disabled' }}
+                                                                        value="{{ $businessPermit->others }}"
+                                                                        {{ $businessPermit->others == 'Others' ? '' : 'disabled' }}
                                                                         @disabled(true)>
                                                                 </div>
                                                             </td>
@@ -928,14 +937,14 @@
                                         Edit
                                     </a>
 
-                                    {{-- <form action="{{ route('approve.permit', $businessPermit->id) }}" method="POST">
+                                    <form action="{{ route('approve.permit', $businessPermit->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" name="action" value="log_approve"
                                             class="btn btn-outline-success btn-md btn-round m-1">Approve</button>
-                                    </form> --}}
+                                    </form>
 
-                                    {{-- <button type="button" class="btn btn-secondary m-1"
-                                        data-dismiss="modal">Close</button> --}}
+                                    <button type="button" class="btn btn-secondary m-1"
+                                        data-dismiss="modal">Close</button>
                                 </div>
 
                             </div>
@@ -947,7 +956,7 @@
     </div>
 @endsection
 
-{{-- <!-- Modal for Document Preview -->
+<!-- Modal for Document Preview -->
 <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="documentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable vh-100">
         <div class="modal-content">
@@ -960,60 +969,23 @@
             </div>
         </div>
     </div>
-</div> --}}
-
-<div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="documentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="documentModalLabel">Document Preview</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <iframe id="documentViewer" style="width: 100%; height: 800px;" frameborder="0"></iframe>
-            </div>
-        </div>
-    </div>
 </div>
-
-
 
 
 <!-- Modal for displaying the gov_entity document -->
 <div class="modal fade" id="govEntityDocumentModal" tabindex="-1" role="dialog"
     aria-labelledby="govEntityDocumentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="govEntityDocumentModalLabel">Government Entity Document</h5>
+                <h5 class="modal-title" id="govEntityDocumentModalLabel">Tax Incentives Document</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <embed id="govEntityDocumentEmbed" src="" width="100%" height="100%"
+                <embed id="govEntityDocumentEmbed" src="" width="100%" height="500px"
                     type="application/pdf">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Permit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- This will be populated by the AJAX request -->
-            </div>
-            <div class="modal-footer">
-
-                {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
             </div>
         </div>
     </div>
@@ -1021,21 +993,6 @@
 
 
 <style>
-    /* Styles for the modal */
-    .modal {
-        max-height: 90vh;
-        /* Set maximum height to 90% of the viewport height */
-        overflow: hidden;
-        /* Prevent overflowing content */
-    }
-
-    .modal-body {
-        height: 80vh;
-        /* Set body height to 80% of the viewport height */
-        overflow-y: auto;
-        /* Enable vertical scrolling */
-    }
-
     /* Style for disabled checkboxes */
     input[type="checkbox"][disabled] {
         -webkit-appearance: none;
@@ -1086,7 +1043,6 @@
     }
 </style>
 <script>
-    // Unchecks other checkboxes when one is selected
     function uncheckOthers(checkboxIds, currentCheckbox) {
         checkboxIds.forEach(function(id) {
             var checkbox = document.getElementById(id);
@@ -1096,23 +1052,18 @@
         });
     }
 
-    // Opens a modal and sets the document or file path inside an iframe
     function openModal(event, filePath) {
-        event.preventDefault(); // Prevent default anchor behavior
-
-        const fullFilePath = filePath.includes('storage/') ? filePath :
-            `storage/${filePath}`; // Ensure full path is correct
-        console.log(fullFilePath); // Log the file path for debugging
-
-        // Set the iframe source to the document/file path
-        document.getElementById('documentViewer').src = fullFilePath;
-
-        // Show the modal
-        const modal = new bootstrap.Modal(document.getElementById('documentModal'));
-        modal.show();
+        event.preventDefault(); // Prevent the default link behavior
+        const fullFilePath = `storage/${filePath}`; // Construct the full path
+        document.getElementById('govEntityDocumentEmbed').src = fullFilePath; // Set the embed source to the file URL
+        const modal = new bootstrap.Modal(document.getElementById('govEntityDocumentModal')); // Create modal instance
+        modal.show(); // Show the modal
     }
 
-    // Toggles file input based on the checkbox state
+
+
+
+
     function toggleFileInputAndUncheck(fileInputId, checkbox, otherCheckboxId) {
         const fileInput = document.getElementById(fileInputId);
         const otherCheckbox = document.getElementById(otherCheckboxId);
@@ -1126,7 +1077,6 @@
         }
     }
 
-    // Disables file input and unchecks another checkbox
     function disableFileInputAndUncheck(fileInputId, otherCheckboxId) {
         const fileInput = document.getElementById(fileInputId);
         const otherCheckbox = document.getElementById(otherCheckboxId);
@@ -1136,7 +1086,17 @@
         fileInput.disabled = true;
     }
 
-    // Ensures that only one checkbox can be selected in the business activity section
+
+
+
+
+
+
+
+
+
+
+
     function checkOnlyOne(selectedCheckbox) {
         const checkboxes = document.querySelectorAll('input[name="business_activity"]');
 
@@ -1150,50 +1110,5 @@
         const othersCheckbox = document.getElementById('othersCheckbox');
         const othersText = document.getElementById('othersText');
         othersText.disabled = !othersCheckbox.checked; // Enable if 'Others' is checked
-    }
-
-    function openEditModal(userId) {
-        $('#editModal').modal('show'); // Open the modal
-
-        // Build the correct URL
-        var ajaxUrl = "{{ url('admin/admin/permit') }}/" + userId + "/edit";
-
-        // Debugging: log the URL to ensure it's correct
-        console.log("AJAX URL:", ajaxUrl);
-
-        // AJAX request to fetch the HTML content of the edit view
-        $.ajax({
-            url: ajaxUrl,
-            method: "GET",
-            success: function(response) {
-                // Inject the HTML content into the modal body
-                $('#editModal .modal-body').html(response);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error loading form:", xhr.responseText);
-                // Handle error - optional, show a user-friendly error message
-                $('#editModal .modal-body').html(
-                    '<p>An error occurred while loading the form. Please try again later.</p>');
-            }
-        });
-    }
-
-
-
-
-
-    function openGovEntityDocumentModal(event, govEntityFilePath) {
-        event.preventDefault(); // Prevent default link behavior
-
-        const fullGovEntityFilePath =
-            `/storage/${govEntityFilePath}`; // Construct the full path to the gov_entity document
-        console.log(fullGovEntityFilePath); // Log the file path for debugging
-
-        // Set the embed source for gov_entity document
-        document.getElementById('govEntityDocumentEmbed').src = fullGovEntityFilePath;
-
-        // Show the modal for gov_entity document
-        var govEntityDocumentModal = new bootstrap.Modal(document.getElementById('govEntityDocumentModal'));
-        govEntityDocumentModal.show();
     }
 </script>

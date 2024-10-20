@@ -94,7 +94,7 @@ class BusinessPermitApplicationController extends Controller
             'block_no2' => 'nullable|string|max:255',
             'street' => 'nullable|string|max:255',
             'street2' => 'nullable|string|max:255',
-            'gov_entity' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'gov_entity_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
             'gov_entity' => 'nullable|string|max:255',
             'business_activity' => 'nullable|string|max:255',
             'others' => 'nullable|string|max:255',
@@ -146,11 +146,13 @@ class BusinessPermitApplicationController extends Controller
             $validatedData['tax_declaration'] = $taxDeclarationFile->store('files', 'public');
         }
     
-        // Handle file upload for 'gov_entity'
-        if ($request->hasFile('gov_entity')) {
-            $govEntityFile = $request->file('gov_entity');
-            $validatedData['gov_entity'] = $govEntityFile->store('files', 'public');
+        if ($request->hasFile('gov_entity_file')) {
+            $taxDeclarationFile = $request->file('gov_entity_file');
+            $validatedData['gov_entity_file'] = $taxDeclarationFile->store('files', 'public');
         }
+
+        
+        
     
         // Prepend the country code to the mobile number
         if (!empty($validatedData['mobile_no'])) {
@@ -166,6 +168,7 @@ class BusinessPermitApplicationController extends Controller
         // Set default status and notification
         $validatedData['status'] = 'Pending';
         $validatedData['notified'] = '0';
+
     
         // Create the record in the database
         $product = BusinessPermitApplication::create($validatedData);
@@ -324,7 +327,8 @@ public function show($id)
         'block_no2' => 'nullable|string|max:255',
         'street' => 'nullable|string|max:255',
         'street2' => 'nullable|string|max:255',
-        'gov_entity' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+        'gov_entity_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'gov_entity' => 'nullable|string|max:255',
         'business_activity' => 'nullable|string|max:255',
         'others' => 'nullable|string|max:255',
         'barangay' => 'nullable|string|max:255',
@@ -378,12 +382,9 @@ public function show($id)
         $validatedData['tax_declaration'] = $taxDeclarationPath;
     }
 
-    // Handle file upload for 'gov_entity' (only if a new file is uploaded)
-    if ($request->hasFile('gov_entity')) {
-        $govEntityFile = $request->file('gov_entity');
-        // Store the file and save the path
-        $govEntityPath = $govEntityFile->store('files', 'public');
-        $validatedData['gov_entity'] = $govEntityPath;
+    if ($request->hasFile('gov_entity_file')) {
+        $taxDeclarationFile = $request->file('gov_entity_file');
+        $validatedData['gov_entity_file'] = $taxDeclarationFile->store('files', 'public');
     }
 
     // Prepend the country code to the mobile number

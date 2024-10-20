@@ -739,7 +739,7 @@
                                                                     <b>Do you have tax incentives from any Government
                                                                         Entity?</b>&nbsp;&nbsp;&nbsp;&nbsp;
                                                                     <span>
-                                                                        @if (empty($businessPermit->gov_entity))
+                                                                        @if (empty($businessPermit->gov_entity_file))
                                                                             <input type="checkbox"
                                                                                 class="form-check-input"
                                                                                 id="yesTaxIncentives"
@@ -759,7 +759,7 @@
                                                                             <a href="#"
                                                                                 id="viewGovEntityDocumentLink"
                                                                                 style="margin-left: 10px;"
-                                                                                onclick="openModal(event, '{{ $businessPermit->gov_entity }}')">View
+                                                                                onclick="openModal(event, '{{ $businessPermit->gov_entity_file }}')">View
                                                                                 Government Entity Document</a>
                                                                         @endif
 
@@ -845,7 +845,8 @@
                                                                     </label>
                                                                     <br>
                                                                     <input type="text" id="othersText" name="others"
-                                                                        {{ $businessPermit->business_activity == 'Others' ? '' : 'disabled' }}
+                                                                        value="{{ $businessPermit->others }}"
+                                                                        {{ $businessPermit->others == 'Others' ? '' : 'disabled' }}
                                                                         @disabled(true)>
                                                                 </div>
                                                             </td>
@@ -1054,10 +1055,11 @@
     function openModal(event, filePath) {
         event.preventDefault(); // Prevent the default link behavior
         const fullFilePath = `storage/${filePath}`; // Construct the full path
-        document.getElementById('documentIframe').src = fullFilePath; // Set the iframe source to the file URL
-        const modal = new bootstrap.Modal(document.getElementById('documentModal')); // Create modal instance
+        document.getElementById('govEntityDocumentEmbed').src = fullFilePath; // Set the embed source to the file URL
+        const modal = new bootstrap.Modal(document.getElementById('govEntityDocumentModal')); // Create modal instance
         modal.show(); // Show the modal
     }
+
 
 
 
