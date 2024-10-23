@@ -34,27 +34,65 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate input data
         $validateData = $request->validate([
-            'firstname' => 'nullable|string|max:255',
+            'firstname' => 'required|string|max:255',
             'middlename' => 'nullable|string|max:255',
-            'lastname' => 'nullable|string|max:255',
-            'gender' => 'nullable|string|max:255',
-            'username' => 'nullable|string|max:255',
-            'password' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:users',
+            'lastname' => 'required|string|max:255',
+            'gender' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username',
+            'password' => 'required|string|min:8', // Password should be at least 8 characters
+            'email' => 'required|email|unique:users,email',
             'contactno' => 'nullable|string|max:255',
-            'role' => 'nullable|string|max:255'
+            'role' => 'required|string|max:255',
         ]);
     
+        // Hash the password before saving
+        $validateData['password'] = bcrypt($validateData['password']);
+    
+        // Create the user
         $createUser = User::create($validateData);
     
         // Set a flash message for successful user creation
         session()->flash('success', 'User created successfully!');
     
-        // Redirect to the desired page
+        // Redirect back to the desired page (replace route as needed)
         return redirect()->route('admin.permit.user');
     }
     
+
+    public function getUser($id)
+    {
+        $user = User::find($id); // Fetch the user by ID
+    
+        if ($user) {
+            return response()->json($user); // Return the user data as JSON
+        }
+    
+        return response()->json(['error' => 'User not found'], 404);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+    
+        if ($user) {
+            // Update the user's data
+            $user->update($request->all());
+    
+            // Store success message in session
+            session()->flash('success', 'User updated successfully.');
+    
+            // Return JSON response
+            return response()->json(['success' => true, 'message' => 'User updated successfully.']);
+        }
+    
+        // If user not found, return error JSON response
+        return response()->json(['success' => false, 'message' => 'User not found.'], 404);
+    }
+    
+
+
 
     /**
      * Display the specified resource.
@@ -75,39 +113,66 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $user = User::find($id);
+    
+        if ($user) {
+            $user->delete(); // Delete the user
+            return response()->json(['success' => true, 'message' => 'User deleted successfully.']);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'User not found.'], 404);
     }
+    
 
     public function authenticate(Request $request)
     {
+        // Validate incoming request data
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    
+        // Retrieve credentials from the request
         $credentials = $request->only('username', 'password');
-
+    
+        // Attempt authentication with the provided credentials
         if (Auth::attempt($credentials)) {
-            // Authentication successful, redirect to dashboard or desired route
-
-            // Assign values to both variables and the array
+            // Authentication successful
+    
+            // Assign values to both variables and the array for activity logging
             $validateData['firstname'] = Auth::user()->firstname; 
             $validateData['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $validateData['user_activity'] = 'has <span class="badge badge-info text-dark p-2">logged in</span>';
-
-            $log = activity_log::create($validateData);
+    
+            // Log the activity
+            try {
+                activity_log::create($validateData);
+            } catch (\Exception $e) {
+                // Log the exception and return a user-friendly error message
+                \Log::error('Activity log failed: ' . $e->getMessage());
+                return redirect()->intended('/dashboard')->with('error', 'Login successful, but activity logging failed.');
+            }
             
+            // Redirect to the intended dashboard after successful authentication and logging
             return redirect()->intended('/dashboard');
         } else {
-            // Authentication failed, redirect back with error message
+            // Authentication failed
+    
+            // Optional: Log the failed attempt with user input (excluding password)
+            \Log::warning('Login failed for username: ' . $request->username);
+    
+            // Redirect back to the login page with an error message
             return redirect()->route('login')->with('error', 'Invalid username or password.');
         }
     }
+    
+    
 
     public function logout(Request $request)
     {

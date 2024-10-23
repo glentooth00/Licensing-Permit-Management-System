@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Licensing Permit </title>
     <link rel="stylesheet" href="{{ asset('dist/css/app.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/style.css') }}">
+
 </head>
 
 <body style="background-color: #B9D9EB;">
@@ -208,37 +210,48 @@
 
                                     </tr>
                                     <tr>
+
+
                                         <td>
-                                            <span>Street
-                                                <select type="text" name="street" class="form-select">
-                                                    <option value="" hidden>Select St...</option>
-                                                    <option value="no selected">NONE</option>
-                                                    @foreach ($streets as $street)
-                                                        <option value="{{ $street->street }}">{{ $street->street }}
-                                                        </option>
+                                            <span>
+                                                <label for="street">City/Municipality</label>
+                                                <select class="form-select" name="city_municipality"
+                                                    id="municipality">
+                                                    <option value="" hidden>Select Municipality</option>
+                                                    @foreach ($municipalities as $municipality)
+                                                        <option value="{{ $municipality->municipality }}">
+                                                            {{ $municipality->municipality }}</option>
                                                     @endforeach
+                                                </select>
+
+                                            </span>
+                                        </td>
+
+
+                                        <td>
+                                            <span>
+                                                <label for="street">Select Street</label>
+                                                <select class="form-select" name="street" id="street">
+                                                    <option value="" hidden>Select Street</option>
+                                                    <option value="">None</option> <!-- None option -->
                                                 </select>
                                             </span>
                                         </td>
                                         <td>
-                                            <span>Barangay <select type="text" name="barangay"
-                                                    class="form-select">
-                                                    <option value="" hidden>Select Brgy...</option>
-                                                    <option value="no selected">NONE</option>
-                                                    @foreach ($barangays as $barangay)
-                                                        <option value="{{ $barangay->barangay }}">
-                                                            {{ $barangay->barangay }}
-                                                        </option>
-                                                    @endforeach
-                                                </select></span>
+                                            <span>
+                                                <label for="barangay">Select Barangay</label>
+                                                <select class="form-select" name="barangay" id="barangay">
+                                                    <option value="" hidden>Select Barangay</option>
+                                                    <option value="">None</option> <!-- None option -->
+                                                </select>
                                         </td>
+
+
+
                                         <td>
                                             <span>Subdivision <input type="text" name="subdivision"></span>
                                         </td>
-                                        <td>
-                                            <span>City/ Municipality <input type="text"
-                                                    name="city_municipality"></span>
-                                        </td>
+
                                         <td>
                                             <span>Province <input type="text" name="province"></span>
                                         </td>
@@ -330,13 +343,13 @@
                                         </td>
                                         <td colspan="2">
                                             <b>Name of Contact Person:</b>
-                                            <input type="text" name=emergency_contact_name">
+                                            <input type="text" name="emergency_contact_name">
                                         </td>
                                         <td colspan="2">
                                             <b>Contact No.: </b><br> <input value="+63" disabled class="text-dark"
                                                 style="width:55px;margin-right:5px; border: none; border-bottom: 1px solid black;"><input
                                                 name="emergency_contact_no" pattern="[0-9]{10}"
-                                                placeholder="Enter 10-digit number" type="number" required"
+                                                placeholder="Enter 10-digit number" type="number"
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                 type = "number" maxlength = "10"
                                                 style=" border: none; border-bottom: 1px solid black; width: 80% !important;">
@@ -416,35 +429,29 @@
                                     <tr>
                                         <td>
                                             <span>Street
-                                                <select type="text" name="street2" class="form-select">
-                                                    <option value="" hidden>Select St...</option>
-                                                    <option value="no selected">NONE</option>
-                                                    @foreach ($streets as $street)
-                                                        <option value="{{ $street->street }}">
-                                                            {{ $street->street }}
-                                                        </option>
-                                                    @endforeach
+                                                <select name="street2" id="streetSelect" class="form-select">
+                                                    <option value="" hidden>Select Street</option>
+                                                    <option value="">None</option>
                                                 </select>
                                             </span>
                                         </td>
+
                                         <td>
-                                            <span>Barangay <select type="text" name="barangay2"
-                                                    class="form-select">
-                                                    <option value="" hidden>Select Brgy...</option>
-                                                    <option value="no selected">NONE</option>
-                                                    @foreach ($barangays as $barangay)
-                                                        <option value="{{ $barangay->barangay }}">
-                                                            {{ $barangay->barangay }}
-                                                        </option>
-                                                    @endforeach
-                                                </select></span>
+                                            <span>Barangay
+                                                <select name="barangay2" id="barangaySelect" class="form-select">
+                                                    <option value="" hidden>Select Barangay</option>
+                                                    <option value="">None</option>
+                                                </select>
+                                            </span>
                                         </td>
                                         <td>
                                             <span>Subdivision <input type="text" name="subdivision2"></span>
                                         </td>
                                         <td>
-                                            <span>City/ Municipality <input type="text" name="city_municipality2"
-                                                    value="ESTANCIA"></span>
+                                            <span>City/ Municipality
+                                                <input type="text" name="city_municipality2" value="ESTANCIA"
+                                                    id="cityMunicipality" readonly>
+                                            </span>
                                         </td>
                                         <td>
                                             <span>Province <input type="text" name="province2"
@@ -503,20 +510,20 @@
                                                 <b>Do you have tax incentives from any Government
                                                     Entity?&nbsp;&nbsp;&nbsp;&nbsp; </b>
                                                 <span>
-
                                                     <input type="checkbox" class="form-check-input"
                                                         id="yesTaxIncentives"
                                                         onclick="toggleFileInputAndUncheck('certificateFileInput', this, 'noTaxIncentives')">
                                                     Yes (please attach a softcopy of your Certificate)
 
-                                                    <input type="file" id="certificateFileInput" name="gov_entity"
-                                                        disabled>
+                                                    <input type="file" id="certificateFileInput"
+                                                        name="gov_entity_file" disabled>
 
-                                                    <input type="checkbox" name="gov_entity" value="No"
+                                                    <input type="checkbox" name="gov_entity" value="None"
                                                         class="form-check-input" id="noTaxIncentives"
                                                         onclick="disableFileInputAndUncheck('certificateFileInput', 'yesTaxIncentives')">
                                                     No
                                                 </span>
+
                                             </span>
                                         </td>
                                     </tr>
@@ -631,10 +638,41 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <div style="display: flex; align-items: flex-start; margin-bottom: 1rem;">
+                                    <!-- Checkbox beside the declaration -->
+                                    <input class="form-check-input" type="checkbox" id="agreeCheckbox"
+                                        style="margin-right: 10px; width: 20px; height: 20px;"
+                                        onclick="toggleSubmitButton()">
 
+                                    <!-- Declaration message -->
+                                    <span style="flex: 1;">
+                                        <p>
+                                            I DECLARE UNDER PENALTY OF PERJURY that all information in this application
+                                            is
+                                            true and correct based on my personal knowledge and authentic records
+                                            submitted
+                                            to the Business Permits Licensing Office. Any false or misleading
+                                            information
+                                            supplied, or production of fake/falsified documents shall be grounds for
+                                            appropriate
+                                            legal action against me and automatically revoke the permit. I hereby agree
+                                            that
+                                            all personal data (as defined under the Data Privacy Law and its
+                                            Implementing Rules
+                                            and Regulations) and account transaction information or records with the
+                                            Municipal
+                                            Government may be processed, profiled, or shared with requesting parties, or
+                                            for the purpose of any court, legal process, examination, inquiry, and audit
+                                            or
+                                            investigation by any authority.
+                                        </p>
+                                    </span>
+                                </div>
 
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                                <!-- Submit button at the bottom left -->
+                                <div style="text-align: left;" class="float-end">
+                                    <button type="submit" id="submitButton" class="btn btn-success btn-lg" disabled
+                                        onclick="return showSubmissionMessage()">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -647,7 +685,25 @@
 </body>
 
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    // Function to toggle submit button based on checkbox status
+    function toggleSubmitButton() {
+        const checkbox = document.getElementById('agreeCheckbox');
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = !checkbox.checked; // Enable if checkbox is checked
+    }
+
+    // Function to show a message when the submit button is clicked
+    function showSubmissionMessage() {
+        alert('Form is being submitted. Thank you for agreeing to the declaration!');
+        return true; // Allow form submission
+    }
+
+
+
+
+    // Uncheck other checkboxes when one is selected
     function uncheckOthers(otherCheckboxIds, currentCheckbox) {
         otherCheckboxIds.forEach(function(otherCheckboxId) {
             var otherCheckbox = document.getElementById(otherCheckboxId);
@@ -657,76 +713,61 @@
         });
     }
 
-    function toggleCheckbox(otherCheckboxId, currentCheckbox) {
-        var otherCheckbox = document.getElementById(otherCheckboxId);
-
-        if (currentCheckbox.checked) {
-            otherCheckbox.checked = false;
-        }
-    }
-
-    function uncheckOthers(otherCheckboxIds, currentCheckbox) {
-        otherCheckboxIds.forEach(function(otherCheckboxId) {
-            var otherCheckbox = document.getElementById(otherCheckboxId);
-            if (currentCheckbox.checked) {
-                otherCheckbox.checked = false;
-            }
-        });
-    }
-
+    // Toggle the file input based on the "Yes" checkbox and uncheck "No" checkbox
     function toggleFileInputAndUncheck(fileInputId, yesCheckbox, noCheckboxId) {
         var fileInput = document.getElementById(fileInputId);
         var noCheckbox = document.getElementById(noCheckboxId);
 
-        // Enable the file input if the "Yes" checkbox is checked, disable it if unchecked
+        // Enable the file input if "Yes" is checked, disable otherwise
         fileInput.disabled = !yesCheckbox.checked;
 
-        // Uncheck the "No" checkbox if "Yes" is checked
+        // Uncheck "No" if "Yes" is checked
         if (yesCheckbox.checked) {
             noCheckbox.checked = false;
         }
     }
 
+    // Disable file input and uncheck "Yes" checkbox when "No" checkbox is selected
     function disableFileInputAndUncheck(fileInputId, yesCheckboxId) {
         var fileInput = document.getElementById(fileInputId);
         var yesCheckbox = document.getElementById(yesCheckboxId);
 
-        // Disable the file input
+        // Disable the file input and uncheck "Yes"
         fileInput.disabled = true;
-
-        // Uncheck the "Yes" checkbox when "No" is checked
+        fileInput.value = ''; // Clear the file input
         yesCheckbox.checked = false;
     }
 
+    // Toggle text inputs when "Yes" checkbox is checked and uncheck "No"
     function toggleTextInputs(yesCheckbox, textInputIds, noCheckboxId) {
         var noCheckbox = document.getElementById(noCheckboxId);
 
-        // Enable or disable text inputs based on "Yes" checkbox status
         textInputIds.forEach(function(inputId) {
             var textInput = document.getElementById(inputId);
-            textInput.disabled = !yesCheckbox.checked;
+            textInput.disabled = !yesCheckbox.checked; // Enable/Disable text inputs
         });
 
-        // If "Yes" is checked, uncheck the "No" checkbox and disable the related options
+        // Uncheck "No" checkbox when "Yes" is checked
         if (yesCheckbox.checked) {
             noCheckbox.checked = false;
-            disableNoOptions();
+            disableNoOptions(); // Disable "No" options
         }
     }
 
+    // Toggle "No" options and disable text inputs if "No" is checked
     function toggleNoOptions(noCheckbox, yesCheckboxId) {
         var yesCheckbox = document.getElementById(yesCheckboxId);
 
-        // If "No" is checked, uncheck "Yes" and enable the related options
         if (noCheckbox.checked) {
-            yesCheckbox.checked = false;
-            disableTextInputs(['taxDeclarationInput', 'propertyIdInput']);
-            enableNoOptions();
+            yesCheckbox.checked = false; // Uncheck "Yes"
+            disableTextInputs(['taxDeclarationInput', 'propertyIdInput']); // Disable text inputs
+            enableNoOptions(); // Enable "No" options
         } else {
-            disableNoOptions();
+            disableNoOptions(); // Disable "No" options
         }
     }
 
+    // Disable a list of text inputs
     function disableTextInputs(textInputIds) {
         textInputIds.forEach(function(inputId) {
             var textInput = document.getElementById(inputId);
@@ -734,63 +775,129 @@
         });
     }
 
+    // Enable "No" options like checkboxes
     function enableNoOptions() {
         document.getElementById('leaseCheckbox').disabled = false;
         document.getElementById('moaCheckbox').disabled = false;
         document.getElementById('consentCheckbox').disabled = false;
     }
 
+    // Disable "No" options like checkboxes
     function disableNoOptions() {
         document.getElementById('leaseCheckbox').disabled = true;
         document.getElementById('moaCheckbox').disabled = true;
         document.getElementById('consentCheckbox').disabled = true;
     }
 
+    // Check only one checkbox at a time in the "Business Activity" section
     function checkOnlyOne2(selectedCheckbox) {
-        // Get all checkboxes
-        var checkboxes = document.querySelectorAll('.form-check-input');
+        var checkboxes = document.querySelectorAll(
+            '#mainBusinessCheckbox, #branchOfficeCheckbox, #adminOfficeCheckbox, #warehouseCheckbox, #othersCheckbox'
+        );
 
-        // Loop through and uncheck others
+        // Uncheck all checkboxes except the one clicked
         checkboxes.forEach(function(checkbox) {
             if (checkbox !== selectedCheckbox) {
                 checkbox.checked = false;
             }
         });
 
-        // Enable or disable the text input if "Others" is checked
-        var othersText = document.getElementById('othersText');
-        if (document.getElementById('othersCheckbox').checked) {
-            othersText.disabled = false;
-        } else {
-            othersText.disabled = true;
-            othersText.value = ''; // Clear text input if unchecked
-        }
-    }
-
-    function checkOnlyOne2(checkbox) {
-        // Get all checkboxes in the "Business Activity" section
-        var checkboxes = document.querySelectorAll(
-            '#mainBusinessCheckbox, #branchOfficeCheckbox, #adminOfficeCheckbox, #warehouseCheckbox, #othersCheckbox'
-        );
-
-        // Uncheck all checkboxes except the one clicked
-        checkboxes.forEach(function(item) {
-            if (item !== checkbox) {
-                item.checked = false;
-            }
-        });
-
         // Special handling for the "Others" checkbox
         var othersText = document.getElementById('othersText');
-        if (checkbox.id === 'othersCheckbox') {
-            othersText.disabled = !checkbox.checked; // Enable/disable text input
-            if (!checkbox.checked) {
+        if (selectedCheckbox.id === 'othersCheckbox') {
+            othersText.disabled = !selectedCheckbox.checked; // Enable/disable text input
+            if (!selectedCheckbox.checked) {
                 othersText.value = ''; // Clear the text input when unchecked
             }
         } else {
-            // Disable and clear the text input when any other checkbox is selected
+            // Disable and clear the text input if any other checkbox is selected
             othersText.disabled = true;
             othersText.value = '';
         }
     }
+
+
+
+
+
+    document.getElementById('municipality').addEventListener('change', function() {
+        var selectedMunicipality = this.value;
+
+        if (selectedMunicipality) {
+            // Send AJAX request
+            fetch('{{ route('getDataByMunicipality') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        municipality: selectedMunicipality
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Populate streets dropdown
+                    var streetSelect = document.getElementById('street');
+                    streetSelect.innerHTML = '<option value="" hidden>Select Street</option>';
+                    streetSelect.innerHTML += '<option value="">None</option>'; // Add None option
+                    data.streets.forEach(function(street) {
+                        streetSelect.innerHTML += '<option value="' + street.street + '">' + street
+                            .street + '</option>';
+                    });
+
+                    // Populate barangays dropdown
+                    var barangaySelect = document.getElementById('barangay');
+                    barangaySelect.innerHTML = '<option value="" hidden>Select Barangay</option>';
+                    barangaySelect.innerHTML += '<option value="">None</option>'; // Add None option
+                    data.barangays.forEach(function(barangay) {
+                        barangaySelect.innerHTML += '<option value="' + barangay.barangay + '">' +
+                            barangay.barangay + '</option>';
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    });
+
+
+    //estancia default
+
+    $(document).ready(function() {
+        // AJAX call to get streets and barangays
+        var municipality = $('#cityMunicipality').val();
+        $.ajax({
+            url: '/get-location-data', // Your route URL
+            method: 'GET',
+            data: {
+                city_municipality: municipality
+            },
+            success: function(response) {
+                var streets = response.streets;
+                var barangays = response.barangays;
+
+                // Populate street select options
+                $('#streetSelect').empty().append(
+                    '<option value="" hidden>Select Street</option><option value="">None</option>'
+                );
+                $.each(streets, function(key, street) {
+                    $('#streetSelect').append('<option value="' + street + '">' + street +
+                        '</option>');
+                });
+
+                // Populate barangay select options
+                $('#barangaySelect').empty().append(
+                    '<option value="" hidden>Select Barangay</option><option value="">None</option>'
+                );
+                $.each(barangays, function(key, barangay) {
+                    $('#barangaySelect').append('<option value="' + barangay + '">' +
+                        barangay + '</option>');
+                });
+            },
+            error: function() {
+                alert('Unable to fetch location data');
+            }
+        });
+    });
 </script>

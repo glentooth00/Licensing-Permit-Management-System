@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\activity_log;
 use App\Models\Barangay;
 use App\Models\BusinessPermitApplication;
+use App\Models\Municipalities;
 use App\Models\Sms_messages;
 use App\Models\Streets;
+use DateTime;
 use DB;
 use Illuminate\Http\Request;
 use Endroid\QrCode\QrCode;
@@ -29,7 +31,7 @@ class BusinessPermitApplicationController extends Controller
         $now  = now()->setTimezone('Asia/Manila')->toDateTimeString();
     
         // Get all business permits that are pending, or return an empty collection if none exist
-        $businessPermits = BusinessPermitApplication::where('status', 'Pending')->get();
+        $businessPermits = BusinessPermitApplication::where('status', 'Pending')->orderBy('created_at')->get();
     
         // Get total permit count (default to 0 if no permits exist)
         $allPermits = BusinessPermitApplication::count();
@@ -56,6 +58,7 @@ class BusinessPermitApplicationController extends Controller
             'renewalCount' => $renewalCount,
         ]);
     }
+    
     
 
     /**
@@ -92,7 +95,8 @@ class BusinessPermitApplicationController extends Controller
             'block_no2' => 'nullable|string|max:255',
             'street' => 'nullable|string|max:255',
             'street2' => 'nullable|string|max:255',
-            'gov_entity' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'gov_entity_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'gov_entity' => 'nullable|string|max:255',
             'business_activity' => 'nullable|string|max:255',
             'others' => 'nullable|string|max:255',
             'barangay' => 'nullable|string|max:255',
@@ -137,39 +141,35 @@ class BusinessPermitApplicationController extends Controller
             'no_of_units.*' => 'nullable|string|max:255',
         ]);
     
-    // Handle file upload for 'tax_declaration'
-    if ($request->hasFile('tax_declaration')) {
-        $taxDeclarationFile = $request->file('tax_declaration');
-        // Store the file and save the path
-        $taxDeclarationPath = $taxDeclarationFile->store('files', 'public');
-        $validatedData['tax_declaration'] = $taxDeclarationPath;
-    }
+        // Handle file upload for 'tax_declaration'
+        if ($request->hasFile('tax_declaration')) {
+            $taxDeclarationFile = $request->file('tax_declaration');
+            $validatedData['tax_declaration'] = $taxDeclarationFile->store('files', 'public');
+        }
+    
+        if ($request->hasFile('gov_entity_file')) {
+            $taxDeclarationFile = $request->file('gov_entity_file');
+            $validatedData['gov_entity_file'] = $taxDeclarationFile->store('files', 'public');
+        }
 
-    // Handle file upload for 'gov_entity'
-    if ($request->hasFile('gov_entity')) {
-        $govEntityFile = $request->file('gov_entity');
-        // Store the file and save the path
-        $govEntityPath = $govEntityFile->store('files', 'public');
-        $validatedData['gov_entity'] = $govEntityPath;
-    }
+        
+        
+    
+        // Prepend the country code to the mobile number
+        if (!empty($validatedData['mobile_no'])) {
+            $validatedData['mobile_no'] = '+63' . ltrim($validatedData['mobile_no'], '0');
+        }
+    
+        // Convert array fields to JSON
+        $validatedData['line_of_business'] = $validatedData['line_of_business'] ? json_encode($validatedData['line_of_business']) : null;
+        $validatedData['PSIC'] = $validatedData['PSIC'] ? json_encode($validatedData['PSIC']) : null;
+        $validatedData['product_services'] = $validatedData['product_services'] ? json_encode($validatedData['product_services']) : null;
+        $validatedData['no_of_units'] = $validatedData['no_of_units'] ? json_encode($validatedData['no_of_units']) : null;
+    
+        // Set default status and notification
+        $validatedData['status'] = 'Pending';
+        $validatedData['notified'] = '0';
 
-    // Prepend the country code to the mobile number
-    if (!empty($validatedData['mobile_no'])) {
-        $validatedData['mobile_no'] = '+63' . ltrim($validatedData['mobile_no'], '0');
-    }
-
-    // Convert array fields to JSON if present
-    $validatedData['line_of_business'] = isset($validatedData['line_of_business']) ? json_encode($validatedData['line_of_business']) : null;
-    $validatedData['PSIC'] = isset($validatedData['PSIC']) ? json_encode($validatedData['PSIC']) : null;
-    $validatedData['product_services'] = isset($validatedData['product_services']) ? json_encode($validatedData['product_services']) : null;
-    $validatedData['no_of_units'] = isset($validatedData['no_of_units']) ? json_encode($validatedData['no_of_units']) : null;
-
-    // Set default status and notification
-    $validatedData['status'] = 'Pending';
-    $validatedData['notified'] = '0';
-
-    // Debugging purposes, remove or replace after testing
-    // dd($validatedData);
     
         // Create the record in the database
         $product = BusinessPermitApplication::create($validatedData);
@@ -177,6 +177,7 @@ class BusinessPermitApplicationController extends Controller
         // Redirect or return response after saving
         return redirect()->back()->with('success', 'Business data saved successfully!');
     }
+    
     
     
     
@@ -203,6 +204,7 @@ public function show($id)
     $businessPermit = BusinessPermitApplication::findOrFail($id);
     $streets = Streets::orderBy('street', 'asc')->get();
     $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
+    $municipalities = Municipalities::get();
 
     // Decode the JSON fields
     $lineOfBusiness = json_decode($businessPermit->line_of_business, true) ?? [];
@@ -219,6 +221,7 @@ public function show($id)
         'psic' => $psic,
         'productServices' => $productServices,
         'noOfUnits' => $noOfUnits,
+        'municipalities' => $municipalities,
     ])->render();
 
     return response()->json(['html' => $view]);
@@ -254,6 +257,7 @@ public function show($id)
 
         $streets = Streets::orderBy('street', 'asc')->get();
         $barangays = Barangay::orderBy('barangay', 'asc')->get(); // Fetching barangays data
+        $municipalities = Municipalities::get();
          // Decode the JSON fields
          $lineOfBusiness = json_decode(optional($businessPermit)->line_of_business, true) ?? [];
          $psic = json_decode(optional($businessPermit)->PSIC, true) ?? [];
@@ -275,8 +279,10 @@ public function show($id)
         'psic' => $psic,
         'productServices' => $productServices,
         'noOfUnits' => $noOfUnits,
+        'municipalities' => $municipalities,
         ]);
     }
+
     
 
 
@@ -322,7 +328,8 @@ public function show($id)
         'block_no2' => 'nullable|string|max:255',
         'street' => 'nullable|string|max:255',
         'street2' => 'nullable|string|max:255',
-        'gov_entity' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+        'gov_entity_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
+            'gov_entity' => 'nullable|string|max:255',
         'business_activity' => 'nullable|string|max:255',
         'others' => 'nullable|string|max:255',
         'barangay' => 'nullable|string|max:255',
@@ -376,12 +383,9 @@ public function show($id)
         $validatedData['tax_declaration'] = $taxDeclarationPath;
     }
 
-    // Handle file upload for 'gov_entity' (only if a new file is uploaded)
-    if ($request->hasFile('gov_entity')) {
-        $govEntityFile = $request->file('gov_entity');
-        // Store the file and save the path
-        $govEntityPath = $govEntityFile->store('files', 'public');
-        $validatedData['gov_entity'] = $govEntityPath;
+    if ($request->hasFile('gov_entity_file')) {
+        $taxDeclarationFile = $request->file('gov_entity_file');
+        $validatedData['gov_entity_file'] = $taxDeclarationFile->store('files', 'public');
     }
 
     // Prepend the country code to the mobile number
@@ -435,7 +439,7 @@ public function show($id)
             $currentDate = \Carbon\Carbon::now()->format('mdY');
     
             // Combine to create Mayor's Permit No.
-            $mayorsPermitNo = "BS-{$randomNumber}-{$currentDate}";
+            $mayorsPermitNo = "BP-{$randomNumber}-{$currentDate}";
     
             // Save the Mayor's Permit No. to the plate_number column
             $businessPermit->plate_number = $mayorsPermitNo;
@@ -452,7 +456,7 @@ public function show($id)
             $phone_number = $businessPermit->mobile_no;
             $businessName = $businessPermit->business_name;
 
-            $message = "Mr/Mrs " . $lastName . " Your business permit for " . $businessName . "  has been approved. Please bring your required documents to our BPL office for finalization. Thank you! ";
+            $message = "Mr/Mrs " . $lastName . " Your business permit for " . $businessName . "  has been APPROVED. Please bring your required documents to our BPL office for finalization. Thank you! ";
     
             $smsResult = self::sendSimpleSMS($phone_number, $message);
 
@@ -547,46 +551,48 @@ public function show($id)
 
 public function showApproved()
 {
-$now = Carbon::now('Asia/Manila');
+    $now = Carbon::now('Asia/Manila');
+    $december20 = Carbon::create($now->year, 12, 20, 0, 0, 0, 'Asia/Manila');
 
-// Retrieve all approved permits
-$approved_permits = BusinessPermitApplication::where('status', 'Approved')
-->orderByDesc('created_at')
-->get();
+    // Check if today is December 20 and if the business hasn't been notified this year
+    if ($now->isSameDay($december20)) {
+        $approved_permits = BusinessPermitApplication::where('status', 'Approved')
+            ->where(function ($query) use ($now) {
+                $query->whereNull('notified_on')
+                      ->orWhereYear('notified_on', '<', $now->year);
+            })
+            ->orderByDesc('created_at')
+            ->get();
 
-foreach ($approved_permits as $permit) {
-// Check if the approved_on time is older than 12 months
-if ($now->diffInMonths($permit->approved_on) >= 1) {
-// Update status to 'Renewal'
-$permit->status = 'Renewal';
-$permit->notified = '1';
-$permit->save();
+        foreach ($approved_permits as $permit) {
+            // Update status to 'Renewal'
+            $permit->status = 'Renewal';
+            $permit->notified = '1';
+            $permit->notified_on = $now;  // Set notified_on to today’s date
+            $permit->save();
 
-// Send SMS notification
-$phone_number = $permit->mobile_no;
-$lastName = $permit->owner_last_name;
-// dd($phone_number);
-// Log::info('Sending SMS to: ' . $phone_number);
+            // Send SMS notification
+            $phone_number = $permit->mobile_no;
+            $lastName = $permit->owner_last_name;
+            $currentYear = $now->year;
 
-$currentYear = date('Y');
+            $message = "Mr/Mrs " . $lastName . ", your business permit is due for Renewal. "
+                     . "Please proceed to the BPL office for the renewal of your business permit "
+                     . "not later than December 31, " . $currentYear . ". Thank you!";
 
-$message = "Mr/Mrs " . $lastName . " Your business permit is due for renewal. Please proceed to the BPL office for the
-renewal of your business permit not later than December 31, " . $currentYear . "Thank you!";
+            // Send the SMS (replace with actual SMS sending function)
+            $smsResult = self::sendSimpleSMS($phone_number, $message);
+        }
+    }
 
-
-$smsResult = self::sendSimpleSMS($phone_number, $message);
-// dd( $smsResult );
-// Check and log SMS result
-// Log::info('SMS sent result: ', (array)$smsResult);
-// dd($smsResult); // Use this for debugging
+    // Return to your view
+    return view('admin.permit.index', [
+        'approved_permits' => BusinessPermitApplication::where('status', 'Approved')->get(),
+    ]);
 }
-}
 
-//Return to your view
-return view('admin.permit.index', [
-'approved_permits' => $approved_permits,
-]);
-}
+
+
 
 
 
@@ -688,48 +694,93 @@ public function generatePermit(Request $request)
     
 
 
-    public function archivePermit(Request $request, $id)
-    {
-
-        // Find the business permit by ID
-        $businessPermit = BusinessPermitApplication::findOrFail($id);
-
-        if ($request->input('action') == 'archive') {
-
-            $businessPermit = BusinessPermitApplication::findOrFail($id);
-
-            $client_firstname = $businessPermit->first_name;
-            $client_middlename = $businessPermit->middle_name;
-            $client_lastname = $businessPermit->last_name;
-
-            $archive['firstname'] = Auth::user()->firstname; 
-              $archive['time'] = now()->setTimezone('Asia/Manila')->toDateTimeString();
-              $archive['user_activity'] = 'has moved the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' .  $client_lastname . '</b>' . ' '.'to <span class="badge badge-warning p-2">ARCHIVED</span>';
-
-            $archived = activity_log::create(  $archive);
-
-            // Update the status to 'Archived'
-            $businessPermit->status = 'Archived';
-            $businessPermit->save();
-
-            // Redirect back with a success message
-            return redirect()->back()->with('success', 'Permit archived successfully.');
-
-        } 
-
-
-    }
+public function archivePermit(Request $request, $id)
+{
+    // Get the current date and time in Asia/Manila timezone
+    // $now = Carbon::now('Asia/Manila');
     
+    // // Create a date object for December 31 of the current year
+    // $december31 = Carbon::create($now->year, 12, 31, 0, 0, 0, 'Asia/Manila');
+
+    // // Check if today is December 31
+    // if ($now->isSameDay($december31)) {
+
+    //     // Find all permits with 'Renewal' status
+    //     $renewal_permits = BusinessPermitApplication::where('status', 'Renewal')
+    //         ->orderByDesc('created_at')
+    //         ->get();
+
+    //     foreach ($renewal_permits as $permit) {
+    //         // Update status to 'Archived'
+    //         $permit->status = 'Archived';
+    //         $permit->archived_on = $now;  // Set archived_on to today's date
+    //         $permit->save();
+
+    //         // Log the archive activity
+    //         $client_firstname = $permit->owner_first_name;
+    //         $client_middlename = $permit->owner_middle_name;
+    //         $client_lastname = $permit->owner_last_name;
+
+    //         $archive['firstname'] = Auth::user()->firstname; 
+    //         $archive['time'] = $now->toDateTimeString();
+    //         $archive['user_activity'] = 'has moved the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' . $client_lastname . '</b>' . ' '.'to <span class="badge badge-warning p-2">ARCHIVED</span>';
+
+    //         activity_log::create($archive);
+    //     }
+    // }
+
+    // Return to your view (or any other response as needed)
+    // return view('admin.permit.archived', [
+    //     'renewal_permits' => BusinessPermitApplication::where('status', 'Renewal')->get(),
+    // ]);
+}
+
 
 
     public function showArchived()
     {
+
+            // Get the current date and time in Asia/Manila timezone
+    $now = Carbon::now('Asia/Manila');
+    
+    // Create a date object for December 31 of the current year
+    $december31 = Carbon::create($now->year, 12, 31, 0, 0, 0, 'Asia/Manila');
+
+    // Check if today is December 31
+    if ($now->isSameDay($december31)) {
+
+        // Find all permits with 'Renewal' status
+        $renewal_permits = BusinessPermitApplication::where('status', 'Renewal')
+            ->orderByDesc('created_at')
+            ->get();
+
+        foreach ($renewal_permits as $permit) {
+            // Update status to 'Archived'
+            $permit->status = 'Archived';
+            $permit->archived_on = $now;  // Set archived_on to today's date
+            $permit->save();
+
+            // Log the archive activity
+            $client_firstname = $permit->owner_first_name;
+            $client_middlename = $permit->owner_middle_name;
+            $client_lastname = $permit->owner_last_name;
+
+            $archive['firstname'] = Auth::user()->firstname; 
+            $archive['time'] = $now->toDateTimeString();
+            $archive['user_activity'] = 'has moved the Business Permit of <b>' . $client_firstname . ' ' . $client_middlename . ' ' . $client_lastname . '</b>' . ' '.'to <span class="badge badge-warning p-2">ARCHIVED</span>';
+
+            activity_log::create($archive);
+        }
+    }
         // Fetch permits with status 'Archived'
         $archived_permits = BusinessPermitApplication::where('status', 'Archived')->orderByDesc('created_at')->get();
 
         // Return the view with the archived permits
         return view('admin.permit.archived', compact('archived_permits'));
     }
+
+
+
     
     public function renewPermit(Request $request, $id)
     {
@@ -781,7 +832,7 @@ public function generatePermit(Request $request)
     // }
 
 
-    public function showForRenewal($message)
+    public function showForRenewal()
     {
         $for_renewal_permits = BusinessPermitApplication::where('status', 'Renewal')->orderByDesc('created_at')->get();
     
@@ -789,8 +840,13 @@ public function generatePermit(Request $request)
             if ($permit->notified == 0) {
 
                 $phone_number = $permit->mobile_no;
+                $lastName = $permit->lastname;
                 $client_name = $permit->owner_first_name . ' ' . $permit->owner_middle_name . ' ' . $permit->owner_last_name;
                 $date_time_sent = Carbon::now('asia/manila');
+                $currentYear = date('Y');
+
+                $message = "Mr/Mrs " . $lastName . " Your business permit is due for RENEWAL. Please proceed to the BPL office for the
+                        renewal of your business permit not later than December 31, " . $currentYear . "Thank you!";
     
                 $smsResult = self::sendSimpleSMS($phone_number, $message);
 
@@ -849,8 +905,10 @@ public function generatePermit(Request $request)
             $permit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $permit->status = 'Approved';
             $permit->notified = '0';
+            $permit->notified_on = null;  // Set notified_on to null
             $permit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $permit->save();
+
         
             // Redirect back or to a specific route
             return redirect()->back()->with('success', 'Renewal approved successfully.');   
@@ -922,7 +980,26 @@ public function generatePermit(Request $request)
         return view('admin.permit.view', compact('businessPermit', 'streets', 'barangays', 'lineOfBusiness', 'psic', 'productServices', 'noOfUnits'));
     }
     
-        
+
+    public function getStreetsAndBarangays(Request $request)
+    {
+        $municipality = 'Estancia'; // Default municipality
+    
+        // Fetch streets and barangays for the specified municipality
+        $streets = Streets::where('municipality', $municipality)->get();
+        $barangays = Barangay::where('municipality', $municipality)->get();
+    
+        // \Log::info('Streets:', $streets->toArray()); // Log streets
+        // \Log::info('Barangays:', $barangays->toArray()); // Log barangays
+    
+        return response()->json([
+            'streets' => $streets,
+            'barangays' => $barangays,
+        ]);
+    }
+    
+
+    
     
     
 }

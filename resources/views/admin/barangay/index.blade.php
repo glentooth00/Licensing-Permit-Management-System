@@ -40,6 +40,17 @@
                                         <input type="text" class="form-control" name="barangay"
                                             id="formGroupExampleInput" placeholder="Barangay name" required>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="formGroupExampleInput">Municipality</label>
+                                        <select type="text" class="form-control" name="municipality"
+                                            id="formGroupExampleInput" placeholder="Municipality">
+                                            <option value="" hidden>Select Municipality</option>
+                                            @foreach ($municipalities as $municipality)
+                                                <option value="{{ $municipality->municipality }}">
+                                                    {{ $municipality->municipality }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
@@ -52,10 +63,11 @@
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-striped">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th class="text-center">Barangays name</th>
+                                            <th class="text-center">Municipality</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -64,6 +76,9 @@
                                             <tr>
                                                 <td>
                                                     {{ $barangay->barangay }}
+                                                </td>
+                                                <td>
+                                                    {{ $barangay->municipality }}
                                                 </td>
 
                                                 <td class="text-center">
