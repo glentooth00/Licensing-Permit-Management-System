@@ -28,6 +28,11 @@
                             <img src="{{ asset('dist/images/logo.png') }}" width="100" alt="logo">
                             <h1>Admin Login</h1>
                         </div>
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
 
                         <form method="POST" action="{{ route('custom.login') }}">
                             @csrf
