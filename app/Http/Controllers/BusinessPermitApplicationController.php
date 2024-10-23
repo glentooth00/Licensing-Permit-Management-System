@@ -290,7 +290,7 @@ public function show($id)
 
     return view('admin.permit.index', [
         'approved_permits' => $approved_permits,
-        'now' => $now,
+        // 'now' => $now,
     ]);
 }
 
@@ -446,6 +446,7 @@ public function show($id)
             // Update the status to 'Approved'
             $permit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $permit->status = 'Approved';
+            $permit->approved_on = now()->setTimezone('Asia/Manila')->toDateTimeString();
             $permit->save();
         
             // Redirect back or to a specific route

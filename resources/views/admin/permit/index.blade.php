@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Registered Permit</h1>
+                        <h1 class="m-0">Registered Permidt</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -23,7 +23,7 @@
 
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">{{ $now }}</div>
+                    <div class="card-header"></div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped table-sm">
@@ -35,7 +35,7 @@
                                     <th class="text-center">APPLIED ON</th>
                                     <th class="text-center">STATUS</th>
                                     <th class="text-center">APPROVED ON</th>
-                                    <th class="text-center">ACTION</th>
+                                    <th class="text-center">ACTIONdfg</th>
                                 </tr>
                             </thead>
                             <tbody>
