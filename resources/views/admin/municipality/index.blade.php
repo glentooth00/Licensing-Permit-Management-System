@@ -1,6 +1,6 @@
 @extends('includes.layouts.app')
 
-@section('page-title', 'Streets')
+@section('page-title', 'Barangays')
 
 @section('content')
 
@@ -33,23 +33,12 @@
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('street.store') }}" method="POST">
+                                <form action="{{ route('store.municipality') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="formGroupExampleInput">Street Name</label>
-                                        <input type="text" class="form-control" name="street" id="formGroupExampleInput"
-                                            placeholder="street name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="formGroupExampleInput">Municipality</label>
-                                        <select type="text" class="form-control" name="municipality"
-                                            id="formGroupExampleInput" placeholder="Municipality">
-                                            <option value="" hidden>Select Municipality</option>
-                                            @foreach ($municipalities as $municipality)
-                                                <option value="{{ $municipality->municipality }}">
-                                                    {{ $municipality->municipality }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label for="formGroupExampleInput">Muncipality</label>
+                                        <input type="text" class="form-control" name="municipality"
+                                            id="formGroupExampleInput" placeholder="municipality" required>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Save</button>
@@ -63,33 +52,29 @@
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="example2" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">Street name</th>
-                                            <th class="text-center">Municipality</th>
+                                            <th class="text-center">Barangays name</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($streets as $street)
+                                        @foreach ($municipalities as $municipality)
                                             <tr>
                                                 <td>
-                                                    {{ $street->street }}
-                                                </td>
-                                                <td>
-                                                    {{ $street->municipality }}
+                                                    {{ $municipality->municipality }}
                                                 </td>
 
                                                 <td class="text-center">
                                                     <a type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                                        data-target="#userData" data-id="{{ $street->id }}"
-                                                        data-street="{{ $street->street }}">
+                                                        data-target="#userData" data-id="{{ $municipality->id }}"
+                                                        data-barangay="{{ $municipality->municipality }}">
                                                         EDIT
                                                     </a>
 
                                                     <button class="btn bg-danger btn-sm"
-                                                        onclick="confirmDelete({{ $street->id }})">DELETE</button>
+                                                        onclick="confirmDelete({{ $municipality->id }})">DELETE</button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -183,18 +168,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Street</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Brgy</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="editStreetForm" action="" method="POST">
+                    <form id="editBarangayForm" action="" method="POST">
                         @csrf
                         @method('PUT') <!-- Assuming you're using the PUT method for updating -->
                         <div class="form-group">
                             <label for="formGroupExampleInput">Street Name</label>
-                            <input type="text" class="form-control" name="street" id="formGroupExampleInput"
+                            <input type="text" class="form-control" name="barangay" id="formGroupExampleInput"
                                 placeholder="Street name">
                         </div>
                     </form>
@@ -214,17 +199,17 @@
         // Use jQuery to handle the modal data population
         $('#userData').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
-            var streetId = button.data('id'); // Extract street ID from data-* attributes
-            var streetName = button.data('street'); // Extract street name
+            var barangayId = button.data('id'); // Extract street ID from data-* attributes
+            var barangayName = button.data('barangay'); // Extract street name
 
             var modal = $(this);
-            modal.find('.modal-title').text('Edit Street: ' + streetName); // Update modal title
+            modal.find('.modal-title').text('Edit Street: ' + barangayName); // Update modal title
 
             // Set the form action URL dynamically to match the update route
-            modal.find('form#editStreetForm').attr('action', '/streets/' + streetId);
+            modal.find('form#editBarangayForm').attr('action', '/barangay/' + barangayId);
 
             // Populate the street name input field with the selected street data
-            modal.find('input[name="street"]').val(streetName);
+            modal.find('input[name="barangay"]').val(barangayName);
         });
     </script>
 
