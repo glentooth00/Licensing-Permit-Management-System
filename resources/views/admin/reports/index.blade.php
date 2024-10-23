@@ -80,7 +80,7 @@
                                             {{ \Carbon\Carbon::parse($report->created_at)->format('M-d-Y h:i A') }}
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-success view-report"
+                                            <button type="button" class="btn btn-success btn-sm view-report"
                                                 data-url="{{ route('show.monthly.permit', $report->id) }}"
                                                 data-applied="{{ $report->permits_applied }}"
                                                 data-approved="{{ $report->permits_approved }}"
@@ -226,18 +226,21 @@
                                     ctx.chart.destroy();
                                 }
 
+                                const labels = [
+                                    `Newly Applied Permits: ${applied}`,
+                                    `Approved: ${approved}`,
+                                    `Pending: ${pending}`,
+                                    `Archived: ${archived}`,
+                                    `Renewal: ${renewed}`,
+
+                                ];
+
                                 ctx.chart = new Chart(ctx, {
                                     type: 'bar',
                                     data: {
-                                        labels: [
-                                            'Newly Applied Permits',
-                                            'Approved',
-                                            'Pending',
-                                            'Archived',
-                                            'Renewal',
-                                        ],
+                                        labels: labels,
                                         datasets: [{
-                                            label: 'Business Permit Report',
+                                            label: '',
 
                                             data: [applied, approved,
                                                 pending, archived,

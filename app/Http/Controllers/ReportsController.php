@@ -117,7 +117,7 @@ class ReportsController extends Controller
 
         $archivedPermits = BusinessPermitApplication::whereBetween('created_at', [$startOfMonth, $endOfMonth])->where('status', 'Archived')->get()->count();
 
-        $renewalPermits = BusinessPermitApplication::whereBetween('created_at', [$startOfMonth, $endOfMonth])->where('status', 'Archived')->get()->count();
+        $renewalPermits = BusinessPermitApplication::whereBetween('created_at', [$startOfMonth, $endOfMonth])->where('status', 'Renewal')->get()->count();
 
 
         Reports::create([
