@@ -3,8 +3,10 @@
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\BarangayController;
+use App\Http\Controllers\MunicipalitiesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SmsMessagesController;
 use App\Http\Controllers\StreetsController;
 use App\Http\Controllers\UserController;
@@ -46,6 +48,11 @@ Route::get('/admin-permit-show', function () {
 
 Route::post('/custom-login', [UserController::class, 'authenticate'])->name('custom.login');
 Route::get('/business_registration', [StreetsController::class, 'regDisplay'])->name('business.registration.street');
+
+// routes/web.php
+Route::post('/get-data-by-municipality', [App\Http\Controllers\StreetsController::class, 'getDataByMunicipality'])->name('getDataByMunicipality');
+Route::get('/get-location-data', [StreetsController::class, 'getLocationData']);
+
 
 
 
@@ -98,6 +105,9 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('admin/permit/{id}/edit', [BusinessPermitApplicationController::class, 'edit'])->name('permit.edit');
 
+    Route::get('admin/ajax/get-streets-and-barangays', [BusinessPermitApplicationController::class, 'getStreetsAndBarangays'])->name('getStreetsAndBarangays');
+
+
 
 
 
@@ -122,12 +132,13 @@ Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
     $todayFormatted = $today->format('F j, Y');
 
     // Construct the QR code data string
-    $qrCodeData = "Permit ID: {$permit->plate_number}\n";
-    $qrCodeData .= "Status: {$permit->status}\n";
+    $qrCodeData = "Owner: {$permit->owner_first_name} {$permit->owner_middle_name} {$permit->owner_last_name}\n";
     $qrCodeData .= "Business Name: {$permit->business_name}\n";
-    $qrCodeData .= "Owner: {$permit->owner_first_name} {$permit->owner_middle_name} {$permit->owner_last_name}\n";
-    $qrCodeData .= "Valid until: {$expirationDate}\n"; // Append expiration date correctly
+    $qrCodeData .= "Permit ID: {$permit->plate_number}\n";
+    $qrCodeData .= "Status: {$permit->status}\n";
     $qrCodeData .= "Date issued: {$todayFormatted}\n";
+    $qrCodeData .= "Valid until: {$expirationDate}\n"; // Append expiration date correctly
+    
     // Generate the QR code based on the constructed data
     $qrCode = QrCode::size(300)->generate($qrCodeData);
 
@@ -181,7 +192,24 @@ Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
 
     Route::get('/registration', [BusinessPermitApplicationController::class, 'dateNow']);
 
-    Route::get('/admin/permit/{id}/show', [BusinessPermitApplicationController::class, 'showPermit'])->name('permit.show');
+    Route::get('/admin/municipality', [MunicipalitiesController::class, 'index'])->name('admin.permit.municipality');
+    Route::post('/admin/store/municipality', [MunicipalitiesController::class, 'store'])->name('store.municipality');
+    // web.php
+    Route::get('admin/user/{id}', [UserController::class, 'getUser']);
+
+    Route::put('/admin/admin/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/admin/admin/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+
+Route::get('admin/admin/reports', [ReportsController::class, 'index'])->name('admin.reports.index');
+    
+Route::post('/generate/permit', [ReportsController::class, 'generatePermit'])->name('generate.permit');
+Route::get('/report/{id}', [ReportsController::class, 'showMonthlyPermit'])->name('show.monthly.permit');
+
+
+
+
+    Route::get('admin/permit/{id}/show', [BusinessPermitApplicationController::class, 'showPermit'])->name('permit.show');
 
 
 });

@@ -62,6 +62,8 @@
                       Streets</a>
                   <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.barangay') }}">Add
                       Barangay</a>
+                  <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.municipality') }}">Add
+                      Municipality</a>
                   <a style="font-size: 14px;" class="dropdown-item" href="{{ route('admin.permit.sms') }}">SMS
                       notifications</a>
 

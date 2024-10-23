@@ -55,7 +55,7 @@
                             <a href="{{ route('business-permits.archived') }}" class="nav-link">
                                 <div class="inner">
                                     <h3>{{ $archivedCount }}</h3>
-                                    <h4>Number of Archived Members</h4>
+                                    <h4>Number of Archived Permits</h4>
                                 </div>
                             </a>
                             <div class="icon">
@@ -122,7 +122,7 @@
                                             {{ $businessPermit->business_type }}
                                         </td>
                                         <td>
-                                            {{ $businessPermit->telephone_no }} / {{ $businessPermit->mobile_no }}
+                                            {{ $businessPermit->telephone_no }} {{ $businessPermit->mobile_no }}
                                         </td>
                                         <td>
                                             {{ $businessPermit->created_at->format('F j, Y') }}
@@ -196,7 +196,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="yourModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-xl" style="width: 2000px;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitle">Business Permit Details</h5>

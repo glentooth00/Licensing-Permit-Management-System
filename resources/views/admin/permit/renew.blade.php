@@ -39,15 +39,15 @@
                                 @foreach ($for_renewal_permits as $for_renewal_permit)
                                     <tr>
                                         <td>
-                                            {{ $for_renewal_permit->first_name }}
-                                            {{ $for_renewal_permit->middle_name }}
-                                            {{ $for_renewal_permit->last_name }}
+                                            {{ $for_renewal_permit->owner_first_name }}
+                                            {{ $for_renewal_permit->owner_middle_name }}
+                                            {{ $for_renewal_permit->owner_last_name }}
                                         </td>
                                         <td>
                                             {{ $for_renewal_permit->business_name }}
                                         </td>
                                         <td>
-                                            {{ $for_renewal_permit->owners_Tel_No_Mobile }}
+                                            {{ $for_renewal_permit->mobile_no }}
                                         </td>
                                         <td>
                                             {{ $for_renewal_permit->created_at->format('F j, Y') }}
