@@ -452,12 +452,32 @@ public function show($id)
             $client_middlename = $businessPermit->owner_middle_name;
             $client_lastname = $businessPermit->owner_last_name;
 
+            $client_name = $businessPermit->owner_first_name . ' ' . $businessPermit->owner_middle_name . ' ' . $businessPermit->owner_last_name;
+
+
+            $date_time_sent = Carbon::now('asia/manila');
+
             $lastName = $businessPermit->owner_last_name;
             $phone_number = $businessPermit->mobile_no;
             $businessName = $businessPermit->business_name;
 
             $message = "Mr/Mrs " . $lastName . " Your business permit for " . $businessName . "  has been APPROVED. Please bring your required documents to our BPL office for finalization. Thank you! ";
     
+            try {
+                Sms_messages::create([
+                    'phone_number' => $phone_number,
+                    'message' => $message,
+                    'client_name' => $client_name,
+                    'date_time_sent' => $date_time_sent
+                ]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to save SMS message: ' . $e->getMessage());
+            }
+
+            
+            
+            
+
             $smsResult = self::sendSimpleSMS($phone_number, $message);
 
             $ApproveLog['firstname'] = Auth::user()->firstname; 
