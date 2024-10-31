@@ -98,7 +98,7 @@
                                                             Permit</a>
 
                                                         {{-- Archive Button --}}
-                                                        <form
+                                                        {{-- <form
                                                             action="{{ route('business-permits.archive', $approved_permit->id) }}"
                                                             method="POST" class="m-1" style="display: inline;">
                                                             @csrf
@@ -108,7 +108,7 @@
                                                                 name="action" value="archive">
                                                                 Archive
                                                             </button>
-                                                        </form>
+                                                        </form> --}}
 
                                                     </div>
 

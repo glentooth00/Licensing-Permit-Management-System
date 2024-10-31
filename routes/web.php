@@ -6,6 +6,7 @@ use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\MunicipalitiesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BusinessPermitApplicationController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SmsMessagesController;
 use App\Http\Controllers\StreetsController;
 use App\Http\Controllers\UserController;
@@ -194,11 +195,21 @@ Route::get('/permit/index', function (\Illuminate\Http\Request $request) {
     Route::get('/admin/municipality', [MunicipalitiesController::class, 'index'])->name('admin.permit.municipality');
     Route::post('/admin/store/municipality', [MunicipalitiesController::class, 'store'])->name('store.municipality');
     // web.php
+    Route::get('admin/user/{id}', [UserController::class, 'getUser']);
+
+    Route::put('/admin/admin/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/admin/admin/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+
+Route::get('admin/admin/reports', [ReportsController::class, 'index'])->name('admin.reports.index');
+    
+Route::post('/generate/permit', [ReportsController::class, 'generatePermit'])->name('generate.permit');
+Route::get('/report/{id}', [ReportsController::class, 'showMonthlyPermit'])->name('show.monthly.permit');
 
 
 
 
-    Route::get('/admin/permit/{id}/show', [BusinessPermitApplicationController::class, 'showPermit'])->name('permit.show');
+    Route::get('admin/permit/{id}/show', [BusinessPermitApplicationController::class, 'showPermit'])->name('permit.show');
 
 
 });
