@@ -13,7 +13,7 @@ class ActivityLogsController extends Controller
      */
     public function index()
     {
-        $activities = activity_log::orderBy('time', 'desc')->get()->map(function ($activity) {
+        $activities = activity_log::orderBy('created_at', 'desc')->get()->map(function ($activity) {
             $activity->formatted_date = Carbon::parse($activity->time)->format('M-D-Y'); // 'Sep-Wed-2024'
             $activity->formatted_time = Carbon::parse($activity->time)->format('h:i:s A'); // '12-hour:MM:SS AM/PM'
             return $activity;
