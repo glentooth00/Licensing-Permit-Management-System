@@ -16,7 +16,8 @@
                                     <div class="card">
                                         <div class="text-center mt-4">
                                             <span style="font-size: 23px;">MUNICIPAL OF ESTANCIA</span><br>
-                                            <span style="font-size: 23px; font-weight: 800;">UNIFIED APPLICATION FORM</span>
+                                            <span style="font-size: 23px; font-weight: 800;">UNIFIED APPddLICATION
+                                                FORM</span>
                                         </div>
                                         <div class="row mt-2 mt-5">
                                             <div class="col-md-5">
@@ -196,9 +197,27 @@
                                                                     style="text-align: center;" readonly>
                                                             </td>
                                                         </tr>
-
-
                                                     </table>
+
+                                                    <table class="table table-bordered mt-4">
+                                                        <tr>
+                                                            <td class="">
+                                                                <b>Business / Trade Name</b>: (For Sole proprietor) or <br>
+                                                                <b>Corporate Name:</b> (For Coop; Corp; Partnership)
+
+                                                                <input type="text" name="business_name"
+                                                                    value="{{ $businessPermit->business_name }}" readonly>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>Fanchise Name:</b> (If applicable)
+                                                                <input type="text" name="franchise"
+                                                                    value="{{ $businessPermit->franchise }}" readonly>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
                                                     <table class="table table-bordered">
                                                         <tr>
                                                             <td rowspan="2">
