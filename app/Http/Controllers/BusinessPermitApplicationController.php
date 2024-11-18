@@ -566,7 +566,7 @@ renewal of your business permit not later than December 31, " . $currentYear;
 
 
 $smsResult = self::sendSimpleSMS($phone_number, $message);
-dd( $smsResult );
+// dd( $smsResult );
 // Check and log SMS result
 // Log::info('SMS sent result: ', (array)$smsResult);
 // dd($smsResult); // Use this for debugging
