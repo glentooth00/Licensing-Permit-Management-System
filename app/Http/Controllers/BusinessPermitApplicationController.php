@@ -451,6 +451,15 @@ public function show($id)
 
     }
     
+    public function dateNow(){
+
+        $DateNow = now()->setTimezone('Asia/Manila')->toDateTimeString();
+
+        return view('site.registration',[
+            'DateNow' => $DateNow,
+        ]);
+
+    }
 
 
     

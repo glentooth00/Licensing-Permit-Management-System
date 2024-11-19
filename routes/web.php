@@ -140,6 +140,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     //autoupdate 
     Route::get('/dashboard', [BusinessPermitApplicationController::class, 'checkMinutePassed']);
 
+    Route::get('/registration', [BusinessPermitApplicationController::class, 'dateNow']);
+
 
 
 });
