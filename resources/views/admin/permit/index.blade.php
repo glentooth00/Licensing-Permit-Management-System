@@ -64,14 +64,14 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            {{ $approved_permit->approved_on }}
+                                            {{ \Carbon\Carbon::parse($approved_permit->approved_on)->format('F j, Y') }}
                                         </td>
                                         <td class="text-center">
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <div class="d-flex justify-content-start">
                                                         {{-- Approve Button --}}
-                                                        @if ($approved_permit->status !== 'Approved')
+                                                        {{-- @if ($approved_permit->status !== 'Approved')
                                                             <form
                                                                 action="{{ route('approve.permit', ['id' => $approved_permit->id]) }}"
                                                                 method="POST" class="m-1">
@@ -80,7 +80,7 @@
                                                                 <button type="submit"
                                                                     class="btn btn-outline-info btn-sm btn-round">Approve</button>
                                                             </form>
-                                                        @endif
+                                                        @endif --}}
 
                                                         {{-- More Details Button with ID --}}
                                                         <a href="{{ route('permit.show', ['id' => $approved_permit->id]) }}"

@@ -24,22 +24,26 @@
                 <div class="row">
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>{{ $approvedCount }}</h3>
-                                <h4>Number of Approved Permits</h4>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-users f-28"></i>
-                            </div>
-                            <a href="#" class="small-box-footer"></a>
+                            <a href="{{ route('admin.permit') }}" class="nav-link">
+                                <div class="inner">
+                                    <h3>{{ $approvedCount }}</h3>
+                                    <h4>Number of Approved Permits</h4>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-users f-28"></i>
+                                </div>
+                                <a href="#" class="small-box-footer"></a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3>{{ $pendingCount }}</h3>
-                                <h4>Renewal for Business Permits</h4>
-                            </div>
+                            <a href="{{ route('business-permits.for-renewal') }}" class="nav-link">
+                                <div class="inner">
+                                    <h3>{{ $pendingCount }}</h3>
+                                    <h4>Renewal for Business Permits</h4>
+                                </div>
+                            </a>
+                            </a>
                             <div class="icon">
                                 <i class="fa fa-user f-28"></i>
                             </div>
@@ -48,10 +52,12 @@
                     </div>
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>{{ $pendingCount }}</h3>
-                                <h4>Number of Registered Members</h4>
-                            </div>
+                            <a href="{{ route('business-permits.archived') }}" class="nav-link">
+                                <div class="inner">
+                                    <h3>{{ $pendingCount }}</h3>
+                                    <h4>Number of Archive Members</h4>
+                                </div>
+                            </a>
                             <div class="icon">
                                 <i class="fa fa-user f-28"></i>
                             </div>
